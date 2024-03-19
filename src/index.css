@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    overflow-x: hidden;
+    
+}
+input{
+
+   
+    outline: none;
+   
+}
+
+
+.home_bg{
+    opacity: 2;
+    background-image: url("./assets/Images/bghome.svg");
+   
+}
