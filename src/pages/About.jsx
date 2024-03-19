@@ -6,7 +6,8 @@ import img2 from "../assets/Images/aboutus2.webp";
 import img3 from "../assets/Images/aboutus3.webp";
 import img4 from "../assets/Images/FoundingStory.png";
 import Footer from "../components/Homepage/Footer";
-
+import BTN from "../components/Homepage/Button";
+import Box from "../components/Aboutpage/Box.jsx";
 export default function About() {
   return (
     <div className="text-white mt-0">
@@ -98,28 +99,76 @@ export default function About() {
             and networking opportunities.
           </div>
         </div>
-
       </div>
-        <div className="px-2 text-center flex w-full justify-around h-[100px] bg-richblack-700 items-center sm:w[120%]">
-            <div className="w-[25%] hover:bg-richblack-200">
-                <div className="md:text-[2rem] text-[1.6rem]">5K</div>
-                <div className="text-richblack-200">Active Students</div>
+      <div className="px-2 text-center flex w-full justify-around h-[100px] bg-richblack-700 items-center sm:w[120%]">
+        <div className="w-[25%] hover:bg-richblack-200">
+          <div className="md:text-[2rem] text-[1.6rem]">5K</div>
+          <div className="text-richblack-200">Active Students</div>
+        </div>
+        <div className="w-[25%] ">
+          <div className="md:text-[2rem] text-[1.6rem]">10+</div>
+          <div className="text-richblack-200">Mentors</div>
+        </div>
+        <div className="w-[25%] ">
+          <div className="md:text-[2rem] text-[1.6rem]">200+</div>
+          <div className="text-richblack-200">Courses</div>
+        </div>
+        <div className="w-[25%] ">
+          <div className="md:text-[2rem] text-[1.6rem]">50+</div>
+          <div className="text-richblack-200">Awards</div>
+        </div>
+      </div>
+      <div className="w-[100%] md:w-[90%] m-auto my-10 flex flex-wrap min-w-[310px] md:[600px] ">
+        <div className="w-full flex flex-wrap justify-center">
+          <div className="lg:w-[50%] w-full flex flex-col items-center text-center">
+            <div className="text-[2rem] w-full md:w-[90%] m-auto p-4 text-center md:text-start font-semibold">
+              World-Class Learning for{" "}
+              <HighlightText>Anyone, Anywhere</HighlightText>
             </div>
-            <div className="w-[25%] ">
-                <div className="md:text-[2rem] text-[1.6rem]">10+</div>
-                <div className="text-richblack-200">Mentors</div>
+            <div className="w-full md:w-[90%] m-auto p-4  md:text-start ">
+              Studynotion partners with more than 275+ leading universities and
+              companies to bring flexible, affordable, job-relevant online
+              learning to individuals and organizations worldwide.
             </div>
-            <div className="w-[25%] ">
-                <div className="md:text-[2rem] text-[1.6rem]">200+</div>
-                <div className="text-richblack-200">Courses</div>
+            <div className= "  w-full md:w-[90%] m-auto p-4  md:text-start flex justify-center lg:justify-start ">
+             
+            <BTN active>Learn More</BTN>
             </div>
-            <div className="w-[25%] ">
-                <div className="md:text-[2rem] text-[1.6rem]">50+</div>
-                <div className="text-richblack-200">Awards</div>
-            </div>
-            
+          </div>
+          
+          <Box
+            active
+            className="w-[25%]"
+            heading="Curriculum Based on Industry Needs"
+            body="Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs."
+          ></Box>
+          <Box
+            className="w-[25%]"
+            heading="Curriculum Based on Industry Needs"
+            body="Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs."
+          ></Box>
         </div>
 
+        <div className="w-full flex flex-wrap lg:justify-end justify-center">
+          <Box
+            active
+            className="w-[25%]"
+            heading="Curriculum Based on Industry Needs"
+            body="Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs."
+          ></Box>
+          <Box
+            className="w-[25%]"
+            heading="Curriculum Based on Industry Needs"
+            body="Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs."
+          ></Box>
+          <Box
+            active
+            className="w-[25%]"
+            heading="Curriculum Based on Industry Needs"
+            body="Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs."
+          ></Box>
+        </div>
+      </div>
       <Footer></Footer>
     </div>
   );
