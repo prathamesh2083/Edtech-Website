@@ -130,12 +130,11 @@ export default function About() {
               companies to bring flexible, affordable, job-relevant online
               learning to individuals and organizations worldwide.
             </div>
-            <div className= "  w-full md:w-[90%] m-auto p-4  md:text-start flex justify-center lg:justify-start ">
-             
-            <BTN active>Learn More</BTN>
+            <div className="  w-full md:w-[90%] m-auto p-4  md:text-start flex justify-center lg:justify-start ">
+              <BTN   active>Learn More</BTN>
             </div>
           </div>
-          
+
           <Box
             active
             className="w-[25%]"

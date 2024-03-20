@@ -1,36 +1,40 @@
 import React from "react";
 import logo from "../../assets/Logo/rzp_logo.png";
 import image from "../../assets/Images/TimelineImage.png";
+import logo1 from "../../assets/TimeLineLogo/Logo1.svg";
+import logo2 from "../../assets/TimeLineLogo/Logo2.svg";
+import logo3 from "../../assets/TimeLineLogo/Logo3.svg";
+import logo4 from "../../assets/TimeLineLogo/Logo4.svg";
 export default function () {
   return (
-    <div className="w-full p-2 flex justify-center gap-5 flex-wrap  my-10">
-      <div className="w-[40%] flex flex-col gap-4 p-2 min-w-[350px]">
+    <div className="w-full md:w-[90%] m-auto p-4 flex justify-center gap-5 flex-wrap  my-10">
+      <div className="w-[40%] flex flex-col gap-4 px-6 min-w-[350px]">
         <div className="flex gap-4">
-          <img src={logo} className="w-[5rem] rounded-full"></img>
+          <img src={logo1} className="w-[2rem] rounded-full"></img>
           <div>
             <p className="font-semibold">Leardeship</p>
             <p>Fully committed to the success company</p>
           </div>
         </div>
         <div className="flex gap-4">
-          <img src={logo} className="w-[5rem] rounded-full"></img>
+          <img src={logo2} className="w-[2rem] rounded-full"></img>
           <div>
-            <p className="font-semibold">Leardeship</p>
-            <p>Fully committed to the success company</p>
+            <p className="font-semibold">Responsibility</p>
+            <p>Students will always be our top priority</p>
           </div>
         </div>
         <div className="flex gap-4">
-          <img src={logo} className="w-[5rem] rounded-full"></img>
+          <img src={logo3} className="w-[2rem] rounded-full"></img>
           <div>
-            <p className="font-semibold">Leardeship</p>
-            <p>Fully committed to the success company</p>
+            <p className="font-semibold">Flexibility</p>
+            <p>The ability to switch is an important skill</p>
           </div>
         </div>
         <div className="flex gap-4">
-          <img src={logo} className="w-[5rem] rounded-full"></img>
+          <img src={logo4} className="w-[2rem] rounded-full"></img>
           <div>
-            <p className="font-semibold">Leardeship</p>
-            <p>Fully committed to the success company</p>
+            <p className="font-semibold">Solve the problem</p>
+            <p>Code your way to a solution</p>
           </div>
         </div>
       </div>

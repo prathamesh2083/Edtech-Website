@@ -6,9 +6,11 @@ import CodeBlocks from "../components/Homepage/CodeBlocks";
 import banner from "../assets/Images/banner.mp4";
 import Footer from "../components/Homepage/Footer";
 import HighlightText from "../components/Homepage/HighlightText";
+import HighlightTextPurple from "../components/Homepage/HighlightTextPurple";
 import TimeLineSection from "../components/Homepage/TimeLineSection";
 import LearningLanguageSection from "../components/Homepage/LearningLanguageSection";
 import instructor from "../assets/Images/Instructor.png"
+import ExploreMore from "../components/Homepage/ExploreMore";
 export default function Home() {
   return (
     <div className=" relative flex flex-col mx-auto w-full justify-center align-middle items-center text-white">
@@ -106,8 +108,10 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
       </div>
 
       {/* section 2  */}
+
+      <ExploreMore></ExploreMore>
       <div className="w-full bg-pure-greys-5 text-richblack-700  ">
-        <div className="flex w-full justify-center gap-4 pt-56  home_bg py-16 ">
+        <div className="flex w-full justify-center gap-4 lg:pt-56  home_bg py-16 ">
           <CTAButton linkto={"/login"} active>
             <p>
               Explore Full Catlog{" "}
@@ -120,7 +124,7 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
         <div className="flex my-14  justify-center lg:justify-between md:justify-center md:px-24 min-h-[150px] flex-wrap gap-10 ">
           <div className="md:w-[80%] lg:w-[50%] w-full text-[2rem] font-semibold min-w-[350px] text-center p-2">
             Get the skills your need for a{" "}
-            <HighlightText>Job that is in demand </HighlightText>{" "}
+            <HighlightTextPurple>Job that is in demand </HighlightTextPurple>{" "}
           </div>
           <div className=" p-2 md:w-[80%] lg:w-[40%] w-[90%] text-center gap-6 items-center lg:items-start  flex flex-col justify-between min-w-[200px]">
             <div>
@@ -140,8 +144,8 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
         <LearningLanguageSection></LearningLanguageSection>
       </div>
       {/* section 3 */}
-      <div className="flex w-full justify-between items-center flex-wrap my-20 p-10">
-        <div className="md:w-1/2 w-full min-w-[300px] p-5 items-center flex  ">
+      <div className="flex w-full justify-center md:justify-between items-center flex-wrap my-20 p-10">
+        <div className="md:w-1/2 w-full min-w-[280px] p-5 items-center flex  ">
           <img src={instructor} className="m-auto min-w-[200px] shadow-2xl shadow-blue-100"></img>
         </div>
 

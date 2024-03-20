@@ -51,24 +51,34 @@ export default function Footer() {
           <div className="font-semibold text-white text-lg">
             {FooterLink2[0].title}
           </div>
-          {FooterLink2[0].links.map((data) => {
-            return <a href={data.link}> {data.title}</a>;
+          {FooterLink2[0].links.map((data,ind) => {
+            return (
+              <a href={data.link} key={ind}>
+                {" "}
+                {data.title}
+              </a>
+            );
           })}
         </div>
         <div className="flex flex-col gap-2 text-richblack-300 text-sm">
           <div className="font-semibold text-white text-lg">
             {FooterLink2[1].title}
           </div>
-          {FooterLink2[1].links.map((data) => {
-            return <a href={data.link}> {data.title}</a>;
+          {FooterLink2[1].links.map((data,ind) => {
+            return (
+              <a href={data.link} key={ind}>
+                {" "}
+                {data.title}
+              </a>
+            );
           })}
         </div>
         <div className="flex flex-col gap-2 text-richblack-300 text-sm ">
           <div className="font-semibold text-white text-lg">
             {FooterLink2[2].title}
           </div>
-          {FooterLink2[2].links.map((data) => {
-            return <a href={data.link}> {data.title}</a>;
+          {FooterLink2[2].links.map((data,ind) => {
+            return <a href={data.link} key={ind}> {data.title}</a>;
           })}
         </div>
       </div>
