@@ -134,7 +134,9 @@ export default function About() {
               <BTN   active>Learn More</BTN>
             </div>
           </div>
-
+          <div>
+            
+          </div>
           <Box
             active
             className="w-[25%]"
