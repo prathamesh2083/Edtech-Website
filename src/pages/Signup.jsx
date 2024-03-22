@@ -73,8 +73,8 @@ export default function Signup() {
     }
   }
   return (
-    <div className="text-white w-full flex mb-60 px-20 gap-10 justify-around flex-wrap-reverse">
-      <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[330px] p-3 md:min-w-[400px] max-w-[500px]">
+    <div className="text-white w-full flex mb-60 px-20 gap-10 md:justify-around justify-center flex-wrap-reverse">
+      <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[280px] p-3 md:min-w-[400px] max-w-[500px]">
         <div className="text-[2rem] font-semibold w-full md:w-[100%] text-center lg:text-start">
           Join the millions learning to code with StudyNotion for free
         </div>
@@ -89,7 +89,7 @@ export default function Signup() {
         </div>
 
         <form className="flex flex-col gap-4">
-          <div className="bg-richblack-800 justify-between flex items-center w-fit h-fit px-4  gap-5 rounded-full min-w-[300px] ">
+          <div className="bg-richblack-800 justify-between flex items-center w-fit h-fit px-4  gap-5 rounded-full min-w-[280px] ">
             <div
               onClick={handlechange}
               name="accountType"
@@ -182,7 +182,7 @@ export default function Signup() {
             ></input>
             <span className="relative bottom-[38%]  left-[88%] w-[30px]">
               {showconfirmpass ? (
-                <IoIosEyeOff  onClick={hideconfirmpassfun} size={"25px"} />
+                <IoIosEyeOff onClick={hideconfirmpassfun} size={"25px"} />
               ) : (
                 <FaEye onClick={showconfirmpassfun} size={"25px"} />
               )}
@@ -252,7 +252,10 @@ export default function Signup() {
             Create Account
           </button>
         </form>
-        <div className="text-blue-100 px-4 "> <Link to={"/login"}>Already have an account?</Link> </div>
+        <div className="text-blue-100 px-4 ">
+          {" "}
+          <Link to={"/login"}>Already have an account?</Link>{" "}
+        </div>
       </div>
       <div className="max-w-[500px] min-w-[270px] flex items-center">
         <img src={signupImage}></img>

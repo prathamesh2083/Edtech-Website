@@ -27,7 +27,7 @@ export default function ExploreMore() {
       <div className="font-semibold lg:relative lg:top-[90px] text-center text-richblack-300">
         Learn to build anything you can imagine
       </div>
-      <div className="flex flex-wrap min-w-[300px] w-[90%] lg:relative lg:top-[100px] md:w-fit m-auto md:px-10 justify-center items-center md:gap-14 h-fit max-h-[100px] bg-richblack-700 rounded-md p-1">
+      <div className="flex flex-wrap min-w-[280px] w-[95%] lg:relative lg:top-[100px] md:w-fit m-auto md:px-10 justify-center items-center md:gap-14 h-fit max-h-[100px] bg-richblack-700 rounded-md p-1">
         {tabNames.map((tab, ind) => {
           return (
             <div
