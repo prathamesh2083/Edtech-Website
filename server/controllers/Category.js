@@ -25,16 +25,23 @@ exports.createCategory = async (req, res) => {
 };
 exports.showAllCategories = async (req, res) => {
   try {
-    const allCategories = await Category.find({});
-    return res.status(500).json({
+   
+    // console.log("called");
+    const allCategories = await Category.find(
+      {},
+      { name: true, description: true }
+    );
+    // console.log(allCategories);
+     return res.status(200).json({
       success: true,
-      Categories: allCategories,
+      data: allCategories,
       message: "All allCategories fetched successfully",
     });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       success: false,
-      message: "Error in fetching all allCategories",
+      message: "Error in fetching all allCategories server",
     });
   }
 };
@@ -42,12 +49,15 @@ exports.showAllCategories = async (req, res) => {
 exports.categoryPageDetails = async (req, res) => {
   try {
     // get category id
-    const { categoryId } = req.body;
-
+   
+    var { categoryId } = req.body;
+    
+    
     // get courses related with cetegoryid
-    const selectedCategory = await Category.findById(categoryId)
-      .populate("course")
-      .exec();
+    const selectedCategory = await Category.findById({_id:categoryId})
+    .populate("course")
+    .exec();
+   
     if (!selectedCategory) {
       return res.status(404).json({
         success: false,
@@ -59,12 +69,16 @@ exports.categoryPageDetails = async (req, res) => {
     })
       .populate("course")
       .exec();
-
-      return res.status(500).json({
+ 
+      const allCategories= await Category.find({}).populate("course").exec();
+      const allcourses=allCategories.flatMap((category)=>category.course);
+      const mostSellingCourses=allcourses.sort((a,b)=>b.sold-a.sold).slice(0,10);
+      return res.status(200).json({
         success: true,
         data:{
           selectedCategory,
-          diffCategoryCourses
+          diffCategoryCourses,
+          mostSellingCourses
         },
         message: "courses fetched successfully ",
       });

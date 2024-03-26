@@ -28,8 +28,8 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 
 // category routes
 router.post("/createCategory", auth, isAdmin, createCategory);
-router.post("/showAllCategories", auth, showAllCategories);
-router.post("/categoryPageDetails", auth, categoryPageDetails);
+router.get("/showAllCategories", showAllCategories);
+router.post("/categoryPageDetails", categoryPageDetails);
 
 module.exports=router;
 

@@ -73,7 +73,7 @@ export default function Signup() {
     }
   }
   return (
-    <div className="text-white w-full flex mb-60 px-20 gap-10 md:justify-around justify-center flex-wrap-reverse">
+    <div className="text-white w-full flex mb-60 md:px-20 px-4 gap-10 md:justify-around justify-center flex-wrap-reverse">
       <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[280px] p-3 md:min-w-[400px] max-w-[500px]">
         <div className="text-[2rem] font-semibold w-full md:w-[100%] text-center lg:text-start">
           Join the millions learning to code with StudyNotion for free
@@ -115,8 +115,8 @@ export default function Signup() {
               Instructor
             </div>
           </div>
-          <div className="flex my-2 justify-between">
-            <div className="w-[45%] flex flex-col gap-2">
+          <div className="flex my-2 justify-between flex-wrap gap-2">
+            <div className="min-w-[250px] w-full md:min-w-0 md:w-[45%] flex flex-col gap-2">
               <label>First Name</label>
               <input
                 name="firstName"
@@ -127,7 +127,7 @@ export default function Signup() {
                 placeholder="Enter first name"
               ></input>
             </div>
-            <div className="w-[45%] flex flex-col gap-2">
+            <div className="min-w-[250px] w-full md:min-w-0 md:w-[45%] flex flex-col gap-2">
               <label>Last Name</label>
               <input
                 name="lastName"
@@ -151,7 +151,7 @@ export default function Signup() {
               placeholder="Enter Email Address"
             ></input>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 h-fit">
             <label>Password</label>
             <input
               name="password"
@@ -257,7 +257,7 @@ export default function Signup() {
           <Link to={"/login"}>Already have an account?</Link>{" "}
         </div>
       </div>
-      <div className="max-w-[500px] min-w-[270px] flex items-center">
+      <div className="p-4 max-w-[500px] min-w-[270px] flex items-center">
         <img src={signupImage}></img>
       </div>
 
