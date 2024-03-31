@@ -4,7 +4,7 @@ import { TbPhoneCall } from "react-icons/tb";
 import { IoMdChatbubbles } from "react-icons/io";
 import HighlightText from '../components/Homepage/HighlightText';
 import Footer from '../components/Homepage/Footer';
-
+import ReviewSlider from '../components/common/ReviewSlider';
 export default function Contact() {
     const [info, setinfo] = useState({
       firstName: "",
@@ -145,6 +145,7 @@ export default function Contact() {
           </button>
         </form>
       </div>
+        <ReviewSlider/>
       <Footer></Footer>
     </div>
   );

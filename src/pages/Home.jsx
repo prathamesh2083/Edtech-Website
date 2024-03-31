@@ -11,6 +11,8 @@ import TimeLineSection from "../components/Homepage/TimeLineSection";
 import LearningLanguageSection from "../components/Homepage/LearningLanguageSection";
 import instructor from "../assets/Images/Instructor.png"
 import ExploreMore from "../components/Homepage/ExploreMore";
+import ReviewSlider from "../components/common/ReviewSlider";
+
 export default function Home() {
   return (
     <div className=" relative flex flex-col mx-auto w-full justify-center align-middle items-center text-white">
@@ -146,7 +148,10 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
       {/* section 3 */}
       <div className="flex w-full justify-center md:justify-between items-center flex-wrap my-20 p-10">
         <div className="md:w-1/2 w-full min-w-[280px] p-5 items-center flex  ">
-          <img src={instructor} className="m-auto min-w-[200px] shadow-2xl shadow-blue-100"></img>
+          <img
+            src={instructor}
+            className="m-auto min-w-[200px] shadow-2xl shadow-blue-100"
+          ></img>
         </div>
 
         <div className="md:w-1/2 flex flex-col gap-10   px-5 items-center">
@@ -163,6 +168,7 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
             <FaArrowRight className="inline"></FaArrowRight>{" "}
           </CTAButton>
         </div>
+      <ReviewSlider className="m-auto w-full text-center md:text-start "></ReviewSlider>
       </div>
       <Footer></Footer>
     </div>

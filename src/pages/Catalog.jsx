@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import CourseCard from "../components/Catalogpage/CourseCard";
+import Footer from "../components/Homepage/Footer";
+import { Link } from "react-router-dom";
+import CourseSlider from "../components/Catalogpage/CourseSlider";
 export default function Catalog() {
   const { catalogName } = useParams();
-  const [active,setactive]=useState(true);
+  const [active, setactive] = useState(true);
   const [categoryId, setcategoryId] = useState(null);
-  const [catlogPageData, setcatlogPageData] = useState(null);
+  const [catalogPageData, setcatalogPageData] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -25,31 +28,25 @@ export default function Catalog() {
   useEffect(() => {
     try {
       (async () => {
-        const details = await axios.post(
-          "/api/categoryPageDetails",{
-
-            categoryId:categoryId
-          }
-        );
-        // console.log("details are", details.data.data);
-        setcatlogPageData(details.data.data);
-        console.log(details.data.data);
+        const details = await axios.post("/api/categoryPageDetails", {
+          categoryId: categoryId,
+        });
+        console.log("details are", details.data.data.diffCategoryCourses);
+        setcatalogPageData(details.data.data);
       })();
     } catch (err) {
       console.log("error in fetching data of category");
       console.log(err);
     }
   }, [categoryId]);
-  function changeActive(e){
-
-    if(e.target.innerHTML==="New"){
+  function changeActive(e) {
+    if (e.target.innerHTML === "New") {
       setactive(false);
-    }
-    else{
+    } else {
       setactive(true);
     }
   }
-  
+
   return (
     // {categoryId}
     // <div></div>
@@ -61,21 +58,23 @@ export default function Catalog() {
           <p>
             Home/Catalog/
             <span className="text-yellow-25">
-              {catlogPageData?.selectedCategory?.name}
+              {catalogPageData?.selectedCategory?.name}
             </span>
           </p>
           <p className="text-[2rem]">
-            {catlogPageData?.selectedCategory?.name}
+            {catalogPageData?.selectedCategory?.name}
           </p>
           <p className="text-richblack-200">
-            {catlogPageData?.selectedCategory?.description}
+            {catalogPageData?.selectedCategory?.description}
           </p>
         </div>
       </div>
 
       {/* selected courses */}
       <div className="w-full flex text-center md:text-start flex-col md:w-[90%] my-10 m-auto gap-5 ">
-        <p className="text-[2rem] font-semibold">Courses to get you started </p>
+        <p className="text-[2rem] font-semibold text-center md:text-start">
+          Courses to get you started{" "}
+        </p>
         <div className="flex px-5 gap-4 border-b-[1px] p-1 border-b-richblack-600">
           <div
             onClick={changeActive}
@@ -98,28 +97,36 @@ export default function Catalog() {
             New
           </div>
         </div>
-        <div>
-          {/* <CourseSlider Courses={details?.data?.data?.selectedCategory?.course}/> */}
+        <div className="w-full ">
+          <CourseSlider
+            className="m-auto w-full text-center md:text-start "
+            Courses={catalogPageData?.selectedCategory?.course}
+          />
         </div>
       </div>
 
       {/* section 3 */}
       <div className="w-full md:w-[90%] flex flex-col gap-10 my-10 m-auto">
-        <p>Top courses in {catlogPageData?.selectedCategory?.name}</p>
+        <p className="text-[2rem] font-semibold text-center md:text-start">
+          Top courses in {catalogPageData?.selectedCategory?.name}
+        </p>
         <div>
-          {/* <CourseSlider
-            Courses={details?.data?.data?.diffCategoryCourses?.course}
-          /> */}
+          <CourseSlider Courses={catalogPageData?.diffCategoryCourses} />
         </div>
       </div>
       <div className="w-full md:w-[90%] flex flex-col gap-10 my-10 m-auto">
-        <p>Frequenty bought courses</p>
-        <div>
-          {/* <CourseSlider
-            Courses={details?.data?.data?.diffCategoryCourses?.course}
-          /> */}
+        <p className="text-[2rem] font-semibold text-center md:text-start px-2">
+          Frequently bought courses
+        </p>
+        <div className="flex flex-wrap justify-center gap-10 ">
+          {catalogPageData?.mostSellingCourses
+            ?.slice(0, 4)
+            ?.map((course, index) => {
+              return <CourseCard key={index} course={course} />;
+            })}
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

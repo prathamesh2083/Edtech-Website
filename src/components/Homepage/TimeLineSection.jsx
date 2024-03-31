@@ -42,7 +42,7 @@ export default function () {
       <div className="md:w-[50%] text-center min-w-[350px] w-full justify-start items-center flex flex-col md:mx-5 ">
         <img
           src={image}
-          className="max-w-[600px] min-w-[250px]  md:min-w-[450px]  shadow-lg shadow-blue-200 w-[90%] mx-auto md:m-0"
+          className="max-w-[600px] min-w-[200px]  md:min-w-[450px]  shadow-lg shadow-blue-200 w-[90%] mx-auto md:m-0"
         ></img>
         <div className="bg-yellow-25 px-2 lg:w-[70%] lg:flex lg:left-0 min-h-[100px] max-h-[100px] w-full items-center md:relative lg:bottom-10 md:w-[70%] justify-around
           hidden ">

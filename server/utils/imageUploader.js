@@ -1,7 +1,7 @@
 const cloudinary = require("cloudinary").v2;
 
 
-async function uploadImageToCloudinary(file,folder){
+exports.uploadImageToCloudinary =async(file,folder)=>{
 
     const options={folder};
     // if(height){
@@ -13,4 +13,3 @@ async function uploadImageToCloudinary(file,folder){
     options.resource_type="auto";
     return await cloudinary.uploader.upload(file.tempFilePath,options);
 }
-module.exports=uploadImageToCloudinary;

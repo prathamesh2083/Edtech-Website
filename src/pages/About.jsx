@@ -8,6 +8,7 @@ import img4 from "../assets/Images/FoundingStory.png";
 import Footer from "../components/Homepage/Footer";
 import BTN from "../components/Homepage/Button";
 import Box from "../components/Aboutpage/Box.jsx";
+import ReviewSlider from "../components/common/ReviewSlider.jsx";
 export default function About() {
   return (
     <div className="text-white mt-0">
@@ -169,6 +170,7 @@ export default function About() {
             body="Save time and money! The Belajar curriculum is made to be easier to understand and in line with industry needs."
           ></Box>
         </div>
+        <ReviewSlider/>
       </div>
       <Footer></Footer>
     </div>

@@ -15,7 +15,7 @@ router.post("/getCourseDetails", auth, getCourseDetails);
 
 router.post("/createRating", auth, isStudent, createRating);
 router.post("/getAverageRating", auth, getAverageRating);
-router.post("/getAllRatings", auth, getAllRatings);
+router.get("/getAllRatings", getAllRatings);
 
 // section routes
 router.post("/createSection", auth, isInstructor, createSection);

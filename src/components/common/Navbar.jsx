@@ -29,7 +29,7 @@ export default function Navbar() {
               const result=await axios.get("/api/showAllCategories");
              
               setsublinks(result.data.data);
-               
+             
            } catch (err) {
             console.log(err);
           
@@ -62,11 +62,12 @@ export default function Navbar() {
                       translate-x-[-45%] translate-y-[15%] "
                       >
                         <div className="absolute left-[50%] top-1 h-6 w-6 rotate-45 rounded bg-richblack-5 translate-y-[-30%]"></div>
-                        <div className="flex flex-col gap-3 p-2 text-[17px]">
+                        <div className="flex flex-col gap-1 p-2 text-[17px]">
                           {sublinks.map((lnk, index) => {
                           return (
                             <Link
-                            className="p-1"
+
+                            className=" hover:bg-richblack-50 p-3 rounded-md"
                               key={index}
                               to={`/catalog/${lnk.name
                                 .split(" ")

@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa";
 // <FaEye />
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
+import ReviewSlider from "../components/common/ReviewSlider";
 // <IoIosEyeOff />
 export default function Login() {
   const [info, setinfo] = useState({
@@ -96,6 +97,7 @@ export default function Login() {
       <div className="max-w-[500px] min-w-[300px] flex items-center">
         <img src={loginImage}></img>
       </div>
+      
     </div>
   );
 }

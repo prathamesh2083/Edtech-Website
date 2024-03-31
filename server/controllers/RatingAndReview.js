@@ -5,27 +5,29 @@ const { mongo, default: mongoose } = require("mongoose");
 exports.createRating = async (req, res) => {
   try {
     // get user id
-    const userId = req.user.id;
-
+    const userId =  req.user.id;
     // get rating ,review ,course id
     const { rating, review, courseId } = req.body;
+    console.log(userId,courseId);
 
-    const course = await Course.findById(courseId);
-    if (!course) {
-      return res.status(500).json({
-        success: false,
-        message: "course not found for rating and review",
-      });
-    }
+    const courseDetails = await Course.findOne({
+      _id: courseId,
+      studentsEnrolled: { $elemMatch: { $eq: userId } },
+    });
 
-    // check user is enrolled to this course or not
-    const isEnrolled = course.studentsEnrolled.includes(userId);
-    if (!isEnrolled) {
+     
+     // check user is enrolled to this course or not
+
+    if (courseDetails) {
       return res.status(404).json({
         success: false,
-        message: "You are not enrolled for this course",
+        message: "Student is not enrolled in the course",
       });
     }
+
+   
+     
+   
 
     // check if user has already rated this course or not
     const alreadyReviewed = await RatingAndReview.findOne({
@@ -56,7 +58,7 @@ exports.createRating = async (req, res) => {
       { new: true }
     );
 
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: "Rating and review created successfully",
     });
@@ -108,6 +110,7 @@ exports.getAverageRating = async (req, res) => {
     });
   }
 };
+
 exports.getAllRatings = async (req, res) => {
   try {
     const result = await RatingAndReview.find({})
@@ -116,9 +119,11 @@ exports.getAllRatings = async (req, res) => {
         path: "user",
         select: "firstName lastName email image",
       }).populate({
-        path:"Course",select:"courseName"
+        path:"course",select:"courseName"
       }).exec();
-       return res.status(500).json({
+     
+      console.log(result);
+       return res.status(200).json({
          success: true,
          data:result,
          message: "All reviews fetched successfully",

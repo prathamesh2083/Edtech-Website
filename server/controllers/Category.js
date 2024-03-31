@@ -64,13 +64,16 @@ exports.categoryPageDetails = async (req, res) => {
         message: "Coursed with selected category not found",
       });
     }
-    const diffCategoryCourses = await Category.find({
+    var diffCategoryCourses = await Category.find({
       _id: { $ne: categoryId },
-    })
-      .populate("course")
-      .exec();
- 
-      const allCategories= await Category.find({}).populate("course").exec();
+    }).populate("course").exec();
+       diffCategoryCourses=diffCategoryCourses.flatMap((crc)=>crc._id!==categoryId?crc.course:[]);
+      const allCategories= await Category.find({}).populate({
+        path:"course",
+        populate:{
+          path:"Instructor"
+        }
+      }).exec();
       const allcourses=allCategories.flatMap((category)=>category.course);
       const mostSellingCourses=allcourses.sort((a,b)=>b.sold-a.sold).slice(0,10);
       return res.status(200).json({
