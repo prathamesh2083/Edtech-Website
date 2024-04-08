@@ -9,7 +9,7 @@ import HighlightText from "../components/Homepage/HighlightText";
 import HighlightTextPurple from "../components/Homepage/HighlightTextPurple";
 import TimeLineSection from "../components/Homepage/TimeLineSection";
 import LearningLanguageSection from "../components/Homepage/LearningLanguageSection";
-import instructor from "../assets/Images/Instructor.png"
+import instructor from "../assets/Images/Instructor.png";
 import ExploreMore from "../components/Homepage/ExploreMore";
 import ReviewSlider from "../components/common/ReviewSlider";
 
@@ -168,7 +168,7 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
             <FaArrowRight className="inline"></FaArrowRight>{" "}
           </CTAButton>
         </div>
-      <ReviewSlider className="m-auto w-full text-center md:text-start "></ReviewSlider>
+        <ReviewSlider className="m-auto w-full text-center md:text-start "></ReviewSlider>
       </div>
       <Footer></Footer>
     </div>

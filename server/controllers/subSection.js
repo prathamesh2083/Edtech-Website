@@ -1,6 +1,6 @@
 const SubSection = require("../models/SubSection");
 const Section = require("../models/Section");
-const uploadImageToCloudinary = require("../utils/imageUploader");
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
 require("dotenv").config();
 exports.createSubSection = async (req, res) => {
   try {
@@ -31,7 +31,7 @@ exports.createSubSection = async (req, res) => {
       { $push: { subSection: newSubSection._id } },
       { new: true }
     ).populate();
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       updateSection,
       message: "Subsection created successfully",

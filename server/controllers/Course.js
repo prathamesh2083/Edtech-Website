@@ -92,7 +92,7 @@ exports.createCourse = async (req, res) => {
 exports.getAllCourses = async (req, res) => {
   try {
     const allCourses = await Course.find({}).populate("Instructor").exec();
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: "All courses fetched successfully",
       allCourses: allCourses,
@@ -109,34 +109,36 @@ exports.getCourseDetails = async (req, res) => {
   try {
     const  {courseId} = req.body;
     // find details
-    console.log("aaa" ,courseId,req.body);
-    const courseDetails = await Course.findById(courseId)
-      .populate({
-        path: "Instructor",
-        populate: {
-          path: "additionalDetails",
-        },
-      })
-      .populate("category")
-      .populate("ratingAndReviews")
-      .populate({
-        path: "courseContent",
-        populate: {
-          path: "subSection",
-        },
-      })
-      .exec();
-
+   
+    
+    
+     const courseDetails = await Course.findOne({ _id: courseId })
+       .populate({
+         path: "Instructor",
+         populate: {
+           path: "additionalDetails",
+         },
+       })
+       .populate("category")
+       .populate("ratingAndReviews")
+       .populate({
+         path: "courseContent",
+         populate: {
+           path: "subSection",
+         },
+       })
+       .exec();
+     
     if (!courseDetails) {
-      return res.status(500).json({
+      return res.status(400).json({
         success: false,
         
         message: "could not find course ",
       });
     }
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
-      allCourses: courseDetails,
+      data: courseDetails,
       message: "course details fetched  successfully ",
     });
   } catch (err) {

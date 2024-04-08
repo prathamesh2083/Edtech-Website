@@ -6,6 +6,124 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 
+// initiate order payment
+// exports.capturePayment=async(req,res)=>{
+
+//     try{
+//            const { courses } = req.body;
+//            const userId = req.user.id;
+
+//            if (courses.length === 0) {
+//             return res.json({
+//               success:false,
+//               message:"provide course id"
+//             })
+//            }
+//            let totalAmount=0;
+//            for(const course_id of courses){
+//             let course;
+//             try{
+//                course=await Course.findById({_id:course_id});
+//                if(!course){
+//                 return res.json({
+//                   success: false,
+//                   message: "Course not found",
+//                 });
+//                }
+//                const uid=new mongoose.Types.ObjectId(userId);
+//                if(course?.studentsEnrolled?.includes(uid)){
+//                 return res.json({
+//                   success: false,
+//                   message: "You have already bougth this course",
+//                 });
+//                }
+//                totalAmount+=course.price;
+//             }
+//             catch(err){
+//               return res.json({
+//                 success: false,
+//                 message: "Error in finding course",
+//               });
+//             }
+//            }
+
+//     }
+//     catch(err){
+//      return res.json({
+//        success: false,
+//        message: "Error in capture payment",
+//      });
+//     }
+
+
+//     const options={
+//       amount:totalAmount*100,
+//       currency:"INR",
+//       receipt:Math.random(Date.now()).toString(),
+//     }
+//     try{
+//            const paymentResponse=await instance.orders.create(options);
+//            return res.json({
+//              success: true,
+//              message: paymentResponse,
+//            });
+//     }
+//     catch(err){
+//             return res.status(500).json({
+//               success: false,
+//               message: "could not initiate order",
+//             });
+//     }
+   
+// }
+
+// // verify payment
+// exports.verifyPayment=async(req,res)=>{
+//   try{
+//        const razorpay_order_id = req.body?.razorpay_order_id;
+//        const razorpay_payment_id = req.body?.razorpay_payment_id;
+//        const razorpay_signature = req.body?.razorpay_signature;
+//        const courses = req.body?.courses;
+//        const userId = req.user.id;
+//        if (
+//          !razorpay_order_id ||
+//          !razorpay_payment_id ||
+//          !razorpay_signature ||
+//          !courses ||
+//          !userId
+//        ) {
+//          return res.json({
+//            success: false,
+//            message: "Payment failed",
+//          });
+//        }
+//        let body = razorpay_order_id + "|" + razorpay_payment_id;
+//        const expectedSignature = crypto
+//          .createHmac("sha256", process.env.RAZORPAY_SECRET)
+//          .update(body.toString())
+//          .digest("hex");
+//        if (expectedSignature === razorpay_signature) {
+//          // enroll student
+//          return res.status(200).json({
+//            success: true,
+//            message: "payment verified",
+//          });
+//        }
+//        return res.status(200).json({
+//          success: false,
+//          message: "payment failed",
+//        });
+//   }
+//   catch(err){
+//     console.log(err);
+//     return res.status(200).json({
+//       success: false,
+//       message: "payment failed",
+//     });
+//   }
+ 
+// }
+
 exports.capturePayment = async (req, res) => {
   // getids
   const { courseId } = req.body;
@@ -131,3 +249,4 @@ exports.verifySignature = async (req, res) => {
     }
   }
 };
+

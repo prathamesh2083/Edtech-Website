@@ -7,6 +7,7 @@ export default {
       "edu-sa": ["Edu SA Beginner", "cursive"],
       mono: ["Roboto Mono", "monospace"],
     },
+
     colors: {
       white: "#fff",
       black: "#000",
@@ -123,13 +124,17 @@ export default {
         800: "#171717",
         900: "#141414",
       },
-     
     },
     extend: {
       maxWidth: {
         maxContent: "1260px",
         maxContentTab: "650px",
       },
+      
+        transitionProperty: {
+          height: "height",
+        },
+      
     },
   },
   plugins: [],

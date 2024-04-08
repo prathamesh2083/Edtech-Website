@@ -11,7 +11,7 @@ const {createCategory,showAllCategories,categoryPageDetails}=require("../control
 
 router.post("/createCourse",auth,isInstructor,createCourse);
 router.post("/getAllCourses", auth, getAllCourses);
-router.post("/getCourseDetails", auth, getCourseDetails);
+router.post("/getCourseDetails", getCourseDetails);
 
 router.post("/createRating", auth, isStudent, createRating);
 router.post("/getAverageRating", auth, getAverageRating);

@@ -23,7 +23,7 @@ export default function ReviewSlider() {
     try{
       ;(async () => {
         const result = await axios.get("/api/getAllRatings");
-        console.log(result?.data?.data);
+       
         setreviews(result?.data?.data);
       })();
     }
