@@ -1,19 +1,27 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import signupImage from "../assets/Images/signup.webp";
 import HighlightText from "../components/Homepage/HighlightText";
 import { FaEye } from "react-icons/fa";
 import { CiCircleMinus } from "react-icons/ci";
+
+import axios from "axios";
 // <FaEye />
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setsignupData } from "../slices/authSlice";
 export default function Signup() {
+  const Navigate = useNavigate();
+  const { signupData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [showvalidation, setshowvalidation] = useState(false);
   const [info, setinfo] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    firstName: "Prathamesh",
+    lastName: "Pandit",
+    email: "prathameshpandit261922@gmail.com",
+    password: "Pandit@2083",
+    confirmPassword: "Pandit@2083",
     accountType: "Student",
   });
   const [valid, setvalid] = useState({
@@ -72,6 +80,28 @@ export default function Signup() {
       });
     }
   }
+
+  const handlesubmit = async (event) => {
+    event.preventDefault();
+
+    const data = {
+      ...info,
+    };
+    dispatch(setsignupData(data));
+
+    console.log(signupData);
+
+    try {
+      const result = await axios.post("/api/sendOTP", {
+        email: info?.email,
+      });
+      if (result?.data?.success) {
+        Navigate("/verify-email");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="text-white w-full flex mb-60 md:px-20 px-4 gap-10 md:justify-around justify-center flex-wrap-reverse">
       <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[280px] p-3 md:min-w-[400px] max-w-[500px]">
@@ -88,7 +118,7 @@ export default function Signup() {
           </span>
         </div>
 
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={handlesubmit}>
           <div className="bg-richblack-800 justify-between flex items-center w-fit h-fit px-4  gap-5 rounded-full min-w-[280px] ">
             <div
               onClick={handlechange}

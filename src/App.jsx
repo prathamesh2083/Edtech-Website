@@ -8,12 +8,14 @@ import About from './pages/About'
 import Navbar from './components/common/Navbar'
 import Catalog from './pages/Catalog'
 import Course from './pages/Course'
+import VerifyOtp from './pages/VerifyOtp'
 export default function App() {
   return (
     <div className='w-screen min-h-screen bg-richblack-900 flex-col flex font-inter'  >
     <Navbar></Navbar>
        <Routes>
          <Route path='/' element={<Home></Home>}></Route>
+         <Route path='/verify-email' element={<VerifyOtp></VerifyOtp>}></Route>
          <Route path='/catalog/:catalogName' element={<Catalog></Catalog>}></Route>
          <Route path='/courses/:courseId' element={<Course></Course>}></Route>
          
