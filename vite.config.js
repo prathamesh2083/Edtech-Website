@@ -8,5 +8,5 @@ export default defineConfig({
       "/api": "http://localhost:4000",
     },
   },
-  plugins: [react(), require("tailwindcss-animate")],
+  plugins: [react()],
 });

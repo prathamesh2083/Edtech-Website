@@ -34,8 +34,8 @@ export default function Login() {
     
   }
   return (
-    <div className="text-white w-full flex my-24 px-20 gap-10 justify-around flex-wrap-reverse">
-      <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[330px] p-3 md:min-w-[400px] max-w-[500px]">
+    <div className="text-white w-full flex my-24  gap-10 justify-around flex-wrap-reverse">
+      <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[280px] p-3 md:min-w-[400px] max-w-[500px]">
         <div className="text-[2rem] font-semibold w-full md:w-[80%] text-center lg:text-start">
           Welcome Back
         </div>
@@ -94,7 +94,7 @@ export default function Login() {
           <Link to={"/signup"}>Don't have an account ?</Link>{" "}
         </div>
       </div>
-      <div className="max-w-[500px] min-w-[300px] flex items-center">
+      <div className="max-w-[500px] min-w-[200px] w-[90%] flex items-center">
         <img src={loginImage}></img>
       </div>
       

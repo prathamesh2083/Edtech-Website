@@ -120,7 +120,12 @@ exports.getCourseDetails = async (req, res) => {
          },
        })
        .populate("category")
-       .populate("ratingAndReviews")
+       .populate({
+         path: "ratingAndReviews",
+         populate:{
+          path:"user"
+         }
+       })
        .populate({
          path: "courseContent",
          populate: {

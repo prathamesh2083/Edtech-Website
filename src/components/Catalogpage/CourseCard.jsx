@@ -10,12 +10,13 @@ export default function CourseCard({ course, Height }) {
     setrating(avg);
   },[course]);
   return (
+    
     <Link
       to={`/courses/${course._id}`}
-      className={ `text-white  flex-wrap border-[1px] border-richblack-800 hover:scale-105 transition-all duration-700 hover:shadow-lg  flex flex-col gap-4 w-[40%] min-w-[300px] p-4`}
+      className={  ` text-white  flex-wrap border-[1px] border-richblack-800 hover:scale-105 transition-all duration-700 hover:shadow-lg  flex flex-col gap-4  min-w-[250px] p-4`}
     >
       <div className="w-full flex justify-center  items-center">
-        <img src={course.thumbnail} className={`m-auto min-w-[280px] md:min-w-[350px]  ${Height?Height:"h-full"} `}></img>
+        <img src={course.thumbnail} className={`m-auto min-w-[280px] md:w-[300px] max-w-[300px]  ${Height?Height:"h-full"} `}></img>
       </div>
 
       <p className="text-[1.3rem]">{course.courseName}</p>

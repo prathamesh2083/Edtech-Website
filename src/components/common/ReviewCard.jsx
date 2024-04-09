@@ -20,6 +20,7 @@ export default function ReviewCard({review,Height}) {
           <div>
             {review.user.firstName} {review.user.lastName}
           </div>
+          
           <div className='text-richblack-300'>{review.course.courseName}</div>
         </div>
       </div>

@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import ReviewCard from './ReviewCard';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import CourseReviewCard from "./CourseReviewCard";
 import {
   Autoplay,
   Navigation,
@@ -14,30 +14,14 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
-export default function ReviewSlider() {
-
-
-  const [reviews,setreviews]=useState([]);
-
-   useEffect(()=>{
-   
-     
-    try{
-      ;(async () => {
-        const result = await axios.get("/api/getAllRatings");
-       
-        setreviews(result?.data?.data);
-      })();
-    }
-    catch(err){
-      console.log(err);
-    }
-   
-   },[])
+export default function ReviewSlider({reviews}) {
+  
 
   return (
-    <div className='  my-14 w-full  ' >
-         <div className='text-[2rem] w-full font-semibold m-auto text-center my-4 p-2'>Reviews From Other Learners</div>
+    <div className="  my-14 w-full  ">
+      <div className="text-[2rem] w-full font-semibold m-auto text-center my-4 p-2">
+        Reviews About the course
+      </div>
       {reviews?.length === 0 ? (
         <div>No Reviews found</div>
       ) : (
@@ -68,7 +52,7 @@ export default function ReviewSlider() {
                 key={index}
                 className="flex justify-center items-center  w-[500px]"
               >
-                <ReviewCard review={review} Height={"h-[250px]"}  />
+                <CourseReviewCard review={review} Height={"h-[250px]"} />
               </SwiperSlide>
             );
           })}
