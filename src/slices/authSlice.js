@@ -14,6 +14,7 @@ const initialState = {
        state.token = value.payload;
      },
      setsignupData(state, value) {
+      
        state.signupData = value.payload;
      },
      setLoading(state, value) {

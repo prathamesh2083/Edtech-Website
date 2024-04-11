@@ -10,14 +10,14 @@ require("dotenv").config();
 
 exports.sendOTP = async (req, res) => {
   try {
-    console.log("called");
+   
 
     const {email} = req.body;
-    console.log("email is : ");
+    
 
-    console.log(email);
+
     if(!email){
-       return res.status(500).json({
+       return res.status(200).json({
          success: false,
          message: "email not found",
        });
@@ -25,7 +25,7 @@ exports.sendOTP = async (req, res) => {
     const already_exist = await User.findOne({email:email});
     
     if (already_exist) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "user already exist",
       });
@@ -56,7 +56,7 @@ exports.sendOTP = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "otp sent unsuccessfull",
     });
@@ -86,20 +86,20 @@ exports.signup = async (req, res) => {
       
       !otp
     ) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "All fields are required",
       });
     }
     if (password !== confirmPassword) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "Password and confirm password does not match",
       });
     }
     const already_exist = await User.findOne({ email: email });
     if (already_exist) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "User already exist",
       });
@@ -108,13 +108,13 @@ exports.signup = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(1);
     if (recentotp.length == 0) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "otp is not valid",
       });
     } else if (otp != recentotp[0].otp) {
       console.log(otp,recentotp[0].otp);
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "Otp doesnt match",
       });
@@ -145,7 +145,7 @@ exports.signup = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "user not registerd ",
     });
@@ -156,7 +156,7 @@ exports.login = async (req, res) => {
     // fetch data
     const {email,password}=req.body;
     if(!email || !password ){
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "All fields are compulsary",
       });
@@ -190,7 +190,7 @@ exports.login = async (req, res) => {
         })
     }
     else{
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "Incorrect password",
       });
@@ -200,7 +200,7 @@ exports.login = async (req, res) => {
   }
   catch(err){
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: "Login unsuccessfull",
     });
@@ -211,14 +211,14 @@ exports.changePassword=async(req,res)=>{
      try{
        const {password,confirmPassword,email}=req.body;
        if(password!==confirmPassword){
-         return res.status(500).json({
+         return res.status(200).json({
            success: false,
            message: "Password doesnt match",
          });
        }
        const user=await User.findOne({email:email});
        if(!user){
-         return res.status(500).json({
+         return res.status(200).json({
            success: false,
            message: "User not found while changepassword",
          });
@@ -226,14 +226,14 @@ exports.changePassword=async(req,res)=>{
        // hash password 
        const hashedpass=await bcrypt.hash(password,10);
        await User.findOneAndUpdate({email:email},{password:hashedpass});
-        return res.status(500).json({
+        return res.status(200).json({
           success: true,
           message: "password changed successfully",
         });
      }
      catch(err){
       console.log(err);
-       return res.status(500).json({
+       return res.status(200).json({
          success: false,
          message: "Error in changePassword",
        });

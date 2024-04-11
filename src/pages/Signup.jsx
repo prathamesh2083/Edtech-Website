@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import signupImage from "../assets/Images/signup.webp";
 import HighlightText from "../components/Homepage/HighlightText";
 import { FaEye } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 import { CiCircleMinus } from "react-icons/ci";
 
 import axios from "axios";
@@ -11,6 +12,7 @@ import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setsignupData } from "../slices/authSlice";
+import sendOTP from "../components/auth/sendOTP";
 export default function Signup() {
   const Navigate = useNavigate();
   const { signupData } = useSelector((state) => state.auth);
@@ -84,21 +86,25 @@ export default function Signup() {
   const handlesubmit = async (event) => {
     event.preventDefault();
 
-    const data = {
-      ...info,
-    };
-    dispatch(setsignupData(data));
+   
+    dispatch(setsignupData(info));
 
     console.log(signupData);
 
     try {
-      const result = await axios.post("/api/sendOTP", {
-        email: info?.email,
-      });
+      
+      const result= await sendOTP(info?.email);
+      console.log( "result in signup is ; ",result);
       if (result?.data?.success) {
+        setTimeout(()=>{
+            toast.success("OTP sent successfully");
+        },200)
         Navigate("/verify-email");
       }
+      else
+      toast.error(result?.data?.message);
     } catch (err) {
+      // toast.error(response);
       console.log(err);
     }
   };
