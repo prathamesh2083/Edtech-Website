@@ -12,6 +12,7 @@ import { IoIosPerson } from "react-icons/io";
 import Section from "../components/Coursepage/Section";
 import CourseReviewSlider from "../components/Coursepage/CourseReviewSlider";
 import CourseSlider from "../components/Catalogpage/CourseSlider";
+import toast from "react-hot-toast";
 
 export default function Course() {
   // const {user}=useSelector((state)=>state.profile);
@@ -33,7 +34,7 @@ export default function Course() {
           const result = await axios.post("/api/getCourseDetails", {
             courseId,
           });
-          console.log(result.data.data);
+          
           setcourseinfo(result.data.data);
         }
       })();
@@ -64,8 +65,13 @@ export default function Course() {
     });
     settotalNoOfLectures(total_lectures);
   }, [courseinfo]);
+
+  const buyCourse=async()=>{
+
+    
+  }
   return (
-    <div className="text-white w-full  ">
+    <div className="text-white w-full   ">
       {/* section 1 */}
       <div className="w-full  flex justify-around  bg-richblack-800 md:p-10 p-6 gap-6 lg:h-[350px]  flex-wrap ">
         <div className="flex flex-col gap-4 w-full md:w-[55%] md:p-10 h-fit">
@@ -107,10 +113,22 @@ export default function Course() {
           <div className="text-[2rem] md:text-start font-semibold ">
             Rs.{courseinfo?.price}
           </div>
-          <Button active width="w-full text-[17px]">
+
+          <div
+            
+            className="w-full text-[17px] bg-yellow-100 p-3 rounded-md text-black"
+            onClick={buyCourse}
+          >
             Buy Now
-          </Button>
-          <Button width="w-full text-[17px]">Add to cart</Button>
+          </div>
+          <div
+            
+            className="w-full text-[17px] bg-richblack-800 p-3 rounded-md text-white"
+            onClick={buyCourse}
+          >
+            Add to cart
+          </div>
+          
           <div>30 day money back Guarantee</div>
           <div className="text-yellow-100">
             <FaShareSquare className="inline" /> Share
@@ -163,7 +181,7 @@ export default function Course() {
       </div>
       {/* section 5 other courses */}
       <div className="w-full md:w-[95%] m-auto text-center  ">
-        <div className="text-[1.8rem] font-semibold my-4 " >
+        <div className="text-[1.8rem] font-semibold my-4 ">
           Other Courses by{" "}
           {courseinfo?.Instructor?.firstName.slice(0, 1).toUpperCase() +
             courseinfo?.Instructor?.firstName.slice(1) +

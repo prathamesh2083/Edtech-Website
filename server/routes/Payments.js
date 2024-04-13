@@ -2,9 +2,10 @@ const express=require("express");
 const router=express.Router();
 
 
-const {capturePayment,verifySignature}=require("../controllers/Payments");
+const {capturePayment,verifyPayment,sendPaymentSuccessEmail}=require("../controllers/Payments");
 const {auth,isStudent,isInstructor,isAdmin}=require("../middlewares/auth");
 
-router.post("/capturePayment",auth,isStudent,capturePayment);
-router.post("/verifySignature",verifySignature);
+router.post("/payment/capturePayment",auth,isStudent,capturePayment);
+router.post("/payment/verifyPayment", verifyPayment);
+router.post("/payment/sendPaymentSuccessEmail", sendPaymentSuccessEmail);
 module.exports=router;

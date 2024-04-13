@@ -46,6 +46,7 @@ export default function ReviewSlider() {
           slidesPerView={3}
           spaceBetween={10}
           loop={true}
+          
           freeMode={true}
           speed={1400}
           centeredSlides={true}

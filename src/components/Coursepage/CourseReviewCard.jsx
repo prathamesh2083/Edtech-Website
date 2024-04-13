@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import RatingStars from "../Catalogpage/RatingStars";
 export default function ReviewCard({ review, Height }) {
   return (
-    <Link
-      to="/login"
+    <div
+     
       className="bg-richblack-800 w-[300px] md:w-[350px] flex flex-col gap-4 p-4 rounded-md"
     >
       <div className="flex p-1 gap-4 ">
@@ -31,6 +31,6 @@ export default function ReviewCard({ review, Height }) {
         </span>
         <RatingStars Review_Count={review.rating}></RatingStars>{" "}
       </div>
-    </Link>
+    </div>
   );
 }
