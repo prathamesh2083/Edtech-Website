@@ -1,5 +1,5 @@
 import  axios  from "axios";
-export default async function sendOTP(email){
+export default async function sendOTP(email,dispatch){
  try{
       const result = await axios.post("/api/sendOTP", {
         email: email,

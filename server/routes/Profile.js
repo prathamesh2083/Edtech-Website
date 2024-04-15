@@ -13,9 +13,9 @@ const {
   getAllDetails,
 } = require("../controllers/Profile");
 
-router.post("/updateProfile",auth, updateProfile);
-router.post("/getAllDetails", auth, getAllDetails);
-router.post("/deleteAccount", auth,  deleteAccount);
+router.post("/profile/updateProfile",auth, updateProfile);
+router.post("/profile/getAllDetails", auth, getAllDetails);
+router.post("/profile/deleteAccount", auth,  deleteAccount);
 
 
 module.exports=router;

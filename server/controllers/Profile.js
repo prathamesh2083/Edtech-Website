@@ -6,7 +6,7 @@ exports.updateProfile = async (req, res) => {
     const { dateOfBirth , about , contactNumber, gender } = req.body;
     const id = req.user.id;
     if ( !id) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "All fields are required",
       });
@@ -30,7 +30,7 @@ exports.updateProfile = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in update profile",
     });
@@ -43,7 +43,7 @@ exports.deleteAccount = async (req, res) => {
     const id = req.user.id;
     const user = await User.findById(id);
     if (!user) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "User not found to delete account",
       });
@@ -51,13 +51,13 @@ exports.deleteAccount = async (req, res) => {
 
     await Profile.findByIdAndDelete({ _id: user.additionalDetails });
     await User.findOneAndDelete(id);
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: "Account Deleted successfully",
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in deleting user account",
     });
@@ -69,19 +69,19 @@ exports.getAllDetails=async(req,res)=>{
        const id=req.user.id;
         const user = await User.findById(id).populate("additionalDetails");
         if (!user) {
-          return res.status(500).json({
+          return res.status(200).json({
             success: false,
-            message: "User not found to delete account",
+            message: "User not found ",
           });
         }
         return res.status(200).json({
           success: true,
-          details:user,
+          user,
         });
   }
   catch(err){
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in getting user profile details",
     });

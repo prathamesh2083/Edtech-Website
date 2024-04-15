@@ -6,6 +6,6 @@ const {capturePayment,verifyPayment,sendPaymentSuccessEmail}=require("../control
 const {auth,isStudent,isInstructor,isAdmin}=require("../middlewares/auth");
 
 router.post("/payment/capturePayment",auth,isStudent,capturePayment);
-router.post("/payment/verifyPayment", verifyPayment);
-router.post("/payment/sendPaymentSuccessEmail", sendPaymentSuccessEmail);
+router.post("/payment/verifyPayment",auth,isStudent, verifyPayment);
+router.post("/payment/sendPaymentSuccessEmail",auth,isStudent,  sendPaymentSuccessEmail);
 module.exports=router;

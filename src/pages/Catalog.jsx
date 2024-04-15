@@ -122,7 +122,7 @@ export default function Catalog() {
           {catalogPageData?.mostSellingCourses
             ?.slice(0, 4)
             ?.map((course, index) => {
-              return <CourseCard key={index} course={course} />;
+              return <CourseCard key={index} course={course}  />;
             })}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import mongoose from "mongoose";
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import RatingStars from "../components/Catalogpage/RatingStars";
@@ -13,22 +13,27 @@ import Section from "../components/Coursepage/Section";
 import CourseReviewSlider from "../components/Coursepage/CourseReviewSlider";
 import CourseSlider from "../components/Catalogpage/CourseSlider";
 import toast from "react-hot-toast";
-
+import { buyCourse } from "../services/operations/studentFeaturesAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../slices/authSlice";
+import { setUser } from "../slices/profileSlice";
+import { formatDate } from "../services/formatDate";
+import copy from "copy-to-clipboard";
 export default function Course() {
-  // const {user}=useSelector((state)=>state.profile);
-  // const {token}=useSelector((state)=>state.auth);
-  // const {loading}=useSelector((state)=>state.profile);
-  // const {paymentLoading}=useSelector((state)=>state.course);
-  // const dispatch=useDispatch();
+   const { token } = useSelector((state) => state.auth);
+   const { user } = useSelector((state) => state.profile);
+  const {loading}=useSelector((state)=>state.profile);
+    // const {paymentLoading}=useSelector((state)=>state.course);
+  const dispatch=useDispatch();
   const navigate = useNavigate();
   const [courseinfo, setcourseinfo] = useState(null);
   const [totalNoOfLectures, settotalNoOfLectures] = useState(0);
   const [othercourses,setothercourses]=useState(null);
-  var courseId = useParams();
+  var {courseId} = useParams();
   useEffect(() => {
     try {
       (async () => {
-        courseId = courseId.courseId;
+        
 
         if (courseId) {
           const result = await axios.post("/api/getCourseDetails", {
@@ -66,10 +71,34 @@ export default function Course() {
     settotalNoOfLectures(total_lectures);
   }, [courseinfo]);
 
-  const buyCourse=async()=>{
-
+  
+  const handlebuycourse = async () => {
     
+    if(token!==null){
+      buyCourse(token,[courseId],user,navigate,dispatch);
+
+      return;
+    }
+  };
+
+  const Addtocart=async()=>{
+         
+    if(!user){
+      toast.error("You are not logged in");
+      navigate("/login");
+      return;
+    }
+    if(user?.accountType!=="Student"){
+      toast.error("Only students can add course to cart");
+      return;
+    }
   }
+  const shareCourse = async () => {
+    copy(window.location.href);
+    toast.success("Link copied to clipboard");
+  };
+  
+
   return (
     <div className="text-white w-full   ">
       {/* section 1 */}
@@ -102,35 +131,35 @@ export default function Course() {
               " " +
               courseinfo?.Instructor.lastName}
           </div>
-          <div>Created at : </div>
+          {courseinfo?.createdAt && (
+            <div>Created at : {formatDate(courseinfo?.createdAt)} </div>
+          )}
         </div>
 
         <div className="md:relative  w-full md:w-[30%] md:p-8 p-4 md:min-w-[350px] max-w-[350px] flex flex-col h-fit  gap-4  text-center bg-richblack-700">
           <img
             src={courseinfo?.thumbnail}
-            className="md:h-[250px]  w-full object-cover m-auto max-w-[250px] lg:max-w-[1000px]"
+            className="md:h-[250px]  w-full object-center m-auto max-w-[250px] lg:max-w-[1000px]"
           ></img>
           <div className="text-[2rem] md:text-start font-semibold ">
             Rs.{courseinfo?.price}
           </div>
 
           <div
-            
-            className="w-full text-[17px] bg-yellow-100 p-3 rounded-md text-black"
-            onClick={buyCourse}
+            className="hover:cursor-pointer w-full text-[17px] bg-yellow-100 p-3 rounded-md text-black"
+            onClick={handlebuycourse}
           >
             Buy Now
           </div>
           <div
-            
-            className="w-full text-[17px] bg-richblack-800 p-3 rounded-md text-white"
-            onClick={buyCourse}
+            onClick={Addtocart}
+            className="hover:cursor-pointer w-full text-[17px] bg-richblack-800 p-3 rounded-md text-white"
           >
             Add to cart
           </div>
-          
+
           <div>30 day money back Guarantee</div>
-          <div className="text-yellow-100">
+          <div className="text-yellow-100" onClick={shareCourse}>
             <FaShareSquare className="inline" /> Share
           </div>
         </div>

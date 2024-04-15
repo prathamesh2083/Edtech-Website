@@ -5,32 +5,39 @@ const { instance } = require("../config/razorpay");
 const Course = require("../models/Course");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
-
+const crypto=require("crypto");
 // initiate order payment
 exports.capturePayment = async (req, res) => {
+  let totalAmount = 0;
   try {
     const { courses } = req.body;
-    const userId = req.user.id;
+    console.log(courses);
 
+    const userId = req.user.id;
+    
     if (courses.length === 0) {
       return res.json({
         success: false,
         message: "provide course id",
       });
     }
-    let totalAmount = 0;
-    for (const course_id of courses) {
+    
+    for (const courseId of courses) {
+      
       let course;
       try {
-        course = await Course.findById({ _id: course_id });
+        course = await Course.findById({ _id: courseId });
+        
         if (!course) {
+           
+          
           return res.json({
             success: false,
             message: "Course not found",
           });
         }
-        const uid = new mongoose.Types.ObjectId(userId);
-        if (course?.studentsEnrolled?.includes(uid)) {
+        // const uid = new mongoose.Types.ObjectId(userId);
+        if (course?.studentsEnrolled?.includes(userId)) {
           return res.json({
             success: false,
             message: "You have already bougth this course",
@@ -38,6 +45,7 @@ exports.capturePayment = async (req, res) => {
         }
         totalAmount += course.price;
       } catch (err) {
+        // console.log(err);
         return res.json({
           success: false,
           message: "Error in finding course",
@@ -45,6 +53,7 @@ exports.capturePayment = async (req, res) => {
       }
     }
   } catch (err) {
+    // console.log("error is : ",err);
     return res.json({
       success: false,
       message: "Error in capture payment",
@@ -63,6 +72,7 @@ exports.capturePayment = async (req, res) => {
       message: paymentResponse,
     });
   } catch (err) {
+    console.log(err);
     return res.status(200).json({
       success: false,
       message: "could not initiate order",
@@ -116,6 +126,9 @@ exports.verifyPayment = async (req, res) => {
 };
 
 const enrollStudents = async (courses, userId, res) => {
+  console.log("user id in enrollstudents is : ",userId);
+  console.log("courses in enrollstudents is : ",courses);
+
   if (!courses || !userId) {
     return res.status(200).json({
       success: false,
@@ -142,7 +155,7 @@ const enrollStudents = async (courses, userId, res) => {
         { new: true }
       );
       const emailResponse = await mailSender(
-        enrollStudents.email,
+        enrolledStudent.email,
         `Successfully Enrolled into ${enrolledCourse.courseName}`,
         "<h1>enrolled successfully</h1>"
       );
@@ -169,7 +182,8 @@ exports.sendPaymentSuccessEmail=async(req,res)=>{
 
   }
   try{
-    const enrolledStudent=await User.findById(userId);
+    const enrolledStudent=await User.findById({_id:userId});
+    console.log(enrolledStudent);
     await mailSender(enrolledStudent.email,`Payment received ${amount/100} `,"<h1>payment successfull</h1>")
   }
   catch(err){

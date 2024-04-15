@@ -9,8 +9,7 @@ exports.auth = async (req, res, next) => {
       
       req.cookies.token ||
       req.header("Authorisation").replace("Bearer ", "");
-      console.log("token is ",token);
-      console.log(token);
+      
     if (!token) {
       return res.status(500).json({
         success: false,

@@ -90,7 +90,7 @@ export default function Signup() {
    
     dispatch(setsignupData(info));
 
-    console.log(signupData);
+    
     dispatch(setLoading(true));
     try {
       

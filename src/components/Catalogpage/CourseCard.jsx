@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GetAvgRating from "../../utils/GetAvgRating";
 import RatingStars from "./RatingStars";
-export default function CourseCard({ course, Height }) {
+export default function CourseCard({ course, Height,width }) {
 
   const [rating,setrating]=useState(0);
   useEffect(()=>{
@@ -16,7 +16,7 @@ export default function CourseCard({ course, Height }) {
       className={  ` text-white  flex-wrap border-[1px] border-richblack-800 hover:scale-105 transition-all duration-700 hover:shadow-lg  flex flex-col gap-4  min-w-[250px] p-4`}
     >
       <div className="w-full flex justify-center  items-center">
-        <img src={course.thumbnail} className={`m-auto min-w-[280px] md:w-[300px] max-w-[300px]  ${Height?Height:"h-full"} `}></img>
+        <img src={course.thumbnail} className={`m-auto min-w-[280px] md:w-[350px]    ${Height?Height:"h-full"} `}></img>
       </div>
 
       <p className="text-[1.3rem]">{course.courseName}</p>

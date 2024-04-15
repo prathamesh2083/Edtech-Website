@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link, matchPath } from "react-router-dom";
+import { Link, matchPath, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks as links } from "../../data/navbar-links";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import ProfileDropDown from "../auth/ProfileDropDown";
 import { apiConnector } from "../../services/apiconnector";
 import { categories } from "../../services/apis";
 import axios from "axios";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { setToken } from "../../slices/authSlice";
+import { setUser } from "../../slices/profileSlice";
+import toast from "react-hot-toast";
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
@@ -19,25 +24,33 @@ export default function Navbar() {
     return matchPath({ path: route }, location.pathname);
   }
 
+  const logoutUser = () => {
+    try {
+      dispatch(setToken(null));
+      dispatch(setUser(null));
 
-  const [sublinks,setsublinks]=useState([]);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate("/login");
+      toast.success("Logout Successfull");
+    } catch (err) {
+      toast.error("Logout Failed ");
+    }
+  };
+  const [sublinks, setsublinks] = useState([]);
 
-  const fetchsublinks=async()=>{
-    
-           try {
-           
-              const result=await axios.get("/api/showAllCategories");
-             
-              setsublinks(result.data.data);
-             
-           } catch (err) {
-            console.log(err);
-          
-           }
-  }
-  useEffect(()=>{
-   fetchsublinks();
-  },[])
+  const fetchsublinks = async () => {
+    try {
+      const result = await axios.get("/api/showAllCategories");
+
+      setsublinks(result.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchsublinks();
+  }, []);
   return (
     <div className="flex flex-wrap h-14 items-center justify-center border-b-[1px] border-b-richblack-700">
       <div className="flex flex-wrap w-11/12 max-w-maxContent items-center justify-between">
@@ -64,22 +77,20 @@ export default function Navbar() {
                         <div className="absolute left-[50%] top-1 h-6 w-6 rotate-45 rounded bg-richblack-5 translate-y-[-30%]"></div>
                         <div className="flex flex-col gap-1 p-2 text-[17px]">
                           {sublinks.map((lnk, index) => {
-                          return (
-                            <Link
-
-                            className=" hover:bg-richblack-50 p-3 rounded-md"
-                              key={index}
-                              to={`/catalog/${lnk.name
-                                .split(" ")
-                                .join("-")
-                                .toLowerCase()}`}
-                            >
-                              {lnk.name}
-                            </Link>
-                          );
-                        })}
+                            return (
+                              <Link
+                                className=" hover:bg-richblack-50 p-3 rounded-md"
+                                key={index}
+                                to={`/catalog/${lnk.name
+                                  .split(" ")
+                                  .join("-")
+                                  .toLowerCase()}`}
+                              >
+                                {lnk.name}
+                              </Link>
+                            );
+                          })}
                         </div>
-                        
                       </div>
                     </div>
                   ) : (
@@ -118,6 +129,13 @@ export default function Navbar() {
               </button>
             </Link>
           )}
+          {token !== null && (
+            <div onClick={logoutUser} className="text-white">
+              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                Logout
+              </button>
+            </div>
+          )}
           {token === null && (
             <Link to="/signup" className="text-white">
               <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
@@ -125,6 +143,8 @@ export default function Navbar() {
               </button>
             </Link>
           )}
+
+          {token !== null && <img src={user?.image} className="w-[40px] rounded-full"></img>}
           {token !== null && <ProfileDropDown />}
         </div>
       </div>
