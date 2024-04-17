@@ -58,7 +58,7 @@ export default function Login() {
 
           dispatch(setUser({ ...result.data.user, image: userImage }));
           localStorage.setItem("user", { ...result.data.user, image: userImage });
-          navigate("/");
+          navigate("/dashboard/my-profile");
          }
          else{
           toast.error(result.data.message);

@@ -13,6 +13,7 @@ import { setToken } from "./slices/authSlice";
 import { setUser } from "./slices/profileSlice";
 import { getUserDetails } from "./services/operations/getUserDetails";
 import { useDispatch } from "react-redux";
+import Dashboard from "./pages/Dashboard";
 export default function App() {
   const dispatch = useDispatch();
 
@@ -34,6 +35,7 @@ export default function App() {
           element={<Catalog></Catalog>}
         ></Route>
         <Route path="/courses/:courseId" element={<Course></Course>}></Route>
+        <Route path="/dashboard/:section" element={<Dashboard></Dashboard>}></Route>
 
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/about" element={<About />}></Route>

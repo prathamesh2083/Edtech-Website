@@ -10,7 +10,7 @@ export default function Section({ section }) {
     <>
       <div
         onClick={changeopen}
-        className="flex justify-between m-auto  border-b-[1px]  w-full md:w-[95%] items-center border-richblack-700 p-6 border-b-w-[80%]"
+        className=" flex justify-between m-auto  border-b-[1px]  w-full md:w-[95%] items-center border-richblack-700 p-6 border-b-w-[80%] "
       >
         <div className="font-bold text-[1.1rem]">{section?.sectionName}</div>
 
@@ -22,8 +22,8 @@ export default function Section({ section }) {
       </div>
       <div
         className={`${
-          !open ? "hidden" : ""
-        }  duration-700 bg-richblack-700 w-full md:w-[95%] m-auto rounded-lg  transition-[height]  ease-out `}
+          !open ? "hidden h-0" : ""
+        }  duration-700 bg-richblack-700 w-full md:w-[95%] m-auto rounded-lg  overflow-hidden transition-all  `}
       >
         {section?.subSection?.map((subsection, index) => {
           return (

@@ -31,7 +31,7 @@ export default function Catalog() {
         const details = await axios.post("/api/categoryPageDetails", {
           categoryId: categoryId,
         });
-        console.log("details are", details.data.data.diffCategoryCourses);
+       
         setcatalogPageData(details.data.data);
       })();
     } catch (err) {

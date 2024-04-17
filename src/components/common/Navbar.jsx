@@ -6,12 +6,15 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import ProfileDropDown from "../auth/ProfileDropDown";
+import { IoMdArrowDropdown } from "react-icons/io";
+
 import { apiConnector } from "../../services/apiconnector";
 import { categories } from "../../services/apis";
 import axios from "axios";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { setToken } from "../../slices/authSlice";
 import { setUser } from "../../slices/profileSlice";
+import Logout from "../../services/auth/Logout"
 import toast from "react-hot-toast";
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -25,17 +28,7 @@ export default function Navbar() {
   }
 
   const logoutUser = () => {
-    try {
-      dispatch(setToken(null));
-      dispatch(setUser(null));
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/login");
-      toast.success("Logout Successfull");
-    } catch (err) {
-      toast.error("Logout Failed ");
-    }
+   Logout(dispatch,navigate);
   };
   const [sublinks, setsublinks] = useState([]);
 
@@ -115,7 +108,7 @@ export default function Navbar() {
         <div className="flex gap-x-4 items-center">
           {user && user.accountType != "Instructor" ? (
             <Link to="/dashboard/cart" className="relative">
-              <FaShoppingCart />
+              <FaShoppingCart color="white" />
               {totalItems > 0 ? <span>{totalItems}</span> : <div></div>}
             </Link>
           ) : (
@@ -129,13 +122,7 @@ export default function Navbar() {
               </button>
             </Link>
           )}
-          {token !== null && (
-            <div onClick={logoutUser} className="text-white">
-              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
-                Logout
-              </button>
-            </div>
-          )}
+          
           {token === null && (
             <Link to="/signup" className="text-white">
               <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
@@ -144,8 +131,18 @@ export default function Navbar() {
             </Link>
           )}
 
-          {token !== null && <img src={user?.image} className="w-[40px] rounded-full"></img>}
-          {token !== null && <ProfileDropDown />}
+          {token !== null && (
+            <div className="flex items-center group ">
+              <div className="flex items-center gap-1">
+                <img src={user?.image} className="w-[30px] rounded-full"></img>
+                <IoMdArrowDropdown color="white" className="inline" />
+              </div>
+
+              <div className=" opacity-80 transition-all duration-200 z-10 invisible group-hover:visible hover:visible translate-x-[-20%] translate-y-[-10%]">
+                <ProfileDropDown />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

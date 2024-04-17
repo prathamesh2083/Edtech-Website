@@ -136,7 +136,7 @@ export default function Course() {
           )}
         </div>
 
-        <div className="md:relative  w-full md:w-[30%] md:p-8 p-4 md:min-w-[350px] max-w-[350px] flex flex-col h-fit  gap-4  text-center bg-richblack-700">
+        <div className="lg:mt-[30px] mt-[10px] md:relative  w-full md:w-[30%] md:p-8 p-4 md:min-w-[350px] max-w-[350px] flex flex-col h-fit  gap-4  text-center bg-richblack-700">
           <img
             src={courseinfo?.thumbnail}
             className="md:h-[250px]  w-full object-center m-auto max-w-[250px] lg:max-w-[1000px]"
@@ -158,21 +158,26 @@ export default function Course() {
             Add to cart
           </div>
 
-          <div>30 day money back Guarantee</div>
-          <div className="text-yellow-100" onClick={shareCourse}>
+          <div className="text-caribbeangreen-200">
+            30 day money back Guarantee
+          </div>
+          <div
+            className="text-yellow-100 hover:cursor-pointer"
+            onClick={shareCourse}
+          >
             <FaShareSquare className="inline" /> Share
           </div>
         </div>
       </div>
 
       {/* section 2 */}
-      <div className="w-[95%] m-auto  ">
+      <div className="w-[95%] m-auto ">
         <div className="border-[1px] border-solid border-richblack-700 lg:px-20    lg:w-[60%] w-full h-fit mt-4 flex flex-col gap-2 p-6 ">
           <div className="text-[2rem] font-semibold">What will You learn </div>
           <div>{courseinfo?.whatYouWillLearn}</div>
         </div>
 
-        <div className="text-center md:text-start  lg:px-20    lg:w-[60%] w-full h-fit mt-4 flex flex-col gap-2 md:p-6">
+        <div className="   text-center md:text-start  lg:px-20    lg:w-[60%] w-full h-fit mt-4 flex flex-col gap-2 md:p-6">
           <div className="text-[2rem] font-semibold  ">Course Content</div>
           <div className="">
             {" "}
@@ -180,7 +185,7 @@ export default function Course() {
             lectures{" "}
           </div>
           {courseinfo?.courseContent?.length !== 0 ? (
-            <div className="bg-richblack-800 w-full flex flex-col gap-2 rounded-xl mt-4 p-4  ">
+            <div className="bg-richblack-800 w-full flex flex-col gap-2 rounded-xl mt-4 p-4    ">
               {courseinfo?.courseContent?.map((section, index) => {
                 return <Section id={index} section={section} />;
               })}

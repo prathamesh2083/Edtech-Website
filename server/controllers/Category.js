@@ -3,7 +3,7 @@ exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
     if (!name || !description) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "All fields are required",
       });
@@ -12,12 +12,12 @@ exports.createCategory = async (req, res) => {
       name: name,
       description: description,
     });
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: "Category created successfully",
     });
   } catch (err) {
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in creating Category",
     });
@@ -39,7 +39,7 @@ exports.showAllCategories = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in fetching all allCategories server",
     });
@@ -87,7 +87,7 @@ exports.categoryPageDetails = async (req, res) => {
       });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in category page details ",
     });
