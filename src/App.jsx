@@ -14,6 +14,8 @@ import { setUser } from "./slices/profileSlice";
 import { getUserDetails } from "./services/operations/getUserDetails";
 import { useDispatch } from "react-redux";
 import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./services/auth/PrivateRoute";
+import PageNotFound from "./pages/PageNotFound";
 export default function App() {
   const dispatch = useDispatch();
 
@@ -35,12 +37,21 @@ export default function App() {
           element={<Catalog></Catalog>}
         ></Route>
         <Route path="/courses/:courseId" element={<Course></Course>}></Route>
-        <Route path="/dashboard/:section" element={<Dashboard></Dashboard>}></Route>
 
+        {/* <Route path="/dashboard/:section" element={<Dashboard></Dashboard>}></Route> */}
+        <Route
+          path="/dashboard/:section"
+          element={
+            <PrivateRoute>
+              <Dashboard></Dashboard>
+            </PrivateRoute>
+          }
+        ></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
     </div>
   );

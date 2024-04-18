@@ -12,7 +12,7 @@ export default function IconBtn({
 }) {
   return (
     <button
-      className={`${
+      className={` ${customClasses?customClasses:""} ${
         active ? "bg-yellow-50 text-black" : "bg-richblack-500"
       } p-2 px-4 rounded-lg `}
       disabled={disabled}

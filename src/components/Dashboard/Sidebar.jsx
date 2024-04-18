@@ -19,7 +19,7 @@ export default function Sidebar() {
     setconfirmationmodal(true);
   };
   return (
-    <div className="text-white flex flex-col  w-[15%] pt-12 bg-richblack-800 py-4">
+    <div className="text-white md:flex flex-col hidden  w-[15%] pt-12 bg-richblack-800 py-4">
       {sidebarLinks?.map((sidelink, index) => {
         return sidelink.type && sidelink?.type !== user?.accountType ? null : (
           <SidebarLink
