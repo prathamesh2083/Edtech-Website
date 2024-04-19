@@ -3,9 +3,9 @@ const User = require("../models/User");
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { dateOfBirth , about , contactNumber, gender } = req.body;
+    const { dateOfBirth, about, contactNumber, gender } = req.body;
     const id = req.user.id;
-    if ( !id) {
+    if (!id) {
       return res.status(200).json({
         success: false,
         message: "All fields are required",
@@ -14,14 +14,10 @@ exports.updateProfile = async (req, res) => {
     const user = await User.findById(id);
     const profileId = user.additionalDetails;
     const profileDetails = await Profile.findById(profileId);
-    if(dateOfBirth)
-    profileDetails.dateOfBirth = dateOfBirth;
-    if(about)
-    profileDetails.about = about;
-    if(gender)
-    profileDetails.gender = gender;
-    if(contactNumber)
-    profileDetails.contactNumber = contactNumber;
+    if (dateOfBirth) profileDetails.dateOfBirth = dateOfBirth;
+    if (about) profileDetails.about = about;
+    if (gender) profileDetails.gender = gender;
+    if (contactNumber) profileDetails.contactNumber = contactNumber;
     await profileDetails.save();
     return res.status(200).json({
       success: true,
@@ -36,7 +32,6 @@ exports.updateProfile = async (req, res) => {
     });
   }
 };
-
 
 exports.deleteAccount = async (req, res) => {
   try {
@@ -64,26 +59,44 @@ exports.deleteAccount = async (req, res) => {
   }
 };
 
-exports.getAllDetails=async(req,res)=>{
-  try{
-       const id=req.user.id;
-        const user = await User.findById(id).populate("additionalDetails");
-        if (!user) {
-          return res.status(200).json({
-            success: false,
-            message: "User not found ",
-          });
-        }
-        return res.status(200).json({
-          success: true,
-          user,
-        });
-  }
-  catch(err){
+exports.getAllDetails = async (req, res) => {
+  try {
+    const id = req.user.id;
+    const user = await User.findById(id).populate("additionalDetails");
+    if (!user) {
+      return res.status(200).json({
+        success: false,
+        message: "User not found ",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
     console.log(err);
     return res.status(200).json({
       success: false,
       message: "Error in getting user profile details",
     });
   }
-}
+};
+exports.getEnrolledCourses = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById({ _id: userId })
+      .populate("courses")
+      .exec();
+    return res.status(200).json({
+      success: true,
+      courses:user?.courses,
+      message: "All enrolled courses fetched successfully ",
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(200).json({
+      success: false,
+      message: "Error in getting enrolled courses details ",
+    });
+  }
+};

@@ -26,7 +26,7 @@ export default function CourseSlider({ Courses }) {
           spaceBetween={10}
           loop={true}
           freeMode={true}
-          speed={1400}
+          speed={1900}
    centeredSlides= {true}
    centeredSlidesBounds= {true}
           autoplay={{

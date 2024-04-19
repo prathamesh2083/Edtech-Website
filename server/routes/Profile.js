@@ -11,11 +11,13 @@ const {
   updateProfile,
   deleteAccount,
   getAllDetails,
+  getEnrolledCourses,
 } = require("../controllers/Profile");
 
 router.post("/profile/updateProfile",auth, updateProfile);
 router.post("/profile/getAllDetails", auth, getAllDetails);
 router.post("/profile/deleteAccount", auth,  deleteAccount);
+router.get("/profile/getEnrolledCourses", auth, isStudent, getEnrolledCourses);
 
 
 module.exports=router;
