@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Dashboard/Sidebar';
 import Profile from '../components/Dashboard/Profile';
 import EnrolledCourses from '../components/Dashboard/EnrolledCourses';
+import Settings from '../components/Dashboard/Settings';
 export default function Dashboard() {
   return (
     <div className="relative flex min-h-[calc(100vh-3.5rem)]">
@@ -11,7 +12,8 @@ export default function Dashboard() {
           <div className='mx-auto w-11/12 max-w-[1000px] py-10' >
             {/* <Outlet/> */}
             {/* <Profile/> */}
-            <EnrolledCourses/>
+            {/* <EnrolledCourses/> */}
+            <Settings/>
           </div>
       </div>
     </div>
