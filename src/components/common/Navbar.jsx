@@ -64,7 +64,7 @@ export default function Navbar() {
                       </p>
 
                       <div
-                        className=" invisible absolute left-[50%] top-[50%] flex flex-col rounded-md bg-richblack-5 p-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-[100%] z-10 w-[300px] text-black
+                        className="border-[2px] border-black invisible absolute left-[50%] top-[50%] flex flex-col rounded-md bg-richblack-5 p-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-[100%] z-10 w-[300px] text-black
                       translate-x-[-45%] translate-y-[15%] "
                       >
                         <div className="absolute left-[50%] top-1 h-6 w-6 rotate-45 rounded bg-richblack-5 translate-y-[-30%]"></div>

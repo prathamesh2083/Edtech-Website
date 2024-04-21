@@ -13,3 +13,4 @@ exports.uploadImageToCloudinary =async(file,folder)=>{
     options.resource_type="auto";
     return await cloudinary.uploader.upload(file.tempFilePath,options);
 }
+

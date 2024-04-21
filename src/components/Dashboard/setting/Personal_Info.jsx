@@ -1,27 +1,48 @@
+import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../../slices/profileSlice";
 
 export default function Personal_Info({ user }) {
-    const [info, setinfo] = useState({
-      
-      dateOfBirth: "",
-      about: "",
-      gender: "",
-      contactNumber:""
+  const dispatch=useDispatch();
+  const [info, setinfo] = useState({
+    dateOfBirth: "",
+    about: "",
+    gender: "Female",
+    contactNumber: "",
+  });
+   const { loading } = useSelector((state) => state.profile);
+  const handlechange = (e) => {
+    const term = e.target.name;
+    const val = e.target.value;
+    setinfo((prev) => {
+      return {
+        ...prev,
+        [term]: val,
+      };
     });
-    const handlechange=(e)=>{
-       const term=e.target.name;
-       const val=e.target.value;
-       setinfo((prev)=>{
-        return {
-            ...prev,
-            [term]:val
-        }
-       })
-       console.log(info);
+    console.log(info);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(setLoading(true));
+      const result = await axios.post("/api/profile/updateProfile", info);
+
+      toast.success("Profile information updated successfully");
+    } catch (err) {
+      toast.error("Error");
+      console.log(err);
     }
+    console.log(info);
+    dispatch(setLoading(false));
+  };
   return (
     <div className=" w-full flex flex-wrap justify-center md:justify-start bg-richblack-800 border-[1px] border-richblack-700 p-2 md:p-8 gap-4 my-8 rounded-md">
-      <div className="w-full font-semibold text-lg text-center md:text-start ">Profile Information</div>
+      <div className="w-full font-semibold text-lg text-center md:text-start ">
+        Profile Information
+      </div>
       <form className="flex  flex-col md:flex-row w-full flex-wrap gap-4 justify-around p-2 ">
         <div className="md:w-[45%] flex flex-col gap-2">
           <div>Date of Birth</div>
@@ -43,13 +64,21 @@ export default function Personal_Info({ user }) {
             name="gender"
             className="text-white rounded-md p-3 px-3 bg-richblack-600 flex flex-col gap-1"
           >
-            <option className="my-1" value="Female">Female</option>
+            <option className="my-1" value="Female">
+              Female
+            </option>
             <option className="my-1" selected value="Male">
               Male
             </option>
-            <option className="my-1" value="non-binary">Non-Binary</option>
-            <option className="my-1" value="other">Other</option>
-            <option className="my-1" value="Prefer not to answer">Perfer not to Answer</option>
+            <option className="my-1" value="non-binary">
+              Non-Binary
+            </option>
+            <option className="my-1" value="other">
+              Other
+            </option>
+            <option className="my-1" value="Prefer not to answer">
+              Perfer not to Answer
+            </option>
           </select>
         </div>
         <div className="md:w-[45%] flex flex-col gap-2">
@@ -75,8 +104,12 @@ export default function Personal_Info({ user }) {
           ></input>
         </div>
         <div className="w-full justify-center md:justify-end   flex">
-          <button type="submit" className= " md:relative md:right-5 font-bold bg-yellow-50 text-black p-2 px-6 rounded-md hover:scale-105 duration-700 transition-all">
-            Save
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className=" md:relative md:right-5 font-bold bg-yellow-50 text-black p-2 px-6 rounded-md hover:scale-105 duration-700 transition-all"
+          >
+           {loading?"Saving...":"Save"}
           </button>
         </div>
       </form>

@@ -67,7 +67,7 @@ export default function UpdatePass({user}) {
             type="submit"
             className=" md:relative md:right-5 font-bold bg-yellow-50 text-black p-2 px-6 rounded-md hover:scale-105 duration-700 transition-all"
           >
-            Save
+            Update
           </button>
         </div>
       </form>
