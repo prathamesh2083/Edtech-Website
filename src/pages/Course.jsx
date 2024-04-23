@@ -79,18 +79,37 @@ export default function Course() {
 
       return;
     }
+    else{
+      toast.error("You are not logged in ");
+    }
   };
 
   const Addtocart=async()=>{
          
     if(!user){
       toast.error("You are not logged in");
-      navigate("/login");
+      
       return;
     }
     if(user?.accountType!=="Student"){
       toast.error("Only students can add course to cart");
       return;
+    }
+    try{ 
+         const result=await axios.post("/api/cart/addtocart",{
+          courseId
+         });
+         if(result.data.success){
+          toast.success(result.data.message);
+         }
+         else{
+          toast.error(result.data.message);
+         }
+         console.log(result.data);
+
+    }
+    catch(err){
+      console.log(err);
     }
   }
   const shareCourse = async () => {

@@ -5,6 +5,7 @@ const {
   isStudent,
   isInstructor,
   isAdmin,
+  
 } = require("../middlewares/auth");
 
 const {
@@ -17,6 +18,7 @@ const {
 
 router.post("/profile/updateProfile",auth, updateProfile);
 router.post("/profile/getAllDetails", auth, getAllDetails);
+router.post("/profile/deleteAccount", auth,  deleteAccount);
 router.post("/profile/deleteAccount", auth,  deleteAccount);
 router.post("/profile/updateProfilePicture", auth, updateProfilePicture);
 

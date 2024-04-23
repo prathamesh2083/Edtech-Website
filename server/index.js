@@ -7,6 +7,7 @@ const cloudinaryConnect = require("./config/cloudinary");
 const CourseRoutes = require("./routes/Course");
 const PaymentsRoutes = require("./routes/Payments");
 const ProfileRoutes = require("./routes/Profile");
+const CartRoutes=require("./routes/Cart");
 const UserRoutes = require("./routes/User");
 const fileupload = require("express-fileupload");
 const bodyParser = require("body-parser");
@@ -26,6 +27,7 @@ app.use("/api", PaymentsRoutes);
 app.use("/api", ProfileRoutes);
 app.use("/api",CourseRoutes);
 app.use("/api", UserRoutes);
+app.use("/api", CartRoutes);
 
 app.use(cors());
 require("dotenv").config();

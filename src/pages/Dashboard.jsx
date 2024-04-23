@@ -4,6 +4,7 @@ import Sidebar from '../components/Dashboard/Sidebar';
 import Profile from '../components/Dashboard/Profile';
 import EnrolledCourses from '../components/Dashboard/EnrolledCourses';
 import Settings from '../components/Dashboard/Settings';
+import Cart from '../components/Dashboard/Cart';
 export default function Dashboard() {
   return (
     <div className="relative flex min-h-[calc(100vh-3.5rem)]">
@@ -13,7 +14,8 @@ export default function Dashboard() {
             {/* <Outlet/> */}
             {/* <Profile/> */}
             {/* <EnrolledCourses/> */}
-            <Settings/>
+            {/* <Settings/> */}
+            <Cart/>
           </div>
       </div>
     </div>

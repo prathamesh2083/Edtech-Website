@@ -16,6 +16,8 @@ import { useDispatch } from "react-redux";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./services/auth/PrivateRoute";
 import PageNotFound from "./pages/PageNotFound";
+import { getCartCourses } from "./services/operations/getCartCourses";
+import { setcart } from "./slices/cartSlice";
 export default function App() {
   const dispatch = useDispatch();
 
@@ -24,6 +26,7 @@ export default function App() {
       const token = JSON.parse(localStorage.getItem("token"));
       dispatch(setToken(token));
       getUserDetails(token, dispatch);
+      getCartCourses(token,dispatch);
     }
   }, []);
   return (

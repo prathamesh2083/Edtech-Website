@@ -126,8 +126,7 @@ exports.verifyPayment = async (req, res) => {
 };
 
 const enrollStudents = async (courses, userId, res) => {
-  console.log("user id in enrollstudents is : ",userId);
-  console.log("courses in enrollstudents is : ",courses);
+  
 
   if (!courses || !userId) {
     return res.status(200).json({

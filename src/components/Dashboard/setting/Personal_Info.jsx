@@ -31,11 +31,12 @@ export default function Personal_Info({ user }) {
       const result = await axios.post("/api/profile/updateProfile", info);
 
       toast.success("Profile information updated successfully");
+       window.location.reload();
     } catch (err) {
       toast.error("Error");
       console.log(err);
     }
-    console.log(info);
+    
     dispatch(setLoading(false));
   };
   return (

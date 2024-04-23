@@ -56,6 +56,7 @@ export default function Settings() {
        console.log( "result is  ",result);
        toast.success("Profile updated successfully");
        setuploading(false);
+       window.location.reload();
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
     }
