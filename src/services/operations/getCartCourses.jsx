@@ -11,6 +11,7 @@ export async function getCartCourses(token, dispatch) {
     );
      
     dispatch(setcart(result.data.cartCourses));
+    return result;
     // window.location.reload();
   } catch (err) {
     console.log(err);

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import RatingStars from "../components/Catalogpage/RatingStars";
 import GetAvgRating from "../utils/GetAvgRating";
@@ -19,9 +19,11 @@ import { setToken } from "../slices/authSlice";
 import { setUser } from "../slices/profileSlice";
 import { formatDate } from "../services/formatDate";
 import copy from "copy-to-clipboard";
+import { setTotalItems } from "../slices/cartSlice"; 
 export default function Course() {
    const { token } = useSelector((state) => state.auth);
    const { user } = useSelector((state) => state.profile);
+   const {totalItems}=useSelector((state)=>state.cart);
   const {loading}=useSelector((state)=>state.profile);
     // const {paymentLoading}=useSelector((state)=>state.course);
   const dispatch=useDispatch();
@@ -75,6 +77,10 @@ export default function Course() {
   const handlebuycourse = async () => {
     
     if(token!==null){
+      if(user.accountType!=="Student"){
+        toast.error("Only students can buy the Course");
+        return;
+      }
       buyCourse(token,[courseId],user,navigate,dispatch);
 
       return;
@@ -100,6 +106,7 @@ export default function Course() {
           courseId
          });
          if(result.data.success){
+          dispatch(setTotalItems(totalItems+1));
           toast.success(result.data.message);
          }
          else{
@@ -116,7 +123,16 @@ export default function Course() {
     copy(window.location.href);
     toast.success("Link copied to clipboard");
   };
+
   
+  useLayoutEffect(() => {
+   window.scrollTo({
+     top: 0,
+     behavior:"instant" 
+   });
+   
+  });
+
 
   return (
     <div className="text-white w-full   ">

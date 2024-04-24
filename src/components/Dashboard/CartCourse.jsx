@@ -6,11 +6,12 @@ import RatingStars from "../Catalogpage/RatingStars";
 import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
 import { getCartCourses } from "../../services/operations/getCartCourses";
-
-export default function CartCourse({ course,refresh }) {
+import { setTotalItems } from "../../slices/cartSlice";
+export default function CartCourse({ course }) {
   const dispatch = useDispatch();
   const { loading, setloading } = useState(false);
-  const {token}=useSelector((state)=>state.auth);
+  const { totalItems } = useSelector((state) => state.cart);
+  const { token } = useSelector((state) => state.auth);
   const [courseDetails, setcourseDetails] = useState(null);
 
   useEffect(() => {
@@ -19,34 +20,36 @@ export default function CartCourse({ course,refresh }) {
         const result = await axios.post("/api/getCourseDetails", {
           courseId: course,
         });
-        console.log(result.data.data);
+
         setcourseDetails(result.data.data);
+        
+        
       } catch (err) {
+        console.log(err);
         console.log("error in getting course details in cart");
       }
     })();
   }, []);
-   const removeCourse =async(e)=>{
-   
-      try{
-          const result = await axios.post("/api/cart/removefromcart",{
-            courseId:courseDetails?._id
-          });
-          if(result.data.success){
-            toast.success("Course removed");
-          }
-
-        }
-        catch(err){
-            console.log("Error in removing course from cart");
-        }
-        window.location.reload();
+  const removeCourse = async (e) => {
+    try {
+     
+      const result = await axios.post("/api/cart/removefromcart", {
+        courseId: course._id,
+      });
+      console.log(result);
+      if (result.data.success) {
         getCartCourses(token, dispatch);
-         refresh();
-   }
+        window.location.reload();
+        dispatch(setTotalItems(totalItems - 1));
+        toast.success("Course removed");
+      }
+    } catch (err) {
+      console.log("Error in removing course from cart");
+    }
+  };
   return (
-    <div className="flex  gap-6 justify-around my-2 hover:bg-richblack-900 hover:scale-105 transition-all duration-700  border-b-[1px] border-b-richblack-600 pb-6 p-2 ">
-      <img src={courseDetails?.thumbnail} className="w-[250px] h-[150px]"></img>
+    <div className="flex flex-wrap items-center md:items-start text-center md:text-start  gap-6 justify-around my-2 hover:bg-richblack-900 hover:scale-105 transition-all duration-700  border-b-[1px] border-b-richblack-600 pb-6 p-2 ">
+      <img src={courseDetails?.thumbnail} className=" w-[250px] h-[150px]"></img>
       <div className="flex flex-col gap-2 justify-center">
         <div className="font-semibold text-[1.2rem]">
           {courseDetails?.courseName}
@@ -73,7 +76,10 @@ export default function CartCourse({ course,refresh }) {
         )}
       </div>
       <div className="flex flex-col justify-center gap-6">
-        <div onClick={removeCourse} className="text-pink-400 hover:cursor-pointer font-semibold flex items-center gap-1 p-2 bg-richblack-800 rounded-md">
+        <div
+          onClick={removeCourse}
+          className="text-pink-400 hover:cursor-pointer font-semibold flex items-center gap-1 p-2 bg-richblack-800 rounded-md"
+        >
           {" "}
           <MdDelete className="inline" size={"20px"} /> Remove
         </div>

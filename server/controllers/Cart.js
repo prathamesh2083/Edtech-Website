@@ -37,7 +37,8 @@ exports.removeFromCart = async (req, res) => {
     const { courseId } = req.body;
     const user = await User.findById({ _id: userId });
     const cartitems = user.cart;
-
+    console.log("cartitems",cartitems);
+    console.log("id isssss ",courseId);
     if (!cartitems?.includes(courseId)) {
       return res.status(200).json({
         success: false,
@@ -66,7 +67,7 @@ exports.getCartCourses = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const user = await User.findById({ _id: userId });
+    const user = await User.findById({ _id: userId }).populate("cart").exec();
     const cartitems = user.cart;
 
     return res.status(200).json({

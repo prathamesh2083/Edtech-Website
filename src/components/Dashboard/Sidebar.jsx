@@ -23,6 +23,7 @@ export default function Sidebar() {
       {sidebarLinks?.map((sidelink, index) => {
         return sidelink.type && sidelink?.type !== user?.accountType ? null : (
           <SidebarLink
+            key={index}
             name={sidelink.name}
             path={sidelink.path}
             icon={sidelink.icon}

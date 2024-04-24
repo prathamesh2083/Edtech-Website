@@ -107,9 +107,14 @@ export default function Navbar() {
         {/* login / signup /dashboard */}
         <div className="flex gap-x-4 items-center">
           {user && user.accountType != "Instructor" ? (
-            <Link to="/dashboard/cart" className="relative">
-              <FaShoppingCart color="white" />
-              {totalItems > 0 ? <span>{totalItems}</span> : <div></div>}
+            <Link to="/dashboard/cart" className=" flex">
+              {totalItems && (
+                <div className="text-yellow-25 relative transition-all  animate-bounce duration-1000     left-[30px] top-[-10px] text-center px-1  flex  items-center  bg-richblack-700 rounded-full h-[20px] w-[20px]">
+                  { totalItems}
+                </div>
+              )}
+
+              <FaShoppingCart color="white" size={"22px"} />
             </Link>
           ) : (
             <div></div>
@@ -122,7 +127,7 @@ export default function Navbar() {
               </button>
             </Link>
           )}
-          
+
           {token === null && (
             <Link to="/signup" className="text-white">
               <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
@@ -132,7 +137,7 @@ export default function Navbar() {
           )}
 
           {token !== null && (
-            <div className="flex items-center group ">
+            <div className="flex items-center group mx-4 ">
               <div className="flex items-center gap-1">
                 <img src={user?.image} className="w-[30px] rounded-full"></img>
                 <IoMdArrowDropdown color="white" className="inline" />
