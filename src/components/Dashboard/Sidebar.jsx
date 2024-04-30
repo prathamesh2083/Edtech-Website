@@ -12,9 +12,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
   const [confirmationmodal, setconfirmationmodal] = useState(false);
-  useEffect(()=>{
-   console.log(confirmationmodal);
-  },[confirmationmodal])
+  
   const handlelogout = async (e) => {
     setconfirmationmodal(true);
   };

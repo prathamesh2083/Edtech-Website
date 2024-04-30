@@ -20,10 +20,19 @@ import { getCartCourses } from "./services/operations/getCartCourses";
 import { setcart } from "./slices/cartSlice";
 import Logout from "./services/auth/Logout";
 import toast from "react-hot-toast";
+
 import { setTotalItems } from "./slices/cartSlice";
+
+//  dashboard
+import Profile from "./components/Dashboard/Profile";
+import EnrolledCourses from "./components/Dashboard/EnrolledCourses";
+import Settings from "./components/Dashboard/Settings";
+import Cart from "./components/Dashboard/Cart";
+import AddCourse from "./components/Dashboard/AddCourse";
+import InstructorCourses from "./components/Dashboard/InstructorCourses";
 export default function App() {
   const dispatch = useDispatch();
-  const {user}=useSelector((state)=>state.profile);
+  const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,15 +42,14 @@ export default function App() {
 
         dispatch(setToken(token));
         if (!(await getUserDetails(token, dispatch))) {
-          toast.error("Your session is expired");
-          alert("not valid token");
+          // toast.error("Your session is expired");
+
           Logout(dispatch, navigate);
           return;
         }
-        if(user?.accountType==="Student"){
-
+        if (user?.accountType === "Student") {
           const cartresult = await getCartCourses(token, dispatch);
-  
+
           dispatch(setTotalItems(cartresult.data.cartCourses.length));
         }
       }
@@ -51,6 +59,7 @@ export default function App() {
     <div className="w-screen min-h-screen bg-richblack-900 flex-col flex font-inter">
       <Navbar></Navbar>
       <Routes>
+        {/* auth routes */}
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/verify-email" element={<VerifyOtp></VerifyOtp>}></Route>
         <Route
@@ -61,13 +70,43 @@ export default function App() {
 
         {/* <Route path="/dashboard/:section" element={<Dashboard></Dashboard>}></Route> */}
         <Route
-          path="/dashboard/:section"
           element={
             <PrivateRoute>
-              <Dashboard></Dashboard>
+              <Dashboard />
             </PrivateRoute>
           }
-        ></Route>
+        >
+          <Route path="dashboard/my-profile" element={<Profile />}></Route>
+          <Route path="dashboard/setting" element={<Settings />}></Route>
+          if(user?.accountType==="Student")
+          {
+            <>
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              ></Route>
+              <Route path="dashboard/cart" element={<Cart />}></Route>
+            </>
+          }
+          if(user?.accountType==="Instructor")
+          {
+            <>
+              {/* <Route
+                path="dashboard/instructor"
+                element={<EnrolledCourses />}
+              ></Route> */}
+              <Route
+                path="dashboard/my-courses"
+                element={<InstructorCourses />}
+              ></Route>
+              <Route
+                path="dashboard/add-course"
+                element={<AddCourse />}
+              ></Route>
+            </>
+          }
+        </Route>
+
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/signup" element={<Signup />}></Route>

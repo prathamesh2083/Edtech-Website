@@ -4,13 +4,22 @@ const User = require("../models/User");
 const Category = require("../models/Category");
 
 require("dotenv").config();
-const {uploadImageToCloudinary} = require("../utils/imageUploader");
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
 exports.createCourse = async (req, res) => {
   try {
-    const { courseName, courseDescription, whatYouWillLearn, price, tag,categoryId } =
-      req.body;
+    const {
+      courseName,
+      courseLanguage,
+      benefits,
+      courseDescription,
+      courselevel,
+      price,
+      tag,
+      categoryId,
+    } = req.body;
+    const whatYouWillLearn = req.body.benefits;
     const thumbnail = req.files.thumbnail;
-    
+
     // validation
     if (
       !courseName ||
@@ -18,9 +27,12 @@ exports.createCourse = async (req, res) => {
       !whatYouWillLearn ||
       !price ||
       !tag ||
-      !thumbnail || !categoryId
+      !thumbnail ||
+      !categoryId ||
+      !courselevel ||
+      !courseLanguage
     ) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "All fields are required",
       });
@@ -30,7 +42,7 @@ exports.createCourse = async (req, res) => {
     const details = await User.findById(userId);
 
     if (!details) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "Instructor not found",
       });
@@ -38,7 +50,7 @@ exports.createCourse = async (req, res) => {
 
     const categoryDetails = await Category.findById(categoryId);
     if (!categoryDetails) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "category not found / invalid category",
       });
@@ -59,8 +71,10 @@ exports.createCourse = async (req, res) => {
       price,
       thumbnail: thumbnailUpload.secure_url,
       tag,
-      category:categoryId
-
+      category: categoryId,
+      courselevel,
+      courseLanguage,
+      benefits,
     });
 
     // update courses of Instructor
@@ -75,14 +89,14 @@ exports.createCourse = async (req, res) => {
       { $push: { course: newcourse._id } }
     );
 
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: "Course Created successfully",
       data: newcourse,
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in creating course",
     });
@@ -98,7 +112,7 @@ exports.getAllCourses = async (req, res) => {
       allCourses: allCourses,
     });
   } catch (err) {
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in getting all courses ",
     });
@@ -107,37 +121,35 @@ exports.getAllCourses = async (req, res) => {
 
 exports.getCourseDetails = async (req, res) => {
   try {
-    const  {courseId} = req.body;
+    const { courseId } = req.body;
     // find details
-   
-    
-    
-     const courseDetails = await Course.findOne({ _id: courseId })
-       .populate({
-         path: "Instructor",
-         populate: {
-           path: "additionalDetails",
-         },
-       })
-       .populate("category")
-       .populate({
-         path: "ratingAndReviews",
-         populate:{
-          path:"user"
-         }
-       })
-       .populate({
-         path: "courseContent",
-         populate: {
-           path: "subSection",
-         },
-       })
-       .exec();
-     
+
+    const courseDetails = await Course.findOne({ _id: courseId })
+      .populate({
+        path: "Instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("category")
+      .populate({
+        path: "ratingAndReviews",
+        populate: {
+          path: "user",
+        },
+      })
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
     if (!courseDetails) {
       return res.status(400).json({
         success: false,
-        
+
         message: "could not find course ",
       });
     }
@@ -148,7 +160,7 @@ exports.getCourseDetails = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in getting  course details ",
     });

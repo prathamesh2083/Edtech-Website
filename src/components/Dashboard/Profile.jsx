@@ -7,7 +7,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.profile);
- 
+
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="text-[2rem] font-semibold text-white w-full mb-8">
@@ -60,15 +60,15 @@ export default function Profile() {
           </div>
           <div className="w-full md:w-[48%]">
             <p className="text-richblack-300">Phone No.</p>
-            <p>{user?.contactNumber || "- -"}</p>
+            <p>{user?.additionalDetails?.contactNumber || "- -"}</p>
           </div>
           <div className="w-full md:w-[48%]">
             <p className="text-richblack-300">Gender</p>
-            <p>{user?.gender || "- -"}</p>
+            <p>{user?.additionalDetails?.gender || "- -"}</p>
           </div>
           <div className="w-full md:w-[48%]">
             <p className="text-richblack-300">Date of Birth</p>
-            <p>{user?.dateOfBirth || "- -"}</p>
+            <p>{user?.additionalDetails?.dateOfBirth || "- -"}</p>
           </div>
         </div>
       </div>

@@ -11,8 +11,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import rootReducer from './reducer/index.js'
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
-import axios from 'axios'
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
 const persistConfig = {
   key: "root",
   storage,

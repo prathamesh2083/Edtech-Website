@@ -9,7 +9,7 @@ export default function Personal_Info({ user }) {
   const [info, setinfo] = useState({
     dateOfBirth: "",
     about: "",
-    gender: "Female",
+    gender: "",
     contactNumber: "",
   });
    const { loading } = useSelector((state) => state.profile);
@@ -68,6 +68,9 @@ export default function Personal_Info({ user }) {
             <option className="my-1" value="Female">
               Female
             </option>
+            <option className="my-1" value="Female">
+              Female
+            </option>
             <option className="my-1" selected value="Male">
               Male
             </option>
@@ -110,7 +113,7 @@ export default function Personal_Info({ user }) {
             type="submit"
             className=" md:relative md:right-5 font-bold bg-yellow-50 text-black p-2 px-6 rounded-md hover:scale-105 duration-700 transition-all"
           >
-           {loading?"Saving...":"Save"}
+            {loading ? "Saving..." : "Save"}
           </button>
         </div>
       </form>
