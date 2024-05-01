@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import IconBtn from "../common/IconBtn";
 import ProfileEditBtn from "./ProfileEditBtn";
+
 export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.profile);
+ 
+  const{token}=useSelector((state)=>state.auth);
+  const { user  } = useSelector((state) => state.profile);
 
   return (
     <div className="w-full flex flex-col gap-4">

@@ -8,7 +8,9 @@ import { FaCheckCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { PiLightningFill } from "react-icons/pi";
 import { TbPointFilled } from "react-icons/tb";
+
 export default function AddCourse() {
+  const {editCourse}=useSelector((state)=>state.course);
   const dispatch = useDispatch();
   const { step } = useSelector((state) => state.course);
 
@@ -26,7 +28,9 @@ export default function AddCourse() {
   return (
     <div className="text-white relative flex flex-wrap w-full  ">
       <div className=" w-full  lg:w-[60%]">
-        <div className="text-[2rem] font-semibold">Add a Course</div>
+        <div className="text-[2rem] font-semibold">
+          {editCourse ? "Edit Course" : "Add a Course"}{" "}
+        </div>
         <div className="mt-12 mb-4 flex gap-4 justify-between md:w-[90%] w-full items-center  m-auto ">
           {steps.map((item, index) => (
             <>

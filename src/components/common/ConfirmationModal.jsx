@@ -2,7 +2,7 @@ import React from 'react'
 import IconBtn from './IconBtn'
 export default function ConfirmationModal({modalData}) {
   return (
-    <div className='z-50  flex flex-col gap-4 m-auto absolute left-[40%] top-[30%] bg-richblack-900 border-[1px] border-richblack-200 p-8 px-10' >
+    <div className='!mt-0 grid bg-opacity-50 backdrop-blur-sm z-1000   gap-4 m-auto absolute left-[40%] top-[30%] bg-black overflow-auto  border-[1px] place-items-center border-richblack-600 rounded-lg p-8 px-10' >
        
             <p className='text-[2rem] font-semibold' >{modalData.text1} </p>
             <p>{modalData.text2} </p>

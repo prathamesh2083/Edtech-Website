@@ -42,11 +42,10 @@ export default function App() {
 
         dispatch(setToken(token));
         if (!(await getUserDetails(token, dispatch))) {
-          // toast.error("Your session is expired");
-
           Logout(dispatch, navigate);
           return;
         }
+
         if (user?.accountType === "Student") {
           const cartresult = await getCartCourses(token, dispatch);
 

@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  user: null,
+  user: localStorage.getItem("user")
+    ? localStorage.getItem("user")
+    : null,
   loading: false,
 };
 const profileSlice = createSlice({

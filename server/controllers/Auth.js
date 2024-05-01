@@ -161,7 +161,7 @@ exports.login = async (req, res) => {
         message: "All fields are compulsary",
       });
     }
-    const user=await User.findOne({email:email});
+    const user=await User.findOne({email:email}).populate("additionalDetails");
     if(!user){
       return res.status(200).json({
         success: false,

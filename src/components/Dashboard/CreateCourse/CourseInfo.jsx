@@ -7,12 +7,15 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 export default function CourseInfo() {
+  const dispatch = useDispatch();
   const [categories, setcategories] = useState([]);
   const [tags, settags] = useState([]);
   const [thumbnail, setthumbnail] = useState(null);
   const [image, setimage] = useState("");
-
+  const { editCourseId } = useSelector((state) => state.course);
+  const { editCourse } = useSelector((state) => state.course);
   const onDrop = useCallback((acceptedFiles) => {
     setthumbnail(URL.createObjectURL(acceptedFiles[0]));
     setimage(acceptedFiles[0]);
@@ -29,6 +32,28 @@ export default function CourseInfo() {
     benefits: "",
   });
   useEffect(() => {
+   
+    if (editCourse) {
+      setthumbnail(editCourseId.thumbnail);
+      // settags(editCourseId.tag);
+      console.log("crs is : ", editCourseId);
+      setinfo(editCourseId);
+    } else {
+      setthumbnail(null);
+      setimage("");
+      settags([]);
+      setinfo({
+        courseName: "",
+        courseDescription: "",
+        price: 0,
+        categoryId: "",
+        courselevel: "All",
+        courseLanguage: "English",
+        tag: tags,
+        benefits: "",
+      });
+    }
+
     (async () => {
       try {
         const result = await axios.get("/api/showAllCategories");
@@ -38,7 +63,8 @@ export default function CourseInfo() {
         console.log("Error in fetching categories in add course");
       }
     })();
-  }, []);
+  }, [editCourse]);
+
   const handleaddtag = (e) => {
     if (e.keyCode === 13) {
       let val = e.target.value;
@@ -75,6 +101,10 @@ export default function CourseInfo() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     
+    if (e.key === "Enter") {
+      alert("h");
+      return;
+    }
     try {
       if (
         !info.courseName ||
@@ -88,10 +118,10 @@ export default function CourseInfo() {
         !info.courseLanguage
       ) {
         toast.error("All fields are required ");
-        
+
         return;
       }
-     
+
       var form = new FormData();
       Object.entries(info).forEach(([key, value]) => {
         form.append(key, value);
@@ -108,16 +138,16 @@ export default function CourseInfo() {
       toast.error("Error in adding course details");
       console.log("Error in creating course");
     }
-    
   };
   return (
-    <div onSubmit={handlesubmit} className="w-full">
+    <div  onSubmit={handlesubmit} className="w-full">
       <form className="flex flex-col gap-8 mt-16 bg-richblack-800 md:p-8 p-4 rounded-lg ">
         <div className="flex flex-col gap-1">
           <label>Course Title</label>
           <input
             onChange={handlechange}
             name="courseName"
+            value={info?.courseName}
             type="text"
             placeholder="Enter Course Title"
             className=" h-[45px] shadow-sm shadow-richblack-400 p-2 rounded-md  bg-richblack-700"
@@ -127,6 +157,7 @@ export default function CourseInfo() {
           <label>Course Description</label>
           <textarea
             type="textarea"
+            value={info?.courseDescription}
             onChange={handlechange}
             name="courseDescription"
             placeholder="Enter Course Description"
@@ -143,6 +174,7 @@ export default function CourseInfo() {
           <input
             onChange={handlechange}
             name="price"
+            value={info?.price}
             type="number"
             placeholder="Enter Course Price"
             className="h-[45px] px-[50px] shadow-sm shadow-richblack-400 p-2 rounded-md  bg-richblack-700"
@@ -198,6 +230,7 @@ export default function CourseInfo() {
         <div className="flex flex-col gap-1">
           <label>Course Category</label>
           <select
+            value={info?.categoryId}
             onChange={handlechange}
             name="categoryId"
             data-gtm-form-interact-field-id="3"
@@ -222,6 +255,7 @@ export default function CourseInfo() {
         <div className="flex flex-col gap-1">
           <label>Course Level</label>
           <select
+            value={info?.courselevel}
             onChange={handlechange}
             name="courselevel"
             type="text"
@@ -238,6 +272,7 @@ export default function CourseInfo() {
           <label>Course Language</label>
           <select
             onChange={handlechange}
+            value={info?.courseLanguage}
             name="courseLanguage"
             type="text"
             placeholder="Enter Course Language"
@@ -278,6 +313,7 @@ export default function CourseInfo() {
         <div className=" flex flex-col gap-1">
           <label>Benefits of Course</label>
           <textarea
+            value={info?.benefits}
             onChange={handlechange}
             name="benefits"
             type="textarea"
