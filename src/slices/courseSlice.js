@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   step: 1,
   editCourse: false,
-  editCourseId: null,
+  editCourseInfo: null,
 };
 
 const courseSlice = createSlice({
@@ -16,11 +16,11 @@ const courseSlice = createSlice({
     seteditCourse: (state, value) => {
       state.editCourse = value.payload;
     },
-    seteditCourseId: (state, value) => {
-      state.editCourseId = value.payload;
+    seteditCourseInfo: (state, value) => {
+      state.editCourseInfo = value.payload;
     },
   },
 });
 
-export const { setStep, seteditCourse ,seteditCourseId} = courseSlice.actions;
+export const { setStep, seteditCourse ,seteditCourseInfo} = courseSlice.actions;
 export default courseSlice.reducer;

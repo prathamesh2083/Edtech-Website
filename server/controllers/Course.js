@@ -17,6 +17,8 @@ exports.createCourse = async (req, res) => {
       tag,
       categoryId,
     } = req.body;
+    console.log("tags are",tag,typeof(tag));
+   
     const whatYouWillLearn = req.body.benefits;
     const thumbnail = req.files.thumbnail;
 

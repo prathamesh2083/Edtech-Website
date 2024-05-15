@@ -20,7 +20,7 @@ import { getCartCourses } from "./services/operations/getCartCourses";
 import { setcart } from "./slices/cartSlice";
 import Logout from "./services/auth/Logout";
 import toast from "react-hot-toast";
-
+import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
 import { setTotalItems } from "./slices/cartSlice";
 
 //  dashboard
@@ -90,10 +90,10 @@ export default function App() {
           if(user?.accountType==="Instructor")
           {
             <>
-              {/* <Route
+              <Route
                 path="dashboard/instructor"
-                element={<EnrolledCourses />}
-              ></Route> */}
+                element={<InstructorDashboard />}
+              ></Route>
               <Route
                 path="dashboard/my-courses"
                 element={<InstructorCourses />}

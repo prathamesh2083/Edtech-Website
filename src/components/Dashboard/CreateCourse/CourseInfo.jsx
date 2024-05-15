@@ -8,36 +8,71 @@ import { useDropzone } from "react-dropzone";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { setStep, seteditCourseInfo } from "../../../slices/courseSlice";
+import TagInput from "./TagInput";
+import { json } from "react-router-dom";
 export default function CourseInfo() {
   const dispatch = useDispatch();
   const [categories, setcategories] = useState([]);
   const [tags, settags] = useState([]);
+  
   const [thumbnail, setthumbnail] = useState(null);
   const [image, setimage] = useState("");
-  const { editCourseId } = useSelector((state) => state.course);
+  const { editCourseInfo } = useSelector((state) => state.course);
   const { editCourse } = useSelector((state) => state.course);
   const onDrop = useCallback((acceptedFiles) => {
     setthumbnail(URL.createObjectURL(acceptedFiles[0]));
     setimage(acceptedFiles[0]);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
   const [info, setinfo] = useState({
     courseName: "",
     courseDescription: "",
-    price: 0,
-    categoryId: "",
+    price: null,
+    categoryId: "65f2d9c00a85b44cb47d4cdd",
     courselevel: "All",
     courseLanguage: "English",
     tag: tags,
     benefits: "",
   });
+  const isformUpdated = () => {
+    if (!editCourse) {
+      return false;
+    }
+
+    if (
+      editCourseInfo.courseName !== info.courseName ||
+      editCourseInfo.courseDescription !== info.courseDescription ||
+      editCourseInfo.price !== info.price ||
+      editCourseInfo.category !== info.categoryId ||
+      editCourseInfo.courselevel !== info.courselevel ||
+      editCourseInfo.courseLanguage !== info.courseLanguage ||
+      editCourseInfo.tag !== tags ||
+      editCourseInfo.benefits !== info.benefits ||
+      editCourseInfo.thumbnail !== image
+    ) {
+      return true;
+    }
+
+    return false;
+  };
   useEffect(() => {
-   
     if (editCourse) {
-      setthumbnail(editCourseId.thumbnail);
-      // settags(editCourseId.tag);
-      console.log("crs is : ", editCourseId);
-      setinfo(editCourseId);
+      setthumbnail(editCourseInfo?.thumbnail);
+      setimage(editCourseInfo?.thumbnail);
+
+      settags(editCourseInfo?.tag);
+      setinfo({
+        courseName: editCourseInfo.courseName,
+        courseDescription: editCourseInfo.courseDescription,
+        price: editCourseInfo.price,
+        categoryId: editCourseInfo.category,
+        courselevel: editCourseInfo.courselevel,
+        courseLanguage: editCourseInfo.courseLanguage,
+        tag: editCourseInfo.tags,
+        benefits: editCourseInfo.whatYouWillLearn,
+      });
     } else {
       setthumbnail(null);
       setimage("");
@@ -45,8 +80,8 @@ export default function CourseInfo() {
       setinfo({
         courseName: "",
         courseDescription: "",
-        price: 0,
-        categoryId: "",
+        price: null,
+        categoryId: "65f2d9c00a85b44cb47d4cdd",
         courselevel: "All",
         courseLanguage: "English",
         tag: tags,
@@ -65,29 +100,8 @@ export default function CourseInfo() {
     })();
   }, [editCourse]);
 
-  const handleaddtag = (e) => {
-    if (e.keyCode === 13) {
-      let val = e.target.value;
-      if (!tags || !tags?.includes(val)) {
-        settags((prev) => [...prev, val]);
-      }
-      e.target.value = "";
-    }
-    setinfo((prev) => {
-      return {
-        ...prev,
-        tag: tags,
-      };
-    });
-  };
-  const removetag = (e) => {
-    var val = e.target.getAttribute("value");
-
-    var array = tags.filter((tag) => {
-      return val !== tag;
-    });
-    settags(array);
-  };
+ 
+  
   const handlechange = (e) => {
     const term = e.target.name;
     const val = e.target.value;
@@ -98,11 +112,15 @@ export default function CourseInfo() {
       };
     });
   };
+  
   const handlesubmit = async (e) => {
     e.preventDefault();
     
-    if (e.key === "Enter") {
-      alert("h");
+    if(editCourse){
+     
+      return;
+    }
+    if(info?.tag?.length==0){
       return;
     }
     try {
@@ -111,28 +129,36 @@ export default function CourseInfo() {
         !info.courseDescription ||
         !info.benefits ||
         !info.price ||
-        info.tag.length == 0 ||
+        !info.tag.length ||
         !image ||
         !info.categoryId ||
         !info.courselevel ||
         !info.courseLanguage
       ) {
+        
         toast.error("All fields are required ");
-
+        console.log(info);
         return;
       }
-
+     
+      
+      
       var form = new FormData();
       Object.entries(info).forEach(([key, value]) => {
+        if(key!=="tag")
         form.append(key, value);
       });
+      form.append("tag", JSON.stringify(info.tag));
       form.append("thumbnail", image);
       console.log("form is ", form);
+      
       const result = await axios.post("/api/createCourse", form);
-      console.log("result is ", result);
       if (result.data.data) {
         toast.success("Course details added successfully ");
       }
+      
+      dispatch(seteditCourseInfo(result.data.data));
+      dispatch(setStep(2));
     } catch (err) {
       console.log(err);
       toast.error("Error in adding course details");
@@ -140,8 +166,11 @@ export default function CourseInfo() {
     }
   };
   return (
-    <div  onSubmit={handlesubmit} className="w-full">
-      <form className="flex flex-col gap-8 mt-16 bg-richblack-800 md:p-8 p-4 rounded-lg ">
+    <div className="w-full">
+      <form
+        onSubmit={handlesubmit}
+        className="flex flex-col gap-8 mt-16 bg-richblack-800 md:p-8 p-4 rounded-lg "
+      >
         <div className="flex flex-col gap-1">
           <label>Course Title</label>
           <input
@@ -246,7 +275,7 @@ export default function CourseInfo() {
                   value={category?._id}
                   className="form-style p-2 bg-richblack-700 "
                 >
-                  {category?.name}
+                  {category.name}
                 </option>
               );
             })}
@@ -283,33 +312,7 @@ export default function CourseInfo() {
             <option value="Marathi">Marathi</option>
           </select>
         </div>
-        <div className=" flex flex-col gap-1 my-2 ">
-          <label>Course Tags</label>
-          <div className="flex flex-wrap gap-2 ">
-            {tags?.map((tag, index) => (
-              <div
-                key={index}
-                className="text-black p-1 my-2 min-w-[50px] text-center px-2 bg-yellow-100 rounded-full flex  items-center justify-center"
-              >
-                {" "}
-                <span className="w-full">{tag}</span>{" "}
-                <span
-                  onClick={removetag}
-                  value={tag}
-                  className="hover:cursor-pointer mx-1 w-[20px] flex justify-center items-center"
-                >
-                  x
-                </span>
-              </div>
-            ))}
-          </div>
-          <input
-            type="text"
-            onKeyDown={handleaddtag}
-            placeholder="Enter Tag and press Enter"
-            className="shadow-sm shadow-richblack-400 p-2 rounded-md  bg-richblack-700"
-          ></input>
-        </div>
+         <TagInput tags={tags} settags={settags} setinfo={setinfo}/>
         <div className=" flex flex-col gap-1">
           <label>Benefits of Course</label>
           <textarea
@@ -321,14 +324,26 @@ export default function CourseInfo() {
             className=" resize-x-none min-h-[130px] shadow-sm shadow-richblack-400 p-2 rounded-md  bg-richblack-700"
           ></textarea>
         </div>
-        <div className="w-full  flex justify-end">
+        <div className="w-full  flex justify-end gap-4">
+          {editCourse && (
+            <button
+              onClick={() => {
+                dispatch(setStep(2));
+              }}
+              className="bg-richblack-700 text-white p-2 px-4  hover:scale-105 transition-all duration-700 rounded-md  flex items-center "
+            >
+              Continue without saving
+            </button>
+          )}
           <button
+            name="submitbtn"
             type="submit"
             className="bg-yellow-200 p-2 px-4 text-black hover:scale-105 transition-all duration-700 rounded-md  flex items-center "
           >
-            Next
+            Save
             <GrFormNextLink className="inline  " size={"25px"} />
           </button>
+         
         </div>
       </form>
     </div>

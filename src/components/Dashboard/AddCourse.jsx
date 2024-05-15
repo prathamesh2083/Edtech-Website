@@ -66,7 +66,8 @@ export default function AddCourse() {
             </>
           ))}
         </div>
-        <CourseInfo />
+        {step==1?<CourseInfo />:(step==2?<CourseBuilder/>:<CoursePublish/>)}
+        
       </div>
 
       <div className="text-white hidden min-w-[400px]  lg:visible lg:flex flex-col gap-2 p-6 bg-richblack-800 rounded-lg h-fit w-[28%] fixed translate-x-[160%]  ">

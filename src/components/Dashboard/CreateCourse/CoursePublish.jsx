@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function CoursePublish() {
   return (
-    <div>CoursePublish</div>
+    <div className='text-white' >CoursePublish</div>
   )
 }

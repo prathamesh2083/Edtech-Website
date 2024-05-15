@@ -4,9 +4,10 @@ import { FiClock } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { seteditCourse } from "../../../slices/courseSlice";
-import { seteditCourseId } from "../../../slices/courseSlice";
+import { seteditCourseInfo } from "../../../slices/courseSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setStep } from "../../../slices/courseSlice";
 export default function CourseCard({ course }) {
     const dispatch=useDispatch();
     const navigate=useNavigate();
@@ -16,7 +17,9 @@ export default function CourseCard({ course }) {
     const editCourse=async()=>{
       
         dispatch(seteditCourse(true));
-        dispatch(seteditCourseId(course));
+        
+        dispatch(seteditCourseInfo(course));
+        dispatch(setStep(1));
         navigate("/dashboard/add-course");
         
 
