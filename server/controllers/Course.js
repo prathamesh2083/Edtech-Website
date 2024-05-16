@@ -107,7 +107,15 @@ exports.createCourse = async (req, res) => {
 
 exports.getAllCourses = async (req, res) => {
   try {
-    const allCourses = await Course.find({}).populate("Instructor").exec();
+    const allCourses = await Course.find({})
+      .populate("Instructor")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
     return res.status(200).json({
       success: true,
       message: "All courses fetched successfully",

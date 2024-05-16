@@ -19,7 +19,7 @@ export default function IconBtn({
       onClick={onClick}
       type={type}
     >
-      {text}
+      {text}{children}
     </button>
   );
 }
