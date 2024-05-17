@@ -5,7 +5,7 @@ import IconBtn from "../../common/IconBtn";
 import { IoMdAdd } from "react-icons/io";
 
 import toast from "react-hot-toast";
-import CourseContent from "./CourseBuilder/CourseContent";
+import CourseContent from "./CourseBuilder/courseContent";
 import { setStep } from "../../../slices/courseSlice";
 import axios from "axios";
 import { GrFormNextLink } from "react-icons/gr";
@@ -14,21 +14,43 @@ export default function CourseBuilder() {
   const dispatch = useDispatch();
   const [section, setsection] = useState("");
   const [editSectionName, seteditSectionName] = useState(null);
+ 
   const handlechange = (e) => {
     const val = e.target.value;
     setsection(val);
   };
+
   const cancelEdit = () => {
+    
     setsection("");
     seteditSectionName(null);
-  };
-  const addsection = async (e) => {
+   
+  };  
+  const handlesubmit = async (e) => {
     e.preventDefault();
     if (section.length === 0) {
       toast.error("Enter section name");
       return;
     }
     if (editSectionName) {
+      try {
+        const result = await axios.post("/api/updateSection", {
+          updatedName: section,
+          sectionId: editSectionName,
+          courseId: editCourseInfo._id,
+        });
+        if (result.data.success) {
+          toast.success("Section updated successfully");
+          dispatch(seteditCourseInfo(result.data.course));
+          setsection("");
+          seteditSectionName(null);
+        } else {
+          toast.error(result.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+        toast.error("Error in updating section");
+      }
 
       return;
     }
@@ -52,7 +74,7 @@ export default function CourseBuilder() {
   return (
     <div className="text-white mt-12 bg-richblack-800 p-4 rounded-md ">
       <p className="text-[1.4rem]">Course Builder</p>
-      <form className="flex flex-col mt-8" onSubmit={addsection}>
+      <form className="flex flex-col mt-8" onSubmit={handlesubmit}>
         <div className="flex flex-col gap-1">
           <div>
             <label className="text-richblack-200">Section Name </label>

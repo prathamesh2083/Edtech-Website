@@ -1,18 +1,29 @@
-import React from 'react'
-import IconBtn from './IconBtn'
-export default function ConfirmationModal({modalData}) {
+import IconBtn from "./IconBtn";
+
+export default function ConfirmationModal({ modalData }) {
   return (
-    <div className='!mt-0 grid bg-opacity-50 backdrop-blur-sm z-1000   gap-4 m-auto absolute left-[40%] top-[30%] bg-black overflow-auto  border-[1px] place-items-center border-richblack-600 rounded-lg p-8 px-10' >
-       
-            <p className='text-[2rem] font-semibold' >{modalData.text1} </p>
-            <p>{modalData.text2} </p>
-            
-            <div className='w-full flex justify-around' >
-               <IconBtn onClick={modalData?.btn1handler} text={modalData?.btntext1} active={true} ></IconBtn>
-               <IconBtn onClick={modalData?.btn2handler} text={modalData?.btntext2} ></IconBtn>
-               
-            </div>
-        
+    <div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
+      <div className="w-11/12 max-w-[350px] rounded-lg border border-richblack-400 bg-richblack-800 p-6">
+        <p className="text-2xl font-semibold text-richblack-5">
+          {modalData?.text1}
+        </p>
+        <p className="mt-3 mb-5 leading-6 text-richblack-200">
+          {modalData?.text2}
+        </p>
+        <div className="flex items-center gap-x-4">
+          <IconBtn
+          active
+            onClick={modalData?.btn1handler}
+            text={modalData?.btntext1}
+          />
+          <button
+            className="cursor-pointer rounded-md bg-richblack-200 py-[8px] px-[20px] font-semibold text-richblack-900"
+            onClick={modalData?.btn2handler}
+          >
+            {modalData?.btntext2}
+          </button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
