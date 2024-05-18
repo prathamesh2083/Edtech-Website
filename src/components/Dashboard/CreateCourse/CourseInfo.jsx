@@ -15,7 +15,7 @@ export default function CourseInfo() {
   const dispatch = useDispatch();
   const [categories, setcategories] = useState([]);
   const [tags, settags] = useState([]);
-  
+
   const [thumbnail, setthumbnail] = useState(null);
   const [image, setimage] = useState("");
   const { editCourseInfo } = useSelector((state) => state.course);
@@ -29,7 +29,7 @@ export default function CourseInfo() {
   const [info, setinfo] = useState({
     courseName: "",
     courseDescription: "",
-    price: null,
+    price: "",
     categoryId: "65f2d9c00a85b44cb47d4cdd",
     courselevel: "All",
     courseLanguage: "English",
@@ -64,14 +64,14 @@ export default function CourseInfo() {
 
       settags(editCourseInfo?.tag);
       setinfo({
-        courseName: editCourseInfo.courseName,
-        courseDescription: editCourseInfo.courseDescription,
-        price: editCourseInfo.price,
-        categoryId: editCourseInfo.category,
-        courselevel: editCourseInfo.courselevel,
-        courseLanguage: editCourseInfo.courseLanguage,
-        tag: editCourseInfo.tags,
-        benefits: editCourseInfo.whatYouWillLearn,
+        courseName: editCourseInfo?.courseName,
+        courseDescription: editCourseInfo?.courseDescription,
+        price: editCourseInfo?.price,
+        categoryId: editCourseInfo?.category,
+        courselevel: editCourseInfo?.courselevel,
+        courseLanguage: editCourseInfo?.courseLanguage,
+        tag: editCourseInfo?.tags,
+        benefits: editCourseInfo?.whatYouWillLearn,
       });
     } else {
       setthumbnail(null);
@@ -100,8 +100,6 @@ export default function CourseInfo() {
     })();
   }, [editCourse]);
 
- 
-  
   const handlechange = (e) => {
     const term = e.target.name;
     const val = e.target.value;
@@ -112,15 +110,61 @@ export default function CourseInfo() {
       };
     });
   };
-  
+  const handleEditCourse = async () => {
+
+    try{
+        const formData = new FormData();
+         formData.append("courseId",editCourseInfo._id);
+        if (editCourseInfo.courseName !== info.courseName) {
+          formData.append("courseName", info.courseName);
+        }
+        if (editCourseInfo.courseLanguage !== info.courseLanguage) {
+          formData.append("courseLanguage", info.courseLanguage);
+        }
+        if (editCourseInfo.courseDescription !== info.courseDescription) {
+          formData.append("courseDescription", info.courseDescription);
+        }
+        if (editCourseInfo.price !== info.price) {
+          formData.append("price", info.price);
+        }
+        if (editCourseInfo.category !== info.categoryId) {
+          formData.append("categoryId", info.categoryId);
+        }
+        if (editCourseInfo.courselevel !== info.courselevel) {
+          formData.append("courselevel", info.courselevel);
+        }
+        if (editCourseInfo.tag !== tags) {
+          formData.append("tag", JSON.stringify(info.tag));
+        }
+        if (editCourseInfo.benefits !== info.benefits) {
+          formData.append("whatYouWillLearn", info.benefits);
+        }
+        if (editCourseInfo.thumbnail !== image) {
+          formData.append("thumbnail", image);
+        }
+        const result = await axios.post("/api/editCourse", formData);
+        if (result.data.success) {
+          toast.success("Course details updated successfully ");
+          dispatch(seteditCourseInfo(result.data.course));
+          dispatch(setStep(2));
+        }
+        console.log("up id ",result);
+        
+    }
+    catch(err){
+      console.log(err);
+      toast.error("Error in updating course details");
+    }
+    
+  };
   const handlesubmit = async (e) => {
     e.preventDefault();
-    
-    if(editCourse){
-     
+
+    if (editCourse) {
+      handleEditCourse();
       return;
     }
-    if(info?.tag?.length==0){
+    if (info?.tag?.length == 0) {
       return;
     }
     try {
@@ -135,28 +179,24 @@ export default function CourseInfo() {
         !info.courselevel ||
         !info.courseLanguage
       ) {
-        
         toast.error("All fields are required ");
-        console.log(info);
+
         return;
       }
-     
-      
-      
+
       var form = new FormData();
       Object.entries(info).forEach(([key, value]) => {
-        if(key!=="tag")
-        form.append(key, value);
+        if (key !== "tag") form.append(key, value);
       });
       form.append("tag", JSON.stringify(info.tag));
       form.append("thumbnail", image);
-      console.log("form is ", form);
       
+
       const result = await axios.post("/api/createCourse", form);
       if (result.data.data) {
         toast.success("Course details added successfully ");
       }
-      
+
       dispatch(seteditCourseInfo(result.data.data));
       dispatch(setStep(2));
     } catch (err) {
@@ -312,7 +352,7 @@ export default function CourseInfo() {
             <option value="Marathi">Marathi</option>
           </select>
         </div>
-         <TagInput tags={tags} settags={settags} setinfo={setinfo}/>
+        <TagInput tags={tags} settags={settags} setinfo={setinfo} />
         <div className=" flex flex-col gap-1">
           <label>Benefits of Course</label>
           <textarea
@@ -343,7 +383,6 @@ export default function CourseInfo() {
             Save
             <GrFormNextLink className="inline  " size={"25px"} />
           </button>
-         
         </div>
       </form>
     </div>

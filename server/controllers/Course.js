@@ -14,11 +14,11 @@ exports.createCourse = async (req, res) => {
       courseDescription,
       courselevel,
       price,
-      tag,
+     
       categoryId,
     } = req.body;
-    console.log("tags are",tag,typeof(tag));
    
+      const tag=JSON.parse(req.body.tag);
     const whatYouWillLearn = req.body.benefits;
     const thumbnail = req.files.thumbnail;
 
@@ -77,6 +77,7 @@ exports.createCourse = async (req, res) => {
       courselevel,
       courseLanguage,
       benefits,
+      status: "Draft",
     });
 
     // update courses of Instructor
@@ -173,6 +174,81 @@ exports.getCourseDetails = async (req, res) => {
     return res.status(200).json({
       success: false,
       message: "Error in getting  course details ",
+    });
+  }
+};
+exports.editCourse = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const updates = req.body;
+   
+    const course = await Course.findById({ _id: courseId });
+    if (!course) {
+      return res.status(200).json({
+        success: false,
+        message: "Course not found to update",
+      });
+    }
+    if (req.files) {
+      const thumbnail = req.files.thumbnail;
+      const thumbnailurl = await uploadImageToCloudinary(
+        thumbnail,
+        process.env.FOLDER_NAME
+      );
+      course.thumbnail = thumbnailurl.secure_url;
+    }
+    for (const key in updates) {
+      if (Object.prototype.hasOwnProperty.call(updates, key)) {
+        const value = updates[key];
+        if (key === "tag") {
+          try {
+            course[key] = JSON.parse(value);
+          } catch (error) {
+            console.error(`Failed to parse JSON for key "${key}":`, error);
+            // Handle the error as needed, e.g., set a default value or continue
+            course[key] = null; // or some other appropriate default value
+          }
+        } else {
+          
+
+            course[key] = value;
+          
+        }
+      }
+    }
+   
+    await course.save();
+    const updatedCourse = await Course.findById({ _id: courseId })
+      .populate({
+        path: "Instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("category")
+      .populate({
+        path: "ratingAndReviews",
+        populate: {
+          path: "user",
+        },
+      })
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+    return res.status(200).json({
+      success: true,
+      message: "Course updated successfully",
+      course: updatedCourse,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(200).json({
+      success: false,
+      message: "Error in edit course",
     });
   }
 };

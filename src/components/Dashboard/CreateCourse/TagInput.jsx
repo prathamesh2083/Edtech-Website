@@ -7,7 +7,7 @@ export default function TagInput({ tags, settags, setinfo }) {
       const { editCourse } = useSelector((state) => state.course);
     useEffect(()=>{
         if(editCourse){
-            settags(editCourseInfo.tag);
+            settags(editCourseInfo?.tag);
         }
     },[])
   const handleaddtag = (e) => {
