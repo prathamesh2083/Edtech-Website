@@ -134,7 +134,8 @@ export default function CourseInfo() {
           formData.append("courselevel", info.courselevel);
         }
         if (editCourseInfo.tag !== tags) {
-          formData.append("tag", JSON.stringify(info.tag));
+         
+          formData.append("tag", JSON.stringify(tags));
         }
         if (editCourseInfo.benefits !== info.benefits) {
           formData.append("whatYouWillLearn", info.benefits);
@@ -148,7 +149,7 @@ export default function CourseInfo() {
           dispatch(seteditCourseInfo(result.data.course));
           dispatch(setStep(2));
         }
-        console.log("up id ",result);
+        
         
     }
     catch(err){
@@ -380,7 +381,7 @@ export default function CourseInfo() {
             type="submit"
             className="bg-yellow-200 p-2 px-4 text-black hover:scale-105 transition-all duration-700 rounded-md  flex items-center "
           >
-            Save
+            {isformUpdated()?"Save":"Next"} 
             <GrFormNextLink className="inline  " size={"25px"} />
           </button>
         </div>

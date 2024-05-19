@@ -1,10 +1,11 @@
 const Course = require("../models/Course");
-
+const SubSection=require("../models/SubSection");
 const User = require("../models/User");
 const Category = require("../models/Category");
 
 require("dotenv").config();
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const Section = require("../models/Section");
 exports.createCourse = async (req, res) => {
   try {
     const {
@@ -14,11 +15,11 @@ exports.createCourse = async (req, res) => {
       courseDescription,
       courselevel,
       price,
-     
+
       categoryId,
     } = req.body;
-   
-      const tag=JSON.parse(req.body.tag);
+
+    const tag = JSON.parse(req.body.tag);
     const whatYouWillLearn = req.body.benefits;
     const thumbnail = req.files.thumbnail;
 
@@ -129,6 +130,30 @@ exports.getAllCourses = async (req, res) => {
     });
   }
 };
+exports.getInstructorCourses = async (req, res) => {
+  try {
+    const { InstructorId } = req.body;
+    const allCourses = await Course.find({ Instructor: InstructorId })
+      .populate("Instructor")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+    return res.status(200).json({
+      success: true,
+      message: "Instructor courses fetched successfully",
+      allCourses: allCourses,
+    });
+  } catch (err) {
+    return res.status(200).json({
+      success: false,
+      message: "Error in getting Instructor courses ",
+    });
+  }
+};
 
 exports.getCourseDetails = async (req, res) => {
   try {
@@ -177,11 +202,54 @@ exports.getCourseDetails = async (req, res) => {
     });
   }
 };
+exports.deleteCourse = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+      
+    const course=await Course.findById({_id:courseId});
+    if(!course){
+       return res.status(200).json({
+         success: false,
+         message: "course not found to delete ",
+       });
+    }
+
+    const studentsEnrolled=course.studentsEnrolled;
+    for(const studentId of studentsEnrolled){
+
+         await User.findByIdAndUpdate(
+           { _id: studentId },
+           { $pull: { courses :courseId} }
+         );
+    }
+
+    const sections = course.courseContent;
+    for(const sectionId of sections){
+       const sec=await Section.findById({_id:sectionId});
+       for(const subSectionId of sec.subSection){
+        await SubSection.findByIdAndDelete({_id:subSectionId}); 
+       }
+       await Section.findOneAndDelete({_id:sectionId});
+    }
+    await Course.findByIdAndDelete({_id:courseId});
+    return res.status(200).json({
+      success: true,
+      message: "Course deleted successfully ",
+    });
+
+  } catch (err) {
+    console.log(err);
+    return res.status(200).json({
+      success: false,
+      message: "Error in deleting course ",
+    });
+  }
+};
 exports.editCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
     const updates = req.body;
-   
+    console.log("tags to edit are ",updates.tag);
     const course = await Course.findById({ _id: courseId });
     if (!course) {
       return res.status(200).json({
@@ -204,19 +272,15 @@ exports.editCourse = async (req, res) => {
           try {
             course[key] = JSON.parse(value);
           } catch (error) {
-            console.error(`Failed to parse JSON for key "${key}":`, error);
-            // Handle the error as needed, e.g., set a default value or continue
+           
             course[key] = null; // or some other appropriate default value
           }
         } else {
-          
-
-            course[key] = value;
-          
+          course[key] = value;
         }
       }
     }
-   
+
     await course.save();
     const updatedCourse = await Course.findById({ _id: courseId })
       .populate({

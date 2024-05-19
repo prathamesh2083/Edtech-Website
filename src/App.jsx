@@ -102,6 +102,10 @@ export default function App() {
                 path="dashboard/add-course"
                 element={<AddCourse />}
               ></Route>
+              <Route
+                path="dashboard/edit-course"
+                element={<AddCourse />}
+              ></Route>
             </>
           }
         </Route>
