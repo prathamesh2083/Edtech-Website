@@ -3,14 +3,17 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { Link } from "react-router-dom";
 export default function EnrolledCourseCard({ course }) {
   return (
-    <div className="w-full flex justify-between items-center my-2 ">
+    <Link
+      to={`/view-course/${course?._id}/section/${course?.courseContent[0]?._id}/sub-section/${course?.courseContent?.[0]?.subSection?.[0]?._id}`}
+      className="w-full flex justify-between items-center my-2 hover:bg-richblack-800 p-4 rounded-sm "
+    >
       <div className="flex gap-[8px] flex-wrap items-center w-[40%] ">
-        <Link to={`/courses/${course?._id}`}>
+        <div>
           <img
             src={course?.thumbnail}
             className="w-[60px] h-[60px] rounded-lg m-auto md:m-0"
           ></img>
-        </Link>
+        </div>
 
         <div className="flex flex-col justify-center items-center md:items-start gap-1">
           <div className="text-[0.9rem]">{course?.courseName}</div>
@@ -31,6 +34,6 @@ export default function EnrolledCourseCard({ course }) {
           className="w-[90%] inline"
         />
       </div>
-    </div>
+    </Link>
   );
 }

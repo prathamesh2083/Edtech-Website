@@ -7,8 +7,10 @@ import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
 import { getCartCourses } from "../../services/operations/getCartCourses";
 import { setTotalItems } from "../../slices/cartSlice";
+import { Link } from "react-router-dom";
 export default function CartCourse({ course }) {
   const dispatch = useDispatch();
+  
   const { loading, setloading } = useState(false);
   const { totalItems } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
@@ -49,7 +51,12 @@ export default function CartCourse({ course }) {
   };
   return (
     <div className="flex flex-wrap items-center md:items-start text-center md:text-start  gap-6 justify-around my-2 hover:bg-richblack-900 hover:scale-105 transition-all duration-700  border-b-[1px] border-b-richblack-600 pb-6 p-2 ">
-      <img src={courseDetails?.thumbnail} className=" w-[250px] h-[150px]"></img>
+      <Link to={`/courses/${course._id}`} >
+        <img
+          src={courseDetails?.thumbnail}
+          className=" w-[250px] h-[150px]"
+        ></img>
+      </Link>
       <div className="flex flex-col gap-2 justify-center">
         <div className="font-semibold text-[1.2rem]">
           {courseDetails?.courseName}

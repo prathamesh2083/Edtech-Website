@@ -20,7 +20,9 @@ import { setUser } from "../slices/profileSlice";
 import { formatDate } from "../services/formatDate";
 import copy from "copy-to-clipboard";
 import { setTotalItems } from "../slices/cartSlice"; 
+
 export default function Course() {
+  
    const { token } = useSelector((state) => state.auth);
    const { user } = useSelector((state) => state.profile);
    const {totalItems}=useSelector((state)=>state.cart);
@@ -33,6 +35,7 @@ export default function Course() {
   const [othercourses,setothercourses]=useState(null);
   var {courseId} = useParams();
   useEffect(() => {
+    
     try {
       (async () => {
         
@@ -76,11 +79,17 @@ export default function Course() {
   
   const handlebuycourse = async () => {
     
+
     if(token!==null){
       if(user.accountType!=="Student"){
         toast.error("Only students can buy the Course");
         return;
       }
+      if(user?.courses.includes(courseId)){
+        toast.error("You have already bought this course");
+        return;
+      }
+
       buyCourse(token,[courseId],user,navigate,dispatch);
 
       return;
@@ -220,7 +229,7 @@ export default function Course() {
             lectures{" "}
           </div>
           {courseinfo?.courseContent?.length !== 0 ? (
-            <div className="bg-richblack-800 w-full flex flex-col gap-2 rounded-xl mt-4 p-4    ">
+            <div className=" w-full flex flex-col gap-2   mt-4 p-4 border-richblack-800 border-[1px]   ">
               {courseinfo?.courseContent?.map((section, index) => {
                 return <Section id={index} section={section} />;
               })}
@@ -249,7 +258,7 @@ export default function Course() {
         <CourseReviewSlider reviews={courseinfo?.ratingAndReviews} />
       </div>
       {/* section 5 other courses */}
-      <div className="w-full md:w-[95%] m-auto text-center  ">
+      <div className="w-full md:w-[95%] m-auto text-center mb-12 p-8  ">
         <div className="text-[1.8rem] font-semibold my-4 ">
           Other Courses by{" "}
           {courseinfo?.Instructor?.firstName.slice(0, 1).toUpperCase() +

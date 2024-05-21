@@ -18,6 +18,7 @@ export default function EnrolledCourses() {
              try{
                  const result = await axios.get("/api/profile/getEnrolledCourses");
                  
+                 
                  setcourses(result?.data?.courses);
                  console.log(result?.data?.courses);
              }
@@ -25,7 +26,7 @@ export default function EnrolledCourses() {
                 console.log(err);
              }
         })()
-        console.log(user);
+       
     },[])
   return (
     <div className="text-white flex flex-col gap-8 ">

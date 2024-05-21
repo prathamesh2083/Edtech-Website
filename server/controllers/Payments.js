@@ -11,7 +11,7 @@ exports.capturePayment = async (req, res) => {
   let totalAmount = 0;
   try {
     const { courses } = req.body;
-    console.log(courses);
+   
 
     const userId = req.user.id;
     
@@ -27,7 +27,7 @@ exports.capturePayment = async (req, res) => {
       let course;
       try {
         course = await Course.findById({ _id: courseId });
-        
+        // console.log("oo ",course);
         if (!course) {
            
           

@@ -30,6 +30,8 @@ import Settings from "./components/Dashboard/Settings";
 import Cart from "./components/Dashboard/Cart";
 import AddCourse from "./components/Dashboard/AddCourse";
 import InstructorCourses from "./components/Dashboard/InstructorCourses";
+import ViewCourse from "./pages/ViewCourse";
+import VideoDetails from "./components/ViewCourse/VideoDetails";
 export default function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.profile);
@@ -109,8 +111,22 @@ export default function App() {
             </>
           }
         </Route>
-
+        <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          if(user?.accountType==="Student")
+          {
+            <>
+              <Route path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoDetails />}></Route>
+            </>
+          }
+        </Route>
         <Route path="/contact" element={<Contact />}></Route>
+       
         <Route path="/about" element={<About />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>

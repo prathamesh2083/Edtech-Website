@@ -90,7 +90,16 @@ exports.getEnrolledCourses = async (req, res) => {
   try {
     const userId = req.user.id;
     const user = await User.findById({ _id: userId })
-      .populate("courses")
+      .populate({
+        path: "courses",
+        populate: {
+          path: "courseContent",
+          populate: {
+            path: "subSection",
+          },
+        },
+      })
+
       .exec();
     return res.status(200).json({
       success: true,

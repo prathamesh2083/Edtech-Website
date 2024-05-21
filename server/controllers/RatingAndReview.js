@@ -35,7 +35,7 @@ exports.createRating = async (req, res) => {
       course: courseId,
     });
     if (alreadyReviewed) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: false,
         message: "You have already reviewed this course",
       });
@@ -64,7 +64,7 @@ exports.createRating = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in creating rating",
     });
@@ -104,7 +104,7 @@ exports.getAverageRating = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in getting average rating",
     });
@@ -130,7 +130,7 @@ exports.getAllRatings = async (req, res) => {
        });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
       message: "Error in getting all rating",
     });

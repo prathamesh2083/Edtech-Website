@@ -103,19 +103,29 @@ export default function InstructorCourses() {
           {/* // table */}
           <div>
             {/* all instructor courses */}
-            <Table >
-              <Thead className="invisible md:visible">
-                <Tr className="flex flex-wrap  md:gap-x-10 border-richblack-800 md:p-8 ">
-                  <Th>COURSES</Th>
-                  <Th>DURATION</Th>
-                  <Th>PRICE</Th>
-                  <Th>ACTIONS</Th>
+            <Table className="my-12">
+              <Thead>
+                <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
+                  <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100">
+                    Courses
+                  </Th>
+                  <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+                    Duration
+                  </Th>
+                  <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+                    Price
+                  </Th>
+                  <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+                    Actions
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody className=" w-full">
                 {courses.length === 0 ? (
                   <Tr>
-                    <Td>No courses found</Td>
+                    <Td className="py-10 text-center text-2xl font-medium text-richblack-100">
+                      No courses found
+                    </Td>
                   </Tr>
                 ) : (
                   courses.map((course) => (
@@ -151,6 +161,7 @@ export default function InstructorCourses() {
                       <Td>2h 30min</Td>
                       <Td className="">{course.price}</Td>
                       <Td className="flex gap-2 flex-nowrap">
+                        
                         <FiEdit
                           size="20px"
                           onClick={() => editCourse(course)}
