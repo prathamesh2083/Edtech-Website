@@ -5,6 +5,7 @@ import CourseReviewModal from "../components/ViewCourse/CourseReviewModal";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import toast from "react-hot-toast";
+
 import {
   setEntirecourseData,
   setcompletedLectures,
@@ -14,6 +15,7 @@ import {
 import VideoDetailsSidebar from "../components/ViewCourse/VideoDetailsSidebar";
 
 export default function ViewCourse() {
+  const {user}=useSelector((state)=>state.profile);
  const [reviewModal,setreviewModal]=useState(false);
   const { courseId } = useParams();
   const { token } = useSelector((state) => state.auth);
@@ -24,14 +26,15 @@ export default function ViewCourse() {
     try {
       const result = await axios.post("/api/getCourseDetails", {
         courseId,
+        userId:user._id
       });
-      
+      console.log("det is ",result.data.completedVideos);
       if (result.data.success) {
         const courseData = result.data.data;
         console.log(courseData);
         dispatch(setcourseSectionData(courseData.courseContent));
         dispatch(setEntirecourseData(courseData));
-        dispatch(setcompletedLectures(courseData.completedVideos)); ///////////chance of bug
+        dispatch(setcompletedLectures(result.data.completedVideos)); ///////////chance of bug
         let lectures=0;
           courseData.courseContent.forEach((sec)=>{
                 lectures+=sec.subSection.length;
@@ -51,12 +54,19 @@ export default function ViewCourse() {
    
   }, []);
   return (
-    <div className="text-white flex">
+    <div className=" text-white relative flex min-h-[calc(100vh-3.5rem)]">
       <VideoDetailsSidebar setreviewModal={setreviewModal} />
-      <div >
+      <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
+      <div className="mx-6">
+
         <Outlet />
       </div>
-      {reviewModal ? <CourseReviewModal setreviewModal={setreviewModal} />:<div></div>}
+      </div>
+      {reviewModal ? (
+        <CourseReviewModal setreviewModal={setreviewModal} />
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

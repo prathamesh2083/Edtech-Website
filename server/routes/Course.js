@@ -14,7 +14,7 @@ const {auth,isStudent,isInstructor,isAdmin}=require("../middlewares/auth");
 const {createSection,updateSection,deleteSection}=require("../controllers/Section");
 const {createSubSection,updateSubSection,deleteSubSection}=require("../controllers/subSection");
 const {createCategory,showAllCategories,categoryPageDetails}=require("../controllers/Category");
-
+const {updateCourseProgress}=require("../controllers/CourseProgress");
 
 router.post("/createCourse",auth,isInstructor,createCourse);
 router.get("/getAllCourses", getAllCourses);
@@ -40,6 +40,9 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 router.post("/createCategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories", showAllCategories);
 router.post("/categoryPageDetails", categoryPageDetails);
+
+//courseprogress routes
+router.post("/updateCourseProgress", auth,isStudent,updateCourseProgress);
 
 module.exports=router;
 

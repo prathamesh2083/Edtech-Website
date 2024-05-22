@@ -15,6 +15,7 @@ import  { Toaster } from "react-hot-toast";
 const persistConfig = {
   key: "root",
   storage,
+ 
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

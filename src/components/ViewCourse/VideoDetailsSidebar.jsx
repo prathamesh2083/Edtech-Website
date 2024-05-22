@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { IoIosArrowUp } from "react-icons/io";
 import IconBtn from "../common/IconBtn";
 export default function VideoDetailsSidebar({ setreviewModal }) {
   const [activeSection, setactiveSection] = useState("");
@@ -40,11 +41,12 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
       setactivesubSection(activeSubsectionId);
     })();
   }, [courseSectionData, EntirecourseData, location.pathname]);
+
   return (
     <>
-      <div>
-        <div>
-          <div className="flex gap-x-3">
+      <div className="p-4 hidden md:block ">
+        <div className="flex flex-col  gap-2">
+          <div className="w-full flex gap-x-3 items-center justify-between px-2">
             <div onClick={() => navigate("/dashboard/enrolled-courses")}>
               <IoChevronBackCircleOutline size={"30px"} />
             </div>
@@ -52,24 +54,35 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
               <IconBtn
                 text="Add Review"
                 active
-                onClick={()=>setreviewModal(true)}
+                onClick={() => setreviewModal(true)}
               />
             </div>
           </div>
           <div>
-            <p>{EntirecourseData?.courseName}</p>
-            <p>
-              {completedLectures ? completedLectures : 0}/{totalNoOfLectures}
+            <p className="text-[1.2rem] font-semibold">
+              {EntirecourseData?.courseName}
+            </p>
+            <p className="text-richblack-50">
+              {completedLectures?.length ? completedLectures?.length : 0}/
+              {totalNoOfLectures}
             </p>
           </div>
         </div>
 
         <div>
           {courseSectionData?.map((section, index) => (
-            <div onClick={() => setactiveSection(section._id)}>
-              <div key={index} className="flex gap-x-3">
+            <div
+              className="flex-col flex gap-1"
+              onClick={() => setactiveSection(section._id)}
+            >
+              <div
+                key={index}
+                className="flex items-center justify-between gap-x-3 w-full bg-richblack-800 p-4 "
+              >
                 <div> {section.sectionName}</div>
-                <div>^</div>
+                <div>
+                  <IoIosArrowUp />
+                </div>
               </div>
 
               <div>
@@ -77,15 +90,13 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
                   <div>
                     {section.subSection?.map((subsection, index) => (
                       <div
-                        onClick={() =>{
-
+                        onClick={() => {
                           navigate(
                             `/view-course/${courseId}/section/${section._id}/sub-section/${subsection._id}`
-                          )
-                          setactivesubSection(subsection._id)
-                        }
-                        }
-                        className={`flex ${
+                          );
+                          setactivesubSection(subsection._id);
+                        }}
+                        className={`flex gap-x-3 px-3 p-2   ${
                           subsection._id === activesubSection
                             ? "bg-yellow-50 text-black "
                             : "bg-black text-white"

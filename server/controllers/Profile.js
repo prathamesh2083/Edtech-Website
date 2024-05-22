@@ -1,7 +1,9 @@
+const CourseProgress = require("../models/CourseProgress");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 require("dotenv").config();
+const {convertSecondsToDuration} = require("../utils/setToDuration");
 exports.updateProfile = async (req, res) => {
   try {
     const { dateOfBirth, about, contactNumber, gender } = req.body;
@@ -14,9 +16,9 @@ exports.updateProfile = async (req, res) => {
       });
     }
 
-    const user = await User.findById({_id:id});
+    const user = await User.findById({ _id: id });
     const profileId = user.additionalDetails;
-    const profileDetails = await Profile.findById({_id:profileId});
+    const profileDetails = await Profile.findById({ _id: profileId });
     console.log(profileDetails);
     if (dateOfBirth) profileDetails.dateOfBirth = dateOfBirth;
     if (about) profileDetails.about = about;
@@ -89,7 +91,7 @@ exports.getAllDetails = async (req, res) => {
 exports.getEnrolledCourses = async (req, res) => {
   try {
     const userId = req.user.id;
-    const user = await User.findById({ _id: userId })
+    let userDetails = await User.findOne({ _id: userId })
       .populate({
         path: "courses",
         populate: {
@@ -101,9 +103,48 @@ exports.getEnrolledCourses = async (req, res) => {
       })
 
       .exec();
+    userDetails = userDetails.toObject();
+    var subSectionLength = 0;
+    for (var i = 0; i < userDetails.courses.length; i++) {
+      let totalDurationInSeconds = 0;
+      subSectionLength = 0;
+      for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
+        totalDurationInSeconds += userDetails.courses[i].courseContent[
+          j
+        ].subSection.reduce(
+          (acc, curr) => acc + parseInt(curr.timeDuration),
+          0
+        );
+        userDetails.courses[i].totalDuration = convertSecondsToDuration(
+          totalDurationInSeconds
+        );
+        subSectionLength+=userDetails.courses[i].courseContent[j].subSection.length;
+      }
+      console.log(userDetails.courses[i]._id);
+      let courseProgressCount=await CourseProgress.findOne({
+        courseID:userDetails.courses[i]._id,
+        userId:userId
+      })
+     
+      courseProgressCount=courseProgressCount.completedVideos.length;
+      if(subSectionLength===0){
+        userDetails.courses[i].progressPercentage=100;
+      }
+      else{
+        const multiplier=Math.pow(10,2);
+        userDetails.courses[i].progressPercentage=Math.round((courseProgressCount/subSectionLength)*100*multiplier)/multiplier
+      }
+    }
+    if(!userDetails){
+       return res.status(200).json({
+         success: false,
+         
+         message: "User not found",
+       });
+    }
     return res.status(200).json({
       success: true,
-      courses: user?.courses,
+      courses: userDetails?.courses,
       message: "All enrolled courses fetched successfully ",
     });
   } catch (err) {
@@ -160,4 +201,3 @@ exports.updateProfilePicture = async (req, res) => {
     });
   }
 };
-

@@ -1,7 +1,7 @@
 const Course = require("../models/Course");
-const SubSection=require("../models/SubSection");
+const SubSection = require("../models/SubSection");
 const User = require("../models/User");
-const CourseProgress=require("../models/CourseProgress");
+const CourseProgress = require("../models/CourseProgress");
 const Category = require("../models/Category");
 
 require("dotenv").config();
@@ -159,10 +159,7 @@ exports.getInstructorCourses = async (req, res) => {
 
 exports.getCourseDetails = async (req, res) => {
   try {
-    const { courseId } = req.body;
-   
-     const userId = req.user?.id;
-    
+    const { courseId, userId } = req.body;
 
     const courseDetails = await Course.findOne({ _id: courseId })
       .populate({
@@ -194,28 +191,30 @@ exports.getCourseDetails = async (req, res) => {
       });
     }
     let progressCount = await CourseProgress.findOne({
-      courseID:courseId,
-      userId:userId
+      courseID: courseId,
+      userId: userId,
     });
 
-    let totalDurationInSeconds=0;
-    courseDetails.courseContent.forEach((content)=>{
-        content.subSection.forEach((subSection)=>{
-          const timeduration=parseInt(subSection.timeDuration);
-          totalDurationInSeconds+=timeduration;
-        })
-    })
-    const totalDuration=convertSecondsToDuration(totalDurationInSeconds);
+    let totalDurationInSeconds = 0;
+    courseDetails.courseContent.forEach((content) => {
+      content.subSection.forEach((subSection) => {
+        const timeduration = parseInt(subSection.timeDuration);
+        totalDurationInSeconds += timeduration;
+      });
+    });
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
     return res.status(200).json({
       success: true,
       data: courseDetails,
       totalDuration,
-      completedVidos:(progressCount?.completedVideos)?progressCount?.completedVideos:[],
+      completedVideos: progressCount?.completedVideos
+        ? progressCount?.completedVideos
+        : [],
       message: "course details fetched  successfully ",
     });
   } catch (err) {
-    console.log( err);
+    console.log(err);
     return res.status(200).json({
       success: false,
       message: "Error in getting course details ",
@@ -225,38 +224,36 @@ exports.getCourseDetails = async (req, res) => {
 exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
-      
-    const course=await Course.findById({_id:courseId});
-    if(!course){
-       return res.status(200).json({
-         success: false,
-         message: "course not found to delete ",
-       });
+
+    const course = await Course.findById({ _id: courseId });
+    if (!course) {
+      return res.status(200).json({
+        success: false,
+        message: "course not found to delete ",
+      });
     }
 
-    const studentsEnrolled=course.studentsEnrolled;
-    for(const studentId of studentsEnrolled){
-
-         await User.findByIdAndUpdate(
-           { _id: studentId },
-           { $pull: { courses :courseId} }
-         );
+    const studentsEnrolled = course.studentsEnrolled;
+    for (const studentId of studentsEnrolled) {
+      await User.findByIdAndUpdate(
+        { _id: studentId },
+        { $pull: { courses: courseId } }
+      );
     }
 
     const sections = course.courseContent;
-    for(const sectionId of sections){
-       const sec=await Section.findById({_id:sectionId});
-       for(const subSectionId of sec.subSection){
-        await SubSection.findByIdAndDelete({_id:subSectionId}); 
-       }
-       await Section.findOneAndDelete({_id:sectionId});
+    for (const sectionId of sections) {
+      const sec = await Section.findById({ _id: sectionId });
+      for (const subSectionId of sec.subSection) {
+        await SubSection.findByIdAndDelete({ _id: subSectionId });
+      }
+      await Section.findOneAndDelete({ _id: sectionId });
     }
-    await Course.findByIdAndDelete({_id:courseId});
+    await Course.findByIdAndDelete({ _id: courseId });
     return res.status(200).json({
       success: true,
       message: "Course deleted successfully ",
     });
-
   } catch (err) {
     console.log(err);
     return res.status(200).json({
@@ -269,7 +266,7 @@ exports.editCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
     const updates = req.body;
-    console.log("tags to edit are ",updates.tag);
+    console.log("tags to edit are ", updates.tag);
     const course = await Course.findById({ _id: courseId });
     if (!course) {
       return res.status(200).json({
@@ -292,7 +289,6 @@ exports.editCourse = async (req, res) => {
           try {
             course[key] = JSON.parse(value);
           } catch (error) {
-           
             course[key] = null; // or some other appropriate default value
           }
         } else {
