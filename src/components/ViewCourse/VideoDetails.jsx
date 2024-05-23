@@ -209,7 +209,7 @@ export default function VideoDetails() {
                   text="Rewatch"
                 />
 
-                <div className="mt-10  flex  justify-start gap-x-4 text-lg">
+                <div className="mt-10  flex  justify-center gap-x-4 text-lg">
                   {!isfirstVideo() && (
                     <IconBtn
                       active

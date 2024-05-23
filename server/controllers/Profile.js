@@ -1,3 +1,5 @@
+const { useSelector } = require("react-redux");
+const Course = require("../models/Course");
 const CourseProgress = require("../models/CourseProgress");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
@@ -201,3 +203,39 @@ exports.updateProfilePicture = async (req, res) => {
     });
   }
 };
+
+exports.instructorDashboardData=async(req,res)=>{
+
+
+  try{
+     const userId=req.user.id;
+     const courses=await Course.find({Instructor:userId});
+     const courseData= courses.map((course)=>{
+      
+          const totalStudentsEnrolled = course.studentsEnrolled.length;
+          const totalAmountGenerated=totalStudentsEnrolled*course.price;
+
+          const courseWithStats = {
+            _id: course._id,
+            courseName: course.courseName,
+            courseDescription: course.courseDescription,
+            totalStudentsEnrolled,
+            totalAmountGenerated,
+          };
+          return courseWithStats;
+     })
+      return res.status(200).json({
+        success: true,
+        data:courseData,
+        message: "courseData fetched successfully",
+      });
+  }
+  catch(err){
+    console.log(err);
+    return res.status(200).json({
+      success: false,
+
+      message: "Internal server error",
+    });
+  }
+}
