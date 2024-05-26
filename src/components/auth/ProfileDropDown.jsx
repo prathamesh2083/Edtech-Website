@@ -12,18 +12,20 @@ export default function ProfileDropDown() {
       Logout(dispatch,navigate);
   }
   return (
-    <div className=" relative top-12  bg-richblack-700    text-white px-4 py-2     z-10 rounded-md flex flex-col">
+    <div className=" relative top-16  bg-richblack-800    text-white       z-10 rounded-lg flex flex-col">
       <Link
         to="/dashboard/my-profile"
-        className=" border-b-[1px]   border-b-richblack-200 flex gap-1 items-center"
+        className="hover:bg-richblack-700 border-b-[1px] px-2 py-2  border-b-richblack-200 flex gap-1 items-center"
       >
         {" "}
         <VscDashboard className="inline" size="20px" height="20px" /> dashboard
       </Link>
 
-      <div onClick={logoutUser} className="flex gap-1 items-center">
+      <div
+        onClick={logoutUser}
+        className=" px-2 py-2 flex gap-1 items-center hover:bg-richblack-700 "
+      >
         {" "}
-        
         <IoMdLogOut className="inline" size="20px" height="20px" />
         Logout
       </div>

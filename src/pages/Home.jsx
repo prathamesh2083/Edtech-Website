@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CTAButton from "../components/Homepage/Button";
@@ -12,10 +12,14 @@ import LearningLanguageSection from "../components/Homepage/LearningLanguageSect
 import instructor from "../assets/Images/Instructor.png";
 import ExploreMore from "../components/Homepage/ExploreMore";
 import ReviewSlider from "../components/common/ReviewSlider";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+   const {token}=useSelector((state)=>state.auth);
+   const{user}=useSelector((state)=>state.profile);
+   
   return (
-    <div className=" relative flex flex-col mx-auto w-full justify-center align-middle items-center text-white">
+    <div className="mt-4 relative flex flex-col mx-auto w-full justify-center align-middle items-center text-white">
       {/* section one */}
       <Link to={"/signup"}>
         <div className="hover:bg-richblack-900 mt-16 p-2 group w-fit justify-center text-center mx-auto flex rounded-full font-bold bg-richblack-800 text-richblack-200 transition-all duration-200 hover:scale-95 px-6 my-3">
@@ -40,10 +44,10 @@ export default function Home() {
         instructors.
       </div>
       <div className="flex gap-7 mt-8 ">
-        <CTAButton active linkto={"/signup"}>
+        <CTAButton active linkto={"/about"}>
           Learn More
         </CTAButton>
-        <CTAButton linkto={"/login"}>Book a Demo</CTAButton>
+        <CTAButton linkto={"/Contact"}>Book a Demo</CTAButton>
       </div>
 
       {/* section 2 */}
@@ -64,12 +68,12 @@ export default function Home() {
           }
           ctabtn1={{
             btnText: "Try it Yourself",
-            linkto: "/signup",
+            linkto: `${user && token ? "/dashboard/my-profile" : "/login"}`,
             active: true,
           }}
           ctabtn2={{
             btnText: "Learn More",
-            linkto: "/login",
+            linkto: "/about",
             active: false,
           }}
           codeblock={`import React from "react";
@@ -94,12 +98,12 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
           }
           ctabtn1={{
             btnText: "Continue Lesson",
-            linkto: "/signup",
+            linkto: `${user && token ? "/dashboard/my-profile" : "/login"}`,
             active: true,
           }}
           ctabtn2={{
             btnText: "Learn More",
-            linkto: "/login",
+            linkto: "/about",
             active: false,
           }}
           codeblock={
@@ -114,13 +118,16 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
       <ExploreMore></ExploreMore>
       <div className="w-full bg-pure-greys-5 text-richblack-700  ">
         <div className="flex w-full justify-center gap-4 lg:pt-56  home_bg py-16 ">
-          <CTAButton linkto={"/login"} active>
+          <CTAButton
+            linkto={`${user && token ? "/dashboard/my-profile" : "/login"}`}
+            active
+          >
             <p>
               Explore Full Catlog{" "}
               <FaArrowRight color="black" className="inline" />
             </p>
           </CTAButton>
-          <CTAButton linkto={"/signup"}>Learn More </CTAButton>
+          <CTAButton linkto={"/about"}>Learn More </CTAButton>
         </div>
 
         <div className="flex my-14  justify-center lg:justify-between md:justify-center md:px-24 min-h-[150px] flex-wrap gap-10 ">
@@ -134,7 +141,7 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
               a competitive specialist requires more than professional skills.
             </div>
             <div className="w-[30%] min-w-[120px]">
-              <CTAButton active linkto={"/login"}>
+              <CTAButton active linkto={"/about"}>
                 Learn More
               </CTAButton>
             </div>
@@ -163,7 +170,11 @@ import banner from "../assets/Images/banner.mp4"<!doctype html>\n<html lang='en'
             Instructors from around the world teach millions of students on
             StudyNotion. We provide the tools and skills to teach what you love.
           </div>
-          <CTAButton active linkto={"/signup"} className="">
+          <CTAButton
+            active
+            linkto={`${user && token ? "/dashboard/my-profile" : "/signup"}`}
+            className=""
+          >
             Start Learning Today{" "}
             <FaArrowRight className="inline"></FaArrowRight>{" "}
           </CTAButton>

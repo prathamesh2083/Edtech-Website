@@ -38,6 +38,7 @@ export default function App() {
   const { totalItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   useEffect(() => {
+    
     (async () => {
       if (localStorage.getItem("token")) {
         const token = JSON.parse(localStorage.getItem("token"));
@@ -79,8 +80,7 @@ export default function App() {
         >
           <Route path="dashboard/my-profile" element={<Profile />}></Route>
           <Route path="dashboard/setting" element={<Settings />}></Route>
-          if(user?.accountType==="Student")
-          {
+          {user?.accountType === "Student" && (
             <>
               <Route
                 path="dashboard/enrolled-courses"
@@ -88,9 +88,9 @@ export default function App() {
               ></Route>
               <Route path="dashboard/cart" element={<Cart />}></Route>
             </>
-          }
-          if(user?.accountType==="Instructor")
-          {
+          )}
+         
+          {user?.accountType === "Instructor" && (
             <>
               <Route
                 path="dashboard/instructor"
@@ -109,7 +109,7 @@ export default function App() {
                 element={<AddCourse />}
               ></Route>
             </>
-          }
+          )}
         </Route>
         <Route
           element={
@@ -118,15 +118,18 @@ export default function App() {
             </PrivateRoute>
           }
         >
-          if(user?.accountType==="Student")
-          {
+          {(user?.accountType==="Student")&&
+          
             <>
-              <Route path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId" element={<VideoDetails />}></Route>
+              <Route
+                path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              ></Route>
             </>
           }
         </Route>
         <Route path="/contact" element={<Contact />}></Route>
-       
+
         <Route path="/about" element={<About />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>

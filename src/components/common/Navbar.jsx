@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, matchPath, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks as links } from "../../data/navbar-links";
@@ -6,32 +6,32 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import ProfileDropDown from "../auth/ProfileDropDown";
+import { RxCross1 } from "react-icons/rx";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { SlMenu } from "react-icons/sl";
 
-import { apiConnector } from "../../services/apiconnector";
-import { categories } from "../../services/apis";
 import axios from "axios";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { setToken } from "../../slices/authSlice";
-import { setUser } from "../../slices/profileSlice";
-import Logout from "../../services/auth/Logout"
-import toast from "react-hot-toast";
+
+import Logout from "../../services/auth/Logout";
+
+import NavbarMobile from "./NavbarMobile";
 export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
+  const [show, setshow] = useState(false);
   const location = useLocation();
   function matchRoute(route) {
     return matchPath({ path: route }, location.pathname);
   }
 
   const logoutUser = () => {
-   Logout(dispatch,navigate);
+    Logout(dispatch, navigate);
   };
   const [sublinks, setsublinks] = useState([]);
-
   const fetchsublinks = async () => {
     try {
       const result = await axios.get("/api/showAllCategories");
@@ -45,13 +45,18 @@ export default function Navbar() {
     fetchsublinks();
   }, []);
   return (
-    <div className="flex flex-wrap h-14 items-center justify-center border-b-[1px] border-b-richblack-700">
-      <div className="flex flex-wrap w-11/12 max-w-maxContent items-center justify-between">
-        <Link to="/">
+    <div className=" fixed z-20 w-full md:max-h-[66px] bg-richblack-900  md:flex  min-h-[50px] md:flex-wrap  items-center justify-center border-b-[1px] border-b-richblack-700">
+      <div className="flex p-2 md:p-0 flex-wrap w-11/12 max-w-maxContent items-center justify-between">
+        <button
+          className="text-white block md:hidden z-30 "
+          onClick={() => setshow(!show)}
+        >
+          {show ? <RxCross1 size={"25px"} /> : <SlMenu size={"25px"} />}
+        </button>
+        <Link to="/" className=" md:w-fit">
           <img src={logo} width={160} height={42} loading="lazy"></img>
         </Link>
-
-        <nav>
+        <nav className="hidden md:block">
           <ul className="flex flex-wrap gap-x-6 text-richblack-25 ">
             {links.map((link, index) => {
               return (
@@ -103,14 +108,13 @@ export default function Navbar() {
             })}
           </ul>
         </nav>
-
         {/* login / signup /dashboard */}
-        <div className="flex gap-x-4 items-center">
+        <div className=" hidden md:flex gap-x-4 items-center">
           {user && user.accountType != "Instructor" ? (
             <Link to="/dashboard/cart" className=" flex">
               {totalItems && (
                 <div className="text-yellow-25 relative transition-all  animate-bounce duration-1000     left-[30px] top-[-10px] text-center px-1  flex  items-center  bg-richblack-700 rounded-full h-[20px] w-[20px]">
-                  { totalItems}
+                  {totalItems}
                 </div>
               )}
 
@@ -149,6 +153,9 @@ export default function Navbar() {
             </div>
           )}
         </div>
+        <nav className={`inline-block lg:hidden md:hidden  `}>
+          <NavbarMobile subLinks={sublinks} setshow={setshow} show={show} />
+        </nav>
       </div>
     </div>
   );

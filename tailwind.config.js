@@ -130,11 +130,11 @@ export default {
         maxContent: "1260px",
         maxContentTab: "650px",
       },
-      
-        transitionProperty: {
-          height: "height",
-        },
-      
+
+      transitionProperty: {
+        height: "height",
+        width: "width",
+      },
     },
   },
   plugins: [],
