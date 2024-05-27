@@ -45,7 +45,7 @@ export default function Navbar() {
     fetchsublinks();
   }, []);
   return (
-    <div className=" fixed z-20 w-full md:max-h-[66px] bg-richblack-900  md:flex  min-h-[50px] md:flex-wrap  items-center justify-center border-b-[1px] border-b-richblack-700">
+    <div className="overflow-y-scroll md:overflow-y-visible fixed z-20 w-full md:max-h-[66px] bg-richblack-900  md:flex  min-h-[50px] md:flex-wrap  items-center justify-center border-b-[1px] border-b-richblack-700">
       <div className="flex p-2 md:p-0 flex-wrap w-11/12 max-w-maxContent items-center justify-between">
         <button
           className="text-white block md:hidden z-30 "

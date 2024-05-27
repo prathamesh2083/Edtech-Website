@@ -48,7 +48,7 @@ export default function AddCourse() {
                     color="black"
                   />
                 ) : (
-                  <div className="w-full h-full rounded-full flex items-center justify-center">
+                  <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center">
                     {item.id}{" "}
                   </div>
                 )}

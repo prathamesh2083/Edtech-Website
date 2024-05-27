@@ -74,7 +74,7 @@ const NavbarMobile = ({ show, setshow }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-
+  
   return (
     <>
       <div
@@ -82,13 +82,12 @@ const NavbarMobile = ({ show, setshow }) => {
         style={{
           width: show ? `200px` : "0px",
           transition: "width 0.4s ease",
-          overflow: "hidden",
         }}
         className={`text-white mt-[50px]  ${
           show ? "flex translate-x-0" : " -translate-x-full"
         }  flex-col  border-r-[1px] border-r-richblack-600 shadow-lg  ${
           show && "shadow-richblack-400   "
-        }   fixed  overflow-hidden w-[200px] top-0 bg-richblack-800 h-screen z-10    left-0 `}
+        }   fixed  overflow-y-scroll w-[200px] top-0 bg-richblack-800 h-screen z-10    left-0 `}
       >
         {token !== null && (
           <div className="border-b-[1px] border-b-richblack-700 pb-4 w-full flex flex-col justify-center items-center text-center my-4">
@@ -136,8 +135,7 @@ const NavbarMobile = ({ show, setshow }) => {
                 />{" "}
                 dashboard
               </Link>
-              
-              
+
               <div
                 onClick={() => {
                   setIsOpen(false);
@@ -156,6 +154,13 @@ const NavbarMobile = ({ show, setshow }) => {
             </div>
           </div>
         )}
+        <div
+          className={`${
+            location.pathname.split("/")[1]==="dashboard"?"block":"hidden"
+          } border-b-[1px] border-t-[1px] border-dotted  `}
+        >
+          <Sidebar show={show} setshow={setshow} />
+        </div>
         <ul className="flex relative flex-col flex-wrap gap-x-6 text-richblack-25 ">
           {links.map((link, index) => {
             return (
