@@ -12,6 +12,13 @@ const UserRoutes = require("./routes/User");
 const fileupload = require("express-fileupload");
 const bodyParser = require("body-parser");
 app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
+require("dotenv").config();
+app.use(
   fileupload({
     useTempFiles: true,
     tempFileDir: "/tmp/",
@@ -29,13 +36,7 @@ app.use("/api", CourseRoutes);
 app.use("/api", UserRoutes);
 app.use("/api", CartRoutes);
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
-require("dotenv").config();
+
 const PORT = process.env.PORT || 4000;
 
 dbConnection();

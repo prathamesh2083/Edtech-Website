@@ -1,9 +1,6 @@
 {
   "name": "y",
   "private": true,
-  
-  
-  
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -18,6 +15,7 @@
     "axios": "^1.6.8",
     "chart.js": "^4.4.3",
     "copy-to-clipboard": "^3.3.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "dotenv-webpack": "^8.1.0",
     "mongoose": "^8.2.4",
@@ -54,4 +52,3 @@
     "vite": "^5.1.6"
   }
 }
-
