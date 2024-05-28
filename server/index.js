@@ -29,7 +29,12 @@ app.use("/api", CourseRoutes);
 app.use("/api", UserRoutes);
 app.use("/api", CartRoutes);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 
@@ -40,5 +45,5 @@ app.listen(PORT, () => {
 });
 cloudinaryConnect();
 app.get("/", (req, res) => {
-  res.send("<h1>running mega 2 project</h1>");
+  res.send("<h1>running mega 3 project</h1>");
 });
