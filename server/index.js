@@ -31,7 +31,7 @@ app.use("/api", CartRoutes);
 
 app.use(cors());
 require("dotenv").config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 
 dbConnection();
 
