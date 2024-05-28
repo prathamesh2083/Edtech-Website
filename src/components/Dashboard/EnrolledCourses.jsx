@@ -21,7 +21,7 @@ export default function EnrolledCourses() {
                  
                  
                  setcourses(result?.data?.courses);
-                 console.log(result);
+                
              }
              catch(err){
                 console.log(err);

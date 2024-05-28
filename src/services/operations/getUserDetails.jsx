@@ -9,16 +9,14 @@ export async function getUserDetails(token, dispatch) {
     const result = await axios.post(
       `${url}/profile/getAllDetails`,
       {},
-      {
-        Authorization: `Bearer ${token}`,
-      }
+      
     );
     
     dispatch(setUser(result.data.user));
     return 1;
   } catch (err) {
     toast.error("Session is expired");
-
+    console.log(err);
     console.log("error in getting user details");
   }
   return 0;

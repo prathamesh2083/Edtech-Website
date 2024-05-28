@@ -30,9 +30,11 @@ exports.auth = async (req, res, next) => {
     }
     next();
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       success: false,
-      message: "something went wrong in auth middleware",
+      message2:err,
+      message: "something went wrong in auth middleware1",
     });
   }
 };

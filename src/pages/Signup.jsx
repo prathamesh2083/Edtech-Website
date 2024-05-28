@@ -20,11 +20,11 @@ export default function Signup() {
   const dispatch = useDispatch();
   const [showvalidation, setshowvalidation] = useState(false);
   const [info, setinfo] = useState({
-    firstName: "Prathamesh",
-    lastName: "Pandit",
-    email: "prathameshpandit261922@gmail.com",
-    password: "Pandit@2083",
-    confirmPassword: "Pandit@2083",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     accountType: "Student",
   });
   const [valid, setvalid] = useState({
