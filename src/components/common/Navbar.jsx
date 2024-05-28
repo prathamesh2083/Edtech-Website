@@ -27,7 +27,6 @@ export default function Navbar() {
   function matchRoute(route) {
     return matchPath({ path: route }, location.pathname);
   }
-
   const logoutUser = () => {
     Logout(dispatch, navigate);
   };
@@ -35,8 +34,10 @@ export default function Navbar() {
   
   const fetchsublinks = async () => {
     try {
+      const url = import.meta.env.VITE_REACT_APP_BASE_URL;
+      console.log(url);
       const result = await axios.get(
-        `/api/showallcategories`
+        `${url}api/showallcategories`
       );
      
       setsublinks(result.data.data);

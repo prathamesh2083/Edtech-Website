@@ -29,7 +29,15 @@ app.use("/api", CourseRoutes);
 app.use("/api", UserRoutes);
 app.use("/api", CartRoutes);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+     "https://edtech-website.vercel.app/",
+    ],
+    credentials: true,
+  })
+);
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 
