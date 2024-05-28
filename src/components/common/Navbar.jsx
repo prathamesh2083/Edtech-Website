@@ -32,10 +32,13 @@ export default function Navbar() {
     Logout(dispatch, navigate);
   };
   const [sublinks, setsublinks] = useState([]);
+  
   const fetchsublinks = async () => {
     try {
-      const result = await axios.get("/api/showAllCategories");
-
+      const result = await axios.get(
+        `/api/showallcategories`
+      );
+     
       setsublinks(result.data.data);
     } catch (err) {
       console.log(err);
@@ -58,7 +61,7 @@ export default function Navbar() {
         </Link>
         <nav className="hidden md:block">
           <ul className="flex flex-wrap gap-x-6 text-richblack-25 ">
-            {links.map((link, index) => {
+            {links?.map((link, index) => {
               return (
                 <li key={index}>
                   {link.title === "Catalog" ? (
@@ -74,7 +77,7 @@ export default function Navbar() {
                       >
                         <div className="absolute left-[50%] top-1 h-6 w-6 rotate-45 rounded bg-richblack-5 translate-y-[-30%]"></div>
                         <div className="flex flex-col gap-1 p-2 text-[17px]">
-                          {sublinks.map((lnk, index) => {
+                          {sublinks?.map((lnk, index) => {
                             return (
                               <Link
                                 className=" hover:bg-richblack-50 p-3 rounded-md"

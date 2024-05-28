@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import RatingStars from "../components/Catalogpage/RatingStars";
 import GetAvgRating from "../utils/GetAvgRating";
@@ -23,6 +23,7 @@ import { setTotalItems } from "../slices/cartSlice";
 
 export default function Course() {
   
+  
    const { token } = useSelector((state) => state.auth);
    const { user } = useSelector((state) => state.profile);
    const {totalItems}=useSelector((state)=>state.cart);
@@ -39,7 +40,7 @@ export default function Course() {
     try {
       (async () => {
         
-
+        
         if (courseId) {
           const result = await axios.post("/api/getCourseDetails", {
             courseId,

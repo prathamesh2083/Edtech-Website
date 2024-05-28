@@ -122,7 +122,7 @@ exports.getAllRatings = async (req, res) => {
         path:"course",select:"courseName"
       }).exec();
      
-      console.log(result);
+     
        return res.status(200).json({
          success: true,
          data:result,

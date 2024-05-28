@@ -2,7 +2,7 @@
   "name": "y",
   "private": true,
   
-  "proxy": "https://studynotion-server-fdsm.onrender.com",
+  
   
   "version": "0.0.0",
   "type": "module",
