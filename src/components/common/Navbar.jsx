@@ -37,6 +37,7 @@ export default function Navbar() {
       const url = import.meta.env.VITE_REACT_APP_BASE_URL;
       console.log(url);
       console.log(`${url}/showallcategories`);
+      console.log(`${url}/showallcategories`);
       const result = await axios.get(
         `${url}/showallcategories`
       );
