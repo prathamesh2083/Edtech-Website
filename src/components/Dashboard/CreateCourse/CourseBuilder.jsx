@@ -5,7 +5,8 @@ import IconBtn from "../../common/IconBtn";
 import { IoMdAdd } from "react-icons/io";
 
 import toast from "react-hot-toast";
-import CourseContent from "./CourseBuilder/courseContent";
+import CourseContent from "./CourseBuilder/CourseContent";
+ 
 import { setStep } from "../../../slices/courseSlice";
 import axios from "axios";
 import { GrFormNextLink } from "react-icons/gr";

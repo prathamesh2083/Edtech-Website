@@ -43,10 +43,12 @@ export default function AddCourse() {
                 }  w-[40px]  h-[40px] aspect-square place-items-center place-content-center  text-center flex justify-center items-center rounded-full `}
               >
                 {step > item.id ? (
-                  <FaCheckCircle
-                    className="bg-yellow-50 w-full h-full rounded-full "
-                    color="black"
-                  />
+                  <div className="w-[40px] h-[40px]  ">
+                    <FaCheckCircle
+                      className="bg-yellow-50 w-[40px] h-[40px]  rounded-full "
+                      color="black"
+                    />
+                  </div>
                 ) : (
                   <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center">
                     {item.id}{" "}
@@ -66,8 +68,13 @@ export default function AddCourse() {
             </>
           ))}
         </div>
-        {step==1?<CourseInfo />:(step==2?<CourseBuilder/>:<CoursePublish/>)}
-        
+        {step == 1 ? (
+          <CourseInfo />
+        ) : step == 2 ? (
+          <CourseBuilder />
+        ) : (
+          <CoursePublish />
+        )}
       </div>
 
       <div className="text-white hidden min-w-[400px]  lg:visible lg:flex flex-col gap-2 p-6 bg-richblack-800 rounded-lg h-fit w-[28%] fixed translate-x-[160%]  ">
