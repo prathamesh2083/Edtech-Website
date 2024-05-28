@@ -34,12 +34,12 @@ export default function Navbar() {
   
   const fetchsublinks = async () => {
     try {
-      const url = import.meta.env.VITE_REACT_APP_BASE_URL;
-      console.log(url);
-      console.log(`${url}/showallcategories`);
-      console.log(`${url}/showallcategories`);
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+      url = url + "api/showallcategories";
+      console.log("Url is ",url);
+      
       const result = await axios.get(
-        `${url}/showallcategories`
+        url
       );
      
       setsublinks(result.data.data);
