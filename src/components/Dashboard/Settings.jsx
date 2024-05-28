@@ -58,6 +58,7 @@ export default function Settings() {
        setuploading(false);
        window.location.reload();
     } catch (error) {
+      console.log("error in setting page ",error);
       console.log("ERROR MESSAGE - ", error.message);
     }
   };
