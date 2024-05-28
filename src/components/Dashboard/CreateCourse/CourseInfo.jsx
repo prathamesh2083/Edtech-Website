@@ -13,6 +13,7 @@ import TagInput from "./TagInput";
 import { json } from "react-router-dom";
 export default function CourseInfo() {
   const dispatch = useDispatch();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [categories, setcategories] = useState([]);
   const [tags, settags] = useState([]);
 
@@ -91,7 +92,7 @@ export default function CourseInfo() {
 
     (async () => {
       try {
-        const result = await axios.get("/api/showAllCategories");
+        const result = await axios.get(`${url}/showAllCategories`);
 
         setcategories(result?.data?.data);
       } catch (err) {
@@ -143,7 +144,7 @@ export default function CourseInfo() {
         if (editCourseInfo.thumbnail !== image) {
           formData.append("thumbnail", image);
         }
-        const result = await axios.post("/api/editCourse", formData);
+        const result = await axios.post(`${url}/editCourse`, formData);
         if (result.data.success) {
           toast.success("Course details updated successfully ");
           dispatch(seteditCourseInfo(result.data.course));
@@ -193,7 +194,7 @@ export default function CourseInfo() {
       form.append("thumbnail", image);
       
 
-      const result = await axios.post("/api/createCourse", form);
+      const result = await axios.post(`${url}/createCourse`, form);
       if (result.data.data) {
         toast.success("Course details added successfully ");
       }

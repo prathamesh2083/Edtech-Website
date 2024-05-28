@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 export async function getUserDetails(token, dispatch) {
   try {
+    var url = import.meta.env.VITE_REACT_APP_BASE_URL;
     const result = await axios.post(
-      "/api/profile/getAllDetails",
+      `${url}/profile/getAllDetails`,
       {},
       {
         Authorization: `Bearer ${token}`,

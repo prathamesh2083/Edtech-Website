@@ -14,6 +14,7 @@ import { setLoading } from "../slices/authSlice";
 import Loading from "./Loading";
 export default function VerifyOtp() {
   const dispatch = useDispatch();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const { signupData, loading } = useSelector((state) => state.auth);
@@ -30,7 +31,7 @@ export default function VerifyOtp() {
     };
     dispatch(setLoading(true));
     try {
-      const result = await axios.post("/api/signup", data);
+      const result = await axios.post(`${url}/signup`, data);
 
       if (result?.data?.success) {
         dispatch(setLoading(false));

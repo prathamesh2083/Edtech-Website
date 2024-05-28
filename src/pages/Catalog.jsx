@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import CourseSlider from "../components/Catalogpage/CourseSlider";
 export default function Catalog() {
   const { catalogName } = useParams();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [active, setactive] = useState(true);
   const [categoryId, setcategoryId] = useState(null);
   const [catalogPageData, setcatalogPageData] = useState(null);
@@ -14,7 +15,7 @@ export default function Catalog() {
   useEffect(() => {
     (async () => {
       try {
-        const getallCategories = await axios.get("/api/showAllCategories");
+        const getallCategories = await axios.get(`${url}/showAllCategories`);
 
         const catId = getallCategories?.data?.data?.filter(
           (cat) => cat.name.split(" ").join("-").toLowerCase() === catalogName
@@ -28,7 +29,7 @@ export default function Catalog() {
   useEffect(() => {
     try {
       (async () => {
-        const details = await axios.post("/api/categoryPageDetails", {
+        const details = await axios.post(`${url}/categoryPageDetails`, {
           categoryId: categoryId,
         });
        

@@ -18,7 +18,8 @@ export default function CourseReviewModal({setreviewModal}) {
           return;
         }
         try{
-              const result = await axios.post("/api/createRating", {
+          var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+              const result = await axios.post(`${url}/createRating`, {
                 rating: getValues("rating"),
                 review: getValues("experience"),
                 courseId: courseId,

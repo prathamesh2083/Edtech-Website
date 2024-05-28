@@ -48,9 +48,9 @@ export default function Settings() {
       formData.append('imageFile', imageFile);
 
       
-      console.log("formdata is : ", formData)
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
        const result = await axios.post(
-         "/api/profile/updateProfilePicture",
+         `${url}/profile/updateProfilePicture`,
          formData
        );
        console.log( "result is  ",result);

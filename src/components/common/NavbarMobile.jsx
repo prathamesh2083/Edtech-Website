@@ -26,7 +26,9 @@ const NavbarMobile = ({ show, setshow }) => {
 
   const fetchsublinks = async () => {
     try {
-      const result = await axios.get("/api/showAllCategories");
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+
+      const result = await axios.get(`${url}/showallcategories`);
 
       setsublinks(result.data.data);
     } catch (err) {

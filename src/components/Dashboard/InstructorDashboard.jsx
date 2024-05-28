@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import InstructorChart from "./InstructorChart";
 export default function InstructorDashboard() {
   const { token } = useSelector((state) => state.auth);
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const { user } = useSelector((state) => state.profile);
   const [courses, setcourses] = useState("");
   const [instructorData, setinstructorData] = useState("");
@@ -15,11 +16,11 @@ export default function InstructorDashboard() {
   const getcourseData = async () => {
     try {
       setloading(true);
-      const result = await axios.post("/api/profile/instructorDashboardData");
+      const result = await axios.post(`${url}/profile/instructorDashboardData`);
 
       setinstructorData(result.data.data);
 
-      const inscourses = await axios.post("/api/getInstructorCourses", {
+      const inscourses = await axios.post(`${url}/getInstructorCourses`, {
         InstructorId: user._id,
       });
 

@@ -23,7 +23,7 @@ import { setTotalItems } from "../slices/cartSlice";
 
 export default function Course() {
   
-  
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
    const { token } = useSelector((state) => state.auth);
    const { user } = useSelector((state) => state.profile);
    const {totalItems}=useSelector((state)=>state.cart);
@@ -42,7 +42,7 @@ export default function Course() {
         
         
         if (courseId) {
-          const result = await axios.post("/api/getCourseDetails", {
+          const result = await axios.post(`${url}/getCourseDetails`, {
             courseId,
           });
           
@@ -59,7 +59,7 @@ export default function Course() {
     try{
        (async()=>{
 
-         const result =await axios.get("/api/getAllCourses");
+         const result =await axios.get(`${url}/getAllCourses`);
            setothercourses(result.data.allCourses);
         
 
@@ -112,7 +112,7 @@ export default function Course() {
       return;
     }
     try{ 
-         const result=await axios.post("/api/cart/addtocart",{
+         const result=await axios.post(`${url}/cart/addtocart`,{
           courseId
          });
          if(result.data.success){

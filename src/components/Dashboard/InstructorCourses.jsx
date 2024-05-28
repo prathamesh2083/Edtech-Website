@@ -18,6 +18,7 @@ import ConfirmationModal from "../common/ConfirmationModal";
 export default function InstructorCourses() {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [courses, setcourses] = useState([]);
   const [loading, setloading] = useState(false);
   const dispatch = useDispatch();
@@ -33,14 +34,14 @@ export default function InstructorCourses() {
        }
        setloading(true);
           
-      const result= await axios.post("/api/deleteCourse",{
+      const result= await axios.post(`${url}/deleteCourse`,{
         courseId
        });
        if(!result.data.success){
           toast.error("Course deletion failed");
           return;
        }
-      const updatedCourses = await axios.post("/api/getInstructorCourses", {
+      const updatedCourses = await axios.post(`${url}/getInstructorCourses`, {
         InstructorId: user._id,
       });
 
@@ -70,7 +71,7 @@ export default function InstructorCourses() {
       try {
         setloading(true);
 
-        const result = await axios.post("/api/getInstructorCourses", {
+        const result = await axios.post(`${url}/getInstructorCourses`, {
           InstructorId: user._id,
         });
 

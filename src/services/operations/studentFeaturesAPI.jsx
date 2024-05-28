@@ -25,8 +25,8 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
          
         toast.error("Razorpay failed to load");
       }
-
-      const orderResponse=await axios.post("/api/payment/capturePayment",{courses},{
+       var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+      const orderResponse=await axios.post(`${url}/payment/capturePayment`,{courses},{
         Authorization:`Bearer ${token}`
       })
       
@@ -74,7 +74,8 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
 
 async function sendPaymentSuccessEmail(response,amount,token){
     try{
-        await axios.post("/api/payment/sendPaymentSuccessEmail",{
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+        await axios.post(`${url}/payment/sendPaymentSuccessEmail`,{
             orderId:response.razorpay_order_id,
             paymenId:response.razorpay_payment_id,
             amount,
@@ -91,8 +92,9 @@ async function verifyPayment(bodyData,token,navigate,dispatch){
     const toastId=toast.loading("verifying payment");
     // dispatch(setPaymentLoading(true));
     try{
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
       const response = await axios.post(
-        "/api/payment/verifyPayment",
+        `${url}/payment/verifyPayment`,
         bodyData,
         {
           Authorization: `Bearer ${token}`,

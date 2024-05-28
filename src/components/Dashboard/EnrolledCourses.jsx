@@ -15,8 +15,9 @@ export default function EnrolledCourses() {
     const [courses,setcourses]=useState(null);
     useEffect(()=>{
         ;(async()=>{
+          var url = import.meta.env.VITE_REACT_APP_BASE_URL;
              try{
-                 const result = await axios.get("/api/profile/getEnrolledCourses");
+                 const result = await axios.get(`${url}/profile/getEnrolledCourses`);
                  
                  
                  setcourses(result?.data?.courses);

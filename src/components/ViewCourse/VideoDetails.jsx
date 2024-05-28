@@ -118,7 +118,8 @@ export default function VideoDetails() {
   };
   const handelLectureCompletion = async () => {
     try {
-      const result = await axios.post("/api/updateCourseProgress", {
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+      const result = await axios.post(`${url}/updateCourseProgress`, {
         courseId: courseId,
         subSectionId: subSectionId,
       });

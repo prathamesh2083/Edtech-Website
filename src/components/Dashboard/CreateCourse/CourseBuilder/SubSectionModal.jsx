@@ -15,6 +15,7 @@ export default function SubSectionModal({
   edit = false,
 }) {
   const dispatch = useDispatch();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [loading, setloading] = useState(false);
   const { editCourseInfo } = useSelector((state) => state.course);
   const [title, settitle] = useState("");
@@ -66,7 +67,7 @@ export default function SubSectionModal({
 
     try {
       setloading(true);
-      const result = await axios.post("/api/updateSubSection", formData);
+      const result = await axios.post(`${url}/updateSubSection`, formData);
       if (result.data.success) {
         toast.success("Lecture updated successfully");
         dispatch(seteditCourseInfo(result.data.course));
@@ -103,7 +104,7 @@ export default function SubSectionModal({
 
     try {
       setloading(true);
-      const result = await axios.post("/api/createSubSection", formData);
+      const result = await axios.post(`${url}/createSubSection`, formData);
       if (result.data.success) {
         toast.success("Lecture added successfully");
 

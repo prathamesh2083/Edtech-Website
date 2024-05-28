@@ -24,7 +24,8 @@ export default function ReviewSlider() {
      
     try{
       ;(async () => {
-        const result = await axios.get("/api/getAllRatings");
+        var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+        const result = await axios.get(`${url}/getAllRatings`);
        
         setreviews(result?.data?.data);
       })();

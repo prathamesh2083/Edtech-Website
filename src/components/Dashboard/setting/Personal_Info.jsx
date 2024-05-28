@@ -27,8 +27,9 @@ export default function Personal_Info({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
       dispatch(setLoading(true));
-      const result = await axios.post("/api/profile/updateProfile", info);
+      const result = await axios.post(`${url}/profile/updateProfile`, info);
 
       toast.success("Profile information updated successfully");
        window.location.reload();

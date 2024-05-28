@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 export default function CoursePublish() {
   const { register, handleSubmit, setValues, getValues } = useForm();
   const dispatch = useDispatch();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const { editCourseInfo } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
@@ -29,7 +30,7 @@ export default function CoursePublish() {
             const status = getValues("public") ? "Published" : "Draft";
             formData.append("status", status);
 
-            const result = await axios.post("/api/editCourse", formData);
+            const result = await axios.post(`${url}/editCourse`, formData);
             console.log(result);
             if (result.data.success) {
               toast.success("Changes saved successfully ");

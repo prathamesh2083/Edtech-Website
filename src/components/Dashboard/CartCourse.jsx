@@ -10,7 +10,7 @@ import { setTotalItems } from "../../slices/cartSlice";
 import { Link } from "react-router-dom";
 export default function CartCourse({ course }) {
   const dispatch = useDispatch();
-  
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const { loading, setloading } = useState(false);
   const { totalItems } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
@@ -19,7 +19,7 @@ export default function CartCourse({ course }) {
   useEffect(() => {
     (async () => {
       try {
-        const result = await axios.post("/api/getCourseDetails", {
+        const result = await axios.post(`${url}/getCourseDetails`, {
           courseId: course,
         });
 
@@ -35,7 +35,7 @@ export default function CartCourse({ course }) {
   const removeCourse = async (e) => {
     try {
      
-      const result = await axios.post("/api/cart/removefromcart", {
+      const result = await axios.post(`${url}/cart/removefromcart`, {
         courseId: course._id,
       });
       console.log(result);

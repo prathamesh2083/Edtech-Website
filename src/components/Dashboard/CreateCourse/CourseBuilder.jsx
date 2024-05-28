@@ -13,6 +13,7 @@ import { GrFormNextLink } from "react-icons/gr";
 export default function CourseBuilder() {
   const { editCourseInfo } = useSelector((state) => state.course);
   const dispatch = useDispatch();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [section, setsection] = useState("");
   const [editSectionName, seteditSectionName] = useState(null);
  
@@ -35,7 +36,7 @@ export default function CourseBuilder() {
     }
     if (editSectionName) {
       try {
-        const result = await axios.post("/api/updateSection", {
+        const result = await axios.post(`${url}/updateSection`, {
           updatedName: section,
           sectionId: editSectionName,
           courseId: editCourseInfo._id,
@@ -57,7 +58,7 @@ export default function CourseBuilder() {
     }
 
     try {
-      const result = await axios.post("/api/createSection", {
+      const result = await axios.post(`${url}/createSection`, {
         sectionName: section,
         courseId: editCourseInfo._id,
       });

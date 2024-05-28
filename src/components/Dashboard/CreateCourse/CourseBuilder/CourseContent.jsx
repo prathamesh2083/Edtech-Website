@@ -12,6 +12,7 @@ import { seteditCourseInfo } from "../../../../slices/courseSlice";
 import SubSectionModal from "./SubSectionModal";
 export default function CourseContent({ seteditSectionName, setsection }) {
   const dispatch = useDispatch();
+  var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const { editCourseInfo } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
 
@@ -25,7 +26,7 @@ export default function CourseContent({ seteditSectionName, setsection }) {
       return;
     }
     try {
-      const result = await axios.post("/api/deleteSection", {
+      const result = await axios.post(`${url}/deleteSection`, {
         sectionId,
         courseId: editCourseInfo?._id,
       });
@@ -45,7 +46,8 @@ export default function CourseContent({ seteditSectionName, setsection }) {
     }
 
     try {
-      const result = await axios.post("/api/deleteSubSection", {
+      
+      const result = await axios.post(`${url}/deleteSubSection`, {
         sectionId,
         subSectionId,
         courseId: editCourseInfo?._id,

@@ -24,7 +24,8 @@ export default function ViewCourse() {
   // fetch and set  course details in courseslice
   const setcourseDetails = async () => {
     try {
-      const result = await axios.post("/api/getCourseDetails", {
+      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+      const result = await axios.post(`${url}/getCourseDetails`, {
         courseId,
         userId:user._id
       });
