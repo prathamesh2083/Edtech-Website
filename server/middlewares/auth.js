@@ -5,19 +5,16 @@ const User = require("../models/User");
 exports.auth = async (req, res, next) => {
   try {
     //extract token
-    const token =req.cookies.token || req.header("Authorisation").replace("Bearer ", "");
-      
+    const token =req?.cookies?.token ;
+      console.log("1");
     if (!token) {
       return res.status(200).json({
         success: false,
         message: "Token not found",
       });
     }
-    return res.status(200).json({
-      success: false,
-      token:token,
-      message: "Token not found",
-    });
+    
+    
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
       
