@@ -1,7 +1,9 @@
 {
   "name": "y",
   "private": true,
-  "proxy": "http://localhost:4000",
+  
+  "proxy": "https://studynotion-server-fdsm.onrender.com",
+  
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -52,3 +54,4 @@
     "vite": "^5.1.6"
   }
 }
+
