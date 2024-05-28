@@ -48,5 +48,5 @@ app.listen(PORT, () => {
 });
 cloudinaryConnect();
 app.get("/", (req, res) => {
-  res.send("<h1>running mega project</h1>");
+  res.send("<h1>running mega 2 project</h1>");
 });

@@ -43,7 +43,8 @@ export default function Login() {
    const handlelogin=async(e)=>{
     e.preventDefault();
     try{
-         const result=await axios.post("/api/login",{
+       const url = import.meta.env.VITE_REACT_APP_BASE_URL;
+         const result=await axios.post(`${url}/api/login`,{
           email:info.email,
           password:info.password
          });
