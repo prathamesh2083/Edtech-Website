@@ -42,7 +42,7 @@ export default function App() {
     (async () => {
       if (localStorage.getItem("token")) {
         const token = JSON.parse(localStorage.getItem("token"));
-
+        
         dispatch(setToken(token));
         if (!(await getUserDetails(token, dispatch))) {
           Logout(dispatch, navigate);
@@ -51,7 +51,7 @@ export default function App() {
 
         if (user?.accountType === "Student") {
           const cartresult = await getCartCourses(token, dispatch);
-
+         
           dispatch(setTotalItems(cartresult.data.cartCourses.length));
         }
       }
