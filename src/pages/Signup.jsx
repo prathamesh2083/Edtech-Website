@@ -117,7 +117,7 @@ export default function Signup() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="text-white w-full flex mb-60 md:px-20 px-4 gap-10 md:justify-around justify-center flex-wrap-reverse">
+        <div className="text-white w-full flex mb-60 md:px-20 px-4 gap-10 md:justify-around justify-center flex-wrap-reverse mt-16">
           <div className="lg:w-[35%] w-[100%] flex flex-col gap-4  min-w-[280px] p-3 md:min-w-[400px] max-w-[500px]">
             <div className="text-[2rem] font-semibold w-full md:w-[100%] text-center lg:text-start">
               Join the millions learning to code with StudyNotion for free

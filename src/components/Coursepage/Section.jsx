@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
+import  convertSecondsToDuration from "../../utils/setToDuration";
 import { FaVideo } from "react-icons/fa6";
 export default function Section({ section,setactive }) {
   const [open, setopen] = useState(false);
@@ -17,7 +18,7 @@ export default function Section({ section,setactive }) {
     <>
       <div
         onClick={changeopen}
-        className=" flex justify-between m-auto  border-b-[1px]  w-full md:w-[95%] items-center border-richblack-700 p-6 border-b-w-[80%] "
+        className=" flex justify-between m-auto  border-b-[1px]  w-full md:w-[95%] items-center border-richblack-700 p-1 md:p-6 border-b-w-[80%] "
       >
         <div className="font-bold text-[1.1rem]">{section?.sectionName}</div>
 
@@ -51,7 +52,8 @@ export default function Section({ section,setactive }) {
                 <div> {subsection.title} </div>
               </div>
               <div className="text-yellow-50  flex items-center w-[10%] min-w-[60px]">
-                {subsection.timeDuration} hours{" "}
+                {convertSecondsToDuration(subsection.timeDuration)}
+                {/* {subsection.timeDuration} hours{" "} */}
               </div>
             </div>
           );

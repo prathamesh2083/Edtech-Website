@@ -28,24 +28,27 @@ export default function Personal_Info({ user }) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      var url = import.meta.env.VITE_REACT_APP_BASE_URL;
-      dispatch(setLoading(true));
-      const result = await axios.post(
-        `${url}/profile/updateProfile`,
-        { info, token },
-        {
-          Authorization: `Bearer ${token}`,
-        }
-      );
-      console.log("res is ",result);
-      toast.success("Profile information updated successfully");
-      const details=await getUserDetails(token,dispatch);
-      
-    } catch (err) {
-      toast.error("Error");
-      console.log(err);
+    if (info?.contactNumber && info?.contactNumber.length!==10){
+      toast.error("Enter 10 digit contact number");
+      return;
     }
+      try {
+        var url = import.meta.env.VITE_REACT_APP_BASE_URL;
+        dispatch(setLoading(true));
+        const result = await axios.post(
+          `${url}/profile/updateProfile`,
+          { info, token },
+          {
+            Authorization: `Bearer ${token}`,
+          }
+        );
+
+        toast.success("Profile information updated successfully");
+        const details = await getUserDetails(token, dispatch);
+      } catch (err) {
+        toast.error("Error");
+        console.log(err);
+      }
     
     dispatch(setLoading(false));
   };

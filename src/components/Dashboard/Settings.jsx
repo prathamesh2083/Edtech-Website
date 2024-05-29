@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiUpload } from "react-icons/fi";
 import Personal_Info from "./setting/Personal_Info";
 import UpdatePass from "./setting/UpdatePass";
@@ -7,9 +7,11 @@ import DeleteAccount from "./setting/DeleteAccount";
 import axios from "axios";
 
 import toast from "react-hot-toast";
+import { getUserDetails } from "../../services/operations/getUserDetails";
 export default function Settings() {
   const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
+  const dispatch=useDispatch();
   const [imageFile, setImageFile] = useState(null);
   const [previewSource, setPreviewSource] = useState(null);
   const [uploading,setuploading]=useState(false);
@@ -37,27 +39,29 @@ export default function Settings() {
   const handleFileUpload = async(e) => {
      e.preventDefault();
     try {
-      console.log("uploading..." ,imageFile);
+      if(!imageFile){
+        console.log("not found");
+        toast.error("Select profile picture");
+       return;
+      }
+      
       setuploading(true);
      
      
-      if(!imageFile){
-        console.log("not found");
-        
-      }
       const formData=new FormData();
       formData.append('imageFile', imageFile);
+      formData.append('token', token);
 
       
       var url = import.meta.env.VITE_REACT_APP_BASE_URL;
        const result = await axios.post(
          `${url}/profile/updateProfilePicture`,
-         {token,formData}
+         formData
        );
-       console.log( "result is  ",result);
+       
        toast.success("Profile updated successfully");
        setuploading(false);
-       window.location.reload();
+      const details = await getUserDetails(token, dispatch);
     } catch (error) {
       console.log("error in setting page ",error);
       console.log("ERROR MESSAGE - ", error.message);

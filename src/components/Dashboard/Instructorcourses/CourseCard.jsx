@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { formatDate } from "../../../services/formatDate";
 import { FiClock } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
@@ -24,6 +24,9 @@ export default function CourseCard({ course }) {
         
 
     }
+    useEffect(()=>{
+      console.log("crs ",course);
+    },[])
   return (
     <div className=" border-[1px] border-richblack-800 flex flex-wrap justify-between p-8">
       <div className="flex flex-wrap gap-4 text-richblack-100 w-[70%] ">

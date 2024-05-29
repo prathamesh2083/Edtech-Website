@@ -167,24 +167,25 @@ export default function CourseInfo() {
       handleEditCourse();
       return;
     }
-   
+    
+    if (
+      !info.courseName ||
+      !info.courseDescription ||
+      !info.benefits ||
+      !info.price ||
+      !info.tag.length ||
+      !image ||
+      !info.categoryId ||
+      !info.courselevel ||
+      !info.courseLanguage
+    ) {
+      toast.error("All fields are required ");
+
+      return;
+    }
+    const toastId=toast.loading("...Creating your course");
     try {
       
-      if (
-        !info.courseName ||
-        !info.courseDescription ||
-        !info.benefits ||
-        !info.price ||
-        !info.tag.length ||
-        !image ||
-        !info.categoryId ||
-        !info.courselevel ||
-        !info.courseLanguage
-      ) {
-        toast.error("All fields are required ");
-
-        return;
-      }
 
       var form = new FormData();
       Object.entries(info).forEach(([key, value]) => {
@@ -196,18 +197,24 @@ export default function CourseInfo() {
       
 
       const result = await axios.post(`${url}/createCourse`, form);
-      console.log("course res is ",result);
-      if (result.data.data) {
+      
+      if (result.data.success) {
         toast.success("Course details added successfully ");
+        dispatch(seteditCourseInfo(result.data.data));
+        dispatch(setStep(2));
+      }
+      else{
+        toast.error(result?.data?.message || "Image size is too large.");
       }
 
-      dispatch(seteditCourseInfo(result.data.data));
-      dispatch(setStep(2));
+      
     } catch (err) {
       console.log(err);
       toast.error("Error in adding course details");
       console.log("Error in creating course");
     }
+    toast.dismiss(toastId); 
+
   };
   return (
     <div className="w-full">

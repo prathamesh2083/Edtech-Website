@@ -107,14 +107,15 @@ export default function Course() {
       
       return;
     }
-     if (user?.courses.includes(courseId)) {
-       toast.error("You have already bought this course");
-       return;
-     }
     if(user?.accountType!=="Student"){
       toast.error("Only students can add course to cart");
       return;
     }
+     if (user?.courses.includes(courseId)) {
+       
+       toast.error("You have already bought this course");
+       return;
+     }
     try{ 
          const result = await axios.post(
            `${url}/cart/addtocart`,
@@ -153,11 +154,11 @@ export default function Course() {
 
 
   return (
-    <div className="text-white w-full   ">
+    <div className="text-white w-full mt-10 md:mt-4  ">
       {/* section 1 */}
       <div className="w-full  flex justify-around  bg-richblack-800 md:p-10 p-6 gap-6 lg:h-[350px]  flex-wrap ">
-        <div className="flex flex-col gap-4 w-full md:w-[55%] md:p-10 h-fit">
-          <div className="text-[2rem] md:text-[3rem] font-semibold">
+        <div className="flex flex-col gap-4 w-full md:w-[55%] md:p-10 h-fit ">
+          <div className="text-[1.7rem] md:text-[2rem] font-semibold">
             {courseinfo?.courseName}
           </div>
           <div className="text-richblack-300 text-[1.2rem]">

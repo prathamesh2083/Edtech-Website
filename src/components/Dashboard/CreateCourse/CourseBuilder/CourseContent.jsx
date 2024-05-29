@@ -67,13 +67,13 @@ export default function CourseContent({ seteditSectionName, setsection }) {
 
   return (
     <div>
-      <div className="my-4 rounded-lg bg-richblack-700 p-6 px-8">
+      <div className=" flex flex-col gap-4  my-4 rounded-lg ">
         {editCourseInfo?.courseContent?.map((section, index) => {
           return (
             <details
               key={section._id}
               open
-              className="border-b-[1px] border-b-richblack-500 p-2"
+              className=" border-richblack-700 rounded-lg border-[1px] p-4 bg-richblack-800 "
             >
               <summary className="flex items-center justify-between gap-x-3 my-2  ">
                 <div className="flex items-center gap-x-3">
@@ -116,7 +116,7 @@ export default function CourseContent({ seteditSectionName, setsection }) {
                     <div
                       key={subSection._id}
                       onClick={() => setViewsubsection(subSection)}
-                      className="pl-4 mt-4 flex bg-richblack-600 p-2 rounded-md items-center justify-between gap-x-3"
+                      className="pl-4 mt-4 flex bg-richblack-700 p-4 rounded-md items-center justify-between gap-x-3"
                     >
                       <div className="flex items-center gap-x-3">
                         <RxDropdownMenu />

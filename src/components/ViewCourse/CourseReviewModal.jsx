@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export default function CourseReviewModal({setreviewModal}) {
   const {user}=useSelector((state)=>state.profile);
-  const { token } = useSelector((state) => state.auth);
+  const { ttoken } = useSelector((state) => state.auth);
   const {register,handleSubmit,setValue,formState:{errors},getValues}=useForm();
   const {courseId}=useParams();
   const onSubmit=async()=>{
