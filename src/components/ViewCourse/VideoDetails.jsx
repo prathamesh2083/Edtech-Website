@@ -12,7 +12,7 @@ export default function VideoDetails() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const playerRef = useRef();
-  const token = useSelector((state) => state.auth);
+  const {token} = useSelector((state) => state.auth);
   const {
     courseSectionData,
     EntirecourseData,
@@ -124,7 +124,7 @@ export default function VideoDetails() {
         subSectionId: subSectionId,
         token
       });
-      
+      console.log("mark ",result);
       if (result.data.success) {
         toast.success("Lecture marked completed");
         dispatch(updatecompletedLectures(subSectionId));
