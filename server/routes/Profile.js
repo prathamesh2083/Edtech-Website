@@ -25,7 +25,7 @@ router.post("/profile/deleteAccount", auth,  deleteAccount);
 router.post("/profile/updateProfilePicture", auth, updateProfilePicture);
 
 
-router.get("/profile/getEnrolledCourses", auth, isStudent, getEnrolledCourses);
+router.post("/profile/getEnrolledCourses", auth, isStudent, getEnrolledCourses);
 
 
 module.exports=router;

@@ -11,6 +11,7 @@ import { TbPointFilled } from "react-icons/tb";
 
 export default function AddCourse() {
   const {editCourse}=useSelector((state)=>state.course);
+  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { step } = useSelector((state) => state.course);
 

@@ -9,6 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 export default function Settings() {
   const { user } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
   const [imageFile, setImageFile] = useState(null);
   const [previewSource, setPreviewSource] = useState(null);
   const [uploading,setuploading]=useState(false);
@@ -51,7 +52,7 @@ export default function Settings() {
       var url = import.meta.env.VITE_REACT_APP_BASE_URL;
        const result = await axios.post(
          `${url}/profile/updateProfilePicture`,
-         formData
+         {token,formData}
        );
        console.log( "result is  ",result);
        toast.success("Profile updated successfully");

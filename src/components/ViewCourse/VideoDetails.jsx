@@ -122,6 +122,7 @@ export default function VideoDetails() {
       const result = await axios.post(`${url}/updateCourseProgress`, {
         courseId: courseId,
         subSectionId: subSectionId,
+        token
       });
       
       if (result.data.success) {
@@ -165,7 +166,7 @@ export default function VideoDetails() {
   }, [subSectionId, sectionId, location.pathname]);
 
   return (
-    <div className="flex flex-col gap-5 text-white mt-8">
+    <div className="flex flex-col gap-5 text-white mt-20">
        
       {!video?.videoUrl ? (
         <div>video not found</div>

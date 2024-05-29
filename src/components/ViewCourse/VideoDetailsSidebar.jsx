@@ -44,7 +44,7 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
 
   return (
     <>
-      <div className="p-4 hidden md:block ">
+      <div className="p-4 hidden md:block mt-16 ">
         <div className="flex flex-col  gap-2">
           <div className="w-full flex gap-x-3 items-center justify-between px-2">
             <div onClick={() => navigate("/dashboard/enrolled-courses")}>

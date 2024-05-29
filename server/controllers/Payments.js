@@ -84,10 +84,11 @@ exports.capturePayment = async (req, res) => {
 // verify payment
 exports.verifyPayment = async (req, res) => {
   try {
-    const razorpay_order_id = req.body?.razorpay_order_id;
-    const razorpay_payment_id = req.body?.razorpay_payment_id;
-    const razorpay_signature = req.body?.razorpay_signature;
-    const courses = req.body?.courses;
+    const razorpay_order_id = req.body?.bodyData?.razorpay_order_id;
+    const razorpay_payment_id = req.body?.bodyData?.razorpay_payment_id;
+    const razorpay_signature = req.body?.bodyData?.razorpay_signature;
+    const courses = req.body?.bodyData.courses;
+   
     const userId = req.user.id;
     if (
       !razorpay_order_id ||
@@ -156,6 +157,11 @@ const enrollStudents = async (courses, userId, res) => {
       const enrolledStudent = await User.findByIdAndUpdate(
         { _id: userId },
         { $push: { courses: courseId,courseProgress:courseProgress._id } },
+        { new: true }
+      );
+      const removeFromCart = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $pull: { cart: courseId } },
         { new: true }
       );
       const emailResponse = await mailSender(

@@ -8,8 +8,8 @@ require("dotenv").config();
 const {convertSecondsToDuration} = require("../utils/setToDuration");
 exports.updateProfile = async (req, res) => {
   try {
-    const { dateOfBirth, about, contactNumber, gender } = req.body;
-    console.log(req.body);
+    const { dateOfBirth, about, contactNumber, gender } = req.body.info;
+    console.log(req.body.info);
     const id = req.user.id;
     if (!id) {
       return res.status(200).json({

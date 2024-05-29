@@ -13,6 +13,7 @@ import TagInput from "./TagInput";
 import { json } from "react-router-dom";
 export default function CourseInfo() {
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
   var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [categories, setcategories] = useState([]);
   const [tags, settags] = useState([]);
@@ -43,15 +44,15 @@ export default function CourseInfo() {
     }
 
     if (
-      editCourseInfo.courseName !== info.courseName ||
-      editCourseInfo.courseDescription !== info.courseDescription ||
-      editCourseInfo.price !== info.price ||
-      editCourseInfo.category !== info.categoryId ||
-      editCourseInfo.courselevel !== info.courselevel ||
-      editCourseInfo.courseLanguage !== info.courseLanguage ||
-      editCourseInfo.tag !== tags ||
-      editCourseInfo.benefits !== info.benefits ||
-      editCourseInfo.thumbnail !== image
+      editCourseInfo?.courseName !== info.courseName ||
+      editCourseInfo?.courseDescription !== info.courseDescription ||
+      editCourseInfo?.price !== info.price ||
+      editCourseInfo?.category !== info.categoryId ||
+      editCourseInfo?.courselevel !== info.courselevel ||
+      editCourseInfo?.courseLanguage !== info.courseLanguage ||
+      editCourseInfo?.tag !== tags ||
+      editCourseInfo?.benefits !== info.benefits ||
+      editCourseInfo?.thumbnail !== image
     ) {
       return true;
     }
@@ -144,7 +145,7 @@ export default function CourseInfo() {
         if (editCourseInfo.thumbnail !== image) {
           formData.append("thumbnail", image);
         }
-        const result = await axios.post(`${url}/editCourse`, formData);
+        const result = await axios.post(`${url}/editCourse`,{token, formData});
         if (result.data.success) {
           toast.success("Course details updated successfully ");
           dispatch(seteditCourseInfo(result.data.course));
@@ -161,15 +162,14 @@ export default function CourseInfo() {
   };
   const handlesubmit = async (e) => {
     e.preventDefault();
-
+    
     if (editCourse) {
       handleEditCourse();
       return;
     }
-    if (info?.tag?.length == 0) {
-      return;
-    }
+   
     try {
+      
       if (
         !info.courseName ||
         !info.courseDescription ||
@@ -192,9 +192,11 @@ export default function CourseInfo() {
       });
       form.append("tag", JSON.stringify(info.tag));
       form.append("thumbnail", image);
+      form.append("token", token);
       
 
       const result = await axios.post(`${url}/createCourse`, form);
+      console.log("course res is ",result);
       if (result.data.data) {
         toast.success("Course details added successfully ");
       }

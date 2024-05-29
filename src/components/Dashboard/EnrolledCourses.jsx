@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import EnrolledCourseCard from './EnrolledCourseCard';
 export default function EnrolledCourses() {
     const {user}=useSelector((state)=>state.profile);
+    const { token } = useSelector((state) => state.auth);
     const navigate=useNavigate();
     const[status,setstatus]=useState("All");
 
@@ -17,9 +18,9 @@ export default function EnrolledCourses() {
         ;(async()=>{
           var url = import.meta.env.VITE_REACT_APP_BASE_URL;
              try{
-                 const result = await axios.get(`${url}/profile/getEnrolledCourses`);
+                 const result = await axios.post(`${url}/profile/getEnrolledCourses`,{token});
                  
-                 
+                
                  setcourses(result?.data?.courses);
                 
              }

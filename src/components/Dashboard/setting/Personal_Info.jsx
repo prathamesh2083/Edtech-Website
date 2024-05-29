@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../../../slices/profileSlice";
+import { getUserDetails } from "../../../services/operations/getUserDetails";
 
 export default function Personal_Info({ user }) {
+  const {token}=useSelector((state)=>state.auth);
   const dispatch=useDispatch();
   const [info, setinfo] = useState({
     dateOfBirth: "",
@@ -22,17 +24,24 @@ export default function Personal_Info({ user }) {
         [term]: val,
       };
     });
-    console.log(info);
+    
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       var url = import.meta.env.VITE_REACT_APP_BASE_URL;
       dispatch(setLoading(true));
-      const result = await axios.post(`${url}/profile/updateProfile`, info);
-
+      const result = await axios.post(
+        `${url}/profile/updateProfile`,
+        { info, token },
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      console.log("res is ",result);
       toast.success("Profile information updated successfully");
-       window.location.reload();
+      const details=await getUserDetails(token,dispatch);
+      
     } catch (err) {
       toast.error("Error");
       console.log(err);

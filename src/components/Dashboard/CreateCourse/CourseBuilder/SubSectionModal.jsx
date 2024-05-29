@@ -15,6 +15,7 @@ export default function SubSectionModal({
   edit = false,
 }) {
   const dispatch = useDispatch();
+  const {token}=useSelector((state)=>state.auth);
   var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [loading, setloading] = useState(false);
   const { editCourseInfo } = useSelector((state) => state.course);
@@ -50,11 +51,11 @@ export default function SubSectionModal({
   const handleEditsubsection = async () => {
     const formData = new FormData();
     const currentValues = getValues();
-    console.log("dd ", currentValues);
+    
     formData.append("SectionId", modalData.sectionId);
     formData.append("subSectionId", modalData._id);
     formData.append("courseId", editCourseInfo._id);
-
+formData.append("token", token);
     if (currentValues.title !== modalData.title) {
       formData.append("title", currentValues.title);
     }
@@ -67,7 +68,10 @@ export default function SubSectionModal({
 
     try {
       setloading(true);
-      const result = await axios.post(`${url}/updateSubSection`, formData);
+      const result = await axios.post(`${url}/updateSubSection`, 
+        formData
+      );
+      console.log("res tt",result);
       if (result.data.success) {
         toast.success("Lecture updated successfully");
         dispatch(seteditCourseInfo(result.data.course));
@@ -94,17 +98,18 @@ export default function SubSectionModal({
     }
 
     const currentValues = getValues();
-    console.log(currentValues);
+    
     const formData = new FormData();
     formData.append("sectionId", modalData);
     formData.append("title", currentValues.title);
     formData.append("video", currentValues.video);
     formData.append("courseId", editCourseInfo._id);
+    formData.append("token", token);
     formData.append("description", currentValues.description);
 
     try {
       setloading(true);
-      const result = await axios.post(`${url}/createSubSection`, formData);
+      const result = await axios.post(`${url}/createSubSection`,formData);
       if (result.data.success) {
         toast.success("Lecture added successfully");
 

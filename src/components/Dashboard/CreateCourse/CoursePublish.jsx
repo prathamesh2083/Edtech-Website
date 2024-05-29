@@ -29,6 +29,7 @@ export default function CoursePublish() {
             formData.append("courseId", editCourseInfo._id);
             const status = getValues("public") ? "Published" : "Draft";
             formData.append("status", status);
+            formData.append("token", token);
 
             const result = await axios.post(`${url}/editCourse`, formData);
             console.log(result);

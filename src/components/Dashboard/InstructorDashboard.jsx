@@ -16,12 +16,12 @@ export default function InstructorDashboard() {
   const getcourseData = async () => {
     try {
       setloading(true);
-      const result = await axios.post(`${url}/profile/instructorDashboardData`);
+      const result = await axios.post(`${url}/profile/instructorDashboardData`,{token});
 
       setinstructorData(result.data.data);
 
       const inscourses = await axios.post(`${url}/getInstructorCourses`, {
-        InstructorId: user._id,
+        InstructorId: user._id,token
       });
 
       setcourses(inscourses.data.allCourses);

@@ -16,8 +16,7 @@ export async function getUserDetails(token, dispatch) {
       }
     );
 
-     console.log("token is ",result);
-     console.log("user details",result.data.user);
+    
     dispatch(setUser(result.data.user));
     return 1;
   } catch (err) {

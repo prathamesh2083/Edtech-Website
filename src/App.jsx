@@ -52,7 +52,7 @@ export default function App() {
         if (user?.accountType === "Student") {
           const cartresult = await getCartCourses(token, dispatch);
          
-          dispatch(setTotalItems(cartresult.data.cartCourses.length));
+          dispatch(setTotalItems(cartresult?.data?.cartCourses?.length));
         }
       }
     })();

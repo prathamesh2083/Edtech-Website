@@ -27,6 +27,7 @@ export default function CourseContent({ seteditSectionName, setsection }) {
     }
     try {
       const result = await axios.post(`${url}/deleteSection`, {
+        token,
         sectionId,
         courseId: editCourseInfo?._id,
       });
@@ -48,6 +49,7 @@ export default function CourseContent({ seteditSectionName, setsection }) {
     try {
       
       const result = await axios.post(`${url}/deleteSubSection`, {
+        token,
         sectionId,
         subSectionId,
         courseId: editCourseInfo?._id,

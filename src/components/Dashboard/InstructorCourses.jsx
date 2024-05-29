@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import { FiEdit } from "react-icons/fi";
+import { FiClock, FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import CourseCard from "./Instructorcourses/CourseCard";
 import toast from "react-hot-toast";
@@ -17,6 +17,7 @@ import { formatDate } from "../../services/formatDate";
 import ConfirmationModal from "../common/ConfirmationModal";
 export default function InstructorCourses() {
   const { user } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   var url = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [courses, setcourses] = useState([]);
@@ -35,14 +36,14 @@ export default function InstructorCourses() {
        setloading(true);
           
       const result= await axios.post(`${url}/deleteCourse`,{
-        courseId
+        courseId,token
        });
        if(!result.data.success){
           toast.error("Course deletion failed");
           return;
        }
       const updatedCourses = await axios.post(`${url}/getInstructorCourses`, {
-        InstructorId: user._id,
+        InstructorId: user._id,token
       });
 
       if (updatedCourses.data.success ) {
@@ -72,16 +73,16 @@ export default function InstructorCourses() {
         setloading(true);
 
         const result = await axios.post(`${url}/getInstructorCourses`, {
-          InstructorId: user._id,
+          InstructorId: user._id,token
         });
-
+       
         setcourses(result.data.allCourses);
         setloading(false);
       } catch (err) {
         console.log("Error in fetching courses");
         toast.error("Error in getting your courses");
       }
-
+      
       setloading(false);
     })();
   }, []);
@@ -130,6 +131,7 @@ export default function InstructorCourses() {
                   </Tr>
                 ) : (
                   courses.map((course) => (
+                    
                     <Tr
                       key={course._id}
                       className=" flex md:flex-row flex-col md:gap-y-20   my-16 md:my-4 border-[1px] border-richblack-700  gap-x-10  p-8  "
@@ -148,9 +150,9 @@ export default function InstructorCourses() {
                           </div>
                           <div>Created At : {formatDate(course.createdAt)}</div>
                           {course.status === "Draft" ? (
-                            <div className="  bg-richblack-700 rounded-full w-[90px] text-center text-md  flex items-center justify-center gap-1  ">
+                            <div className=" text-pink-100 bg-richblack-700 rounded-full w-[90px] text-center text-md  flex items-center justify-center gap-1  ">
                               <FiClock className="inline  " size="15px" />{" "}
-                              <div>Draft</div>
+                              <div  >Draft</div>
                             </div>
                           ) : (
                             <div className="text-caribbeangreen-50 rounded-full bg-richblack-700 w-[100px] text-center ">
@@ -159,10 +161,9 @@ export default function InstructorCourses() {
                           )}
                         </div>
                       </Td>
-                      <Td>2h 30min</Td>
+                      <Td>{course?.timeDuration}l</Td>
                       <Td className="">{course.price}</Td>
                       <Td className="flex gap-2 flex-nowrap">
-                        
                         <FiEdit
                           size="20px"
                           onClick={() => editCourse(course)}

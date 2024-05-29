@@ -36,9 +36,9 @@ export default function CartCourse({ course }) {
     try {
      
       const result = await axios.post(`${url}/cart/removefromcart`, {
-        courseId: course._id,
+        courseId: course._id,token
       });
-      console.log(result);
+      
       if (result.data.success) {
         getCartCourses(token, dispatch);
         window.location.reload();

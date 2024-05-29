@@ -3,9 +3,9 @@ import { setcart } from "../../slices/cartSlice";
 export async function getCartCourses(token, dispatch) {
   try {
     var url = import.meta.env.VITE_REACT_APP_BASE_URL;
-    const result = await axios.get(
+    const result = await axios.post(
       `${url}/cart/getcartcourses`,
-
+      {token},
       {
         Authorization: `Bearer ${token}`,
       }

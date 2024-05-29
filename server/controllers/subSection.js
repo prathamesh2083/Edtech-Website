@@ -7,7 +7,7 @@ exports.createSubSection = async (req, res) => {
   try {
     const {
       title,
-      timeDuration = "0",
+      
       courseId,
       description,
       sectionId,
@@ -26,7 +26,8 @@ exports.createSubSection = async (req, res) => {
       video,
       process.env.FOLDER_NAME
     );
-
+    const timeDuration=uploadedVideo.duration;
+    console.log("duration ",timeDuration);
     const newSubSection = await SubSection.create({
       title,
       timeDuration,

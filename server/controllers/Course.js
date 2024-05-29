@@ -10,6 +10,7 @@ const Section = require("../models/Section");
 const { convertSecondsToDuration } = require("../utils/setToDuration");
 exports.createCourse = async (req, res) => {
   try {
+    console.log("body is ",req.body);
     const {
       courseName,
       courseLanguage,
@@ -20,7 +21,7 @@ exports.createCourse = async (req, res) => {
 
       categoryId,
     } = req.body;
-
+    
     const tag = JSON.parse(req.body.tag);
     const whatYouWillLearn = req.body.benefits;
     const thumbnail = req.files.thumbnail;

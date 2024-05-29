@@ -36,7 +36,7 @@ export default function Course() {
   const [othercourses,setothercourses]=useState(null);
   var {courseId} = useParams();
   useEffect(() => {
-    
+    console.log("uui ",user);
     try {
       (async () => {
         
@@ -107,14 +107,22 @@ export default function Course() {
       
       return;
     }
+     if (user?.courses.includes(courseId)) {
+       toast.error("You have already bought this course");
+       return;
+     }
     if(user?.accountType!=="Student"){
       toast.error("Only students can add course to cart");
       return;
     }
     try{ 
-         const result=await axios.post(`${url}/cart/addtocart`,{
-          courseId
-         });
+         const result = await axios.post(
+           `${url}/cart/addtocart`,
+           {
+             courseId,token
+           },
+         
+         );
          if(result.data.success){
           dispatch(setTotalItems(totalItems+1));
           toast.success(result.data.message);

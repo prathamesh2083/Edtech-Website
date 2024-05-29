@@ -20,10 +20,10 @@ export default function Cart() {
   useEffect(()=>{
     (async()=>{
       const result = await getCartCourses(token, dispatch);
-        
+        console.log(result);
           setcart(result.data.cartCourses);
           var pricesum=0;
-          for(var i=0;i<result.data.cartCourses.length;i++){
+          for(var i=0;i<result?.data?.cartCourses?.length;i++){
             pricesum+=result.data.cartCourses[i].price;
           }
           settotalprice(pricesum);
