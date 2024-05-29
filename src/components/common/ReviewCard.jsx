@@ -12,24 +12,24 @@ export default function ReviewCard({review,Height}) {
       <div className="flex p-1 gap-4 ">
         <img
           src={`https://api.dicebear.com/5.x/initials/svg?seed=${
-            review.user.firstName + " " + review.user.lastName
+            review?.user?.firstName + " " + review?.user?.lastName
           }`}
           className="h-11 w-11 rounded-full object-cover "
         ></img>
         <div className="flex flex-col gap-1">
           <div>
-            {review.user.firstName} {review.user.lastName}
+            {review?.user?.firstName} {review?.user?.lastName}
           </div>
           
-          <div className='text-richblack-300'>{review.course.courseName}</div>
+          <div className='text-richblack-300'>{review?.course.courseName}</div>
         </div>
       </div>
-      <div>{review.review}</div>
+      <div>{review?.review}</div>
       <div className='flex gap-2 text-yellow-25 font-bold'>
         <span className='inline'>
-        {Number.isInteger(review.rating)?`${review.rating}.0`:review.rating}
+        {Number.isInteger(review?.rating)?`${review?.rating}.0`:review?.rating}
         </span>
-          <RatingStars Review_Count={review.rating} ></RatingStars>{" "}
+          <RatingStars Review_Count={review?.rating} ></RatingStars>{" "}
       </div>
     </div>
   );
