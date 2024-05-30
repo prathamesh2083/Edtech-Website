@@ -71,7 +71,7 @@ formData.append("token", token);
       const result = await axios.post(`${url}/updateSubSection`, 
         formData
       );
-      console.log("res tt",result);
+      
       if (result.data.success) {
         toast.success("Lecture updated successfully");
         dispatch(seteditCourseInfo(result.data.course));
@@ -106,19 +106,26 @@ formData.append("token", token);
     formData.append("courseId", editCourseInfo._id);
     formData.append("token", token);
     formData.append("description", currentValues.description);
-
-    try {
-      setloading(true);
-      const result = await axios.post(`${url}/createSubSection`,formData);
-      if (result.data.success) {
-        toast.success("Lecture added successfully");
-
-        dispatch(seteditCourseInfo(result.data.course));
-        setmodalData(null);
-      }
-    } catch (err) {
-      console.log(err);
+    if (
+      !currentValues.title ||
+      !currentValues.video ||
+      !currentValues.description
+    ){
+      toast.error("All fields are compulsary");
+      return;
     }
+      try {
+        setloading(true);
+        const result = await axios.post(`${url}/createSubSection`, formData);
+        if (result.data.success) {
+          toast.success("Lecture added successfully");
+
+          dispatch(seteditCourseInfo(result.data.course));
+          setmodalData(null);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     setloading(false);
   };
   return (

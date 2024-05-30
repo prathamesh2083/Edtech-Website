@@ -109,7 +109,7 @@ export default function Catalog() {
       {/* section 3 */}
       <div className="w-full md:w-[90%] flex flex-col gap-10 my-10 m-auto">
         <p className="text-[2rem] font-semibold text-center md:text-start">
-          Top courses in {catalogPageData?.selectedCategory?.name}
+          Top courses in other categories
         </p>
         <div>
           <CourseSlider Courses={catalogPageData?.diffCategoryCourses} />

@@ -267,6 +267,7 @@ exports.editCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
     const updates = req.body;
+    console.log(updates);
     console.log("tags to edit are ", updates.tag);
     const course = await Course.findById({ _id: courseId });
     if (!course) {

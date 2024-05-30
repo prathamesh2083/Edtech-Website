@@ -60,14 +60,14 @@ export default function InstructorCourses() {
     }
   };
   const totalSecond = (course) => {
-    console.log(course);
+    
     var sec = 0;
     course.courseContent.forEach((section) => {
       section.subSection.forEach((lec) => {
         sec += parseInt(lec.timeDuration);
       });
     });
-    console.log("sec are", sec);
+   
     return sec;
   };
   const editCourse = async (course) => {
@@ -151,14 +151,14 @@ export default function InstructorCourses() {
                       className=" flex md:flex-row flex-col md:gap-y-20   my-16 md:my-4 border-[1px] border-richblack-700  gap-x-10  p-8  "
                     >
                       <Td className="flex gap-x-4 md:w-[700px] ">
-                        <div className="w-[300px] h-[200px]">
+                        <div className="w-[350px] h-[250px]">
                           <img
                             src={course?.thumbnail}
-                            className="w-full aspect-square shadow-md shadow-blue-500   rounded-md object-cover object-center "
+                            className="w-full min-h-[100px] min-w-[250px] aspect-auto shadow-md shadow-blue-500   rounded-md object-cover  object-center "
                           ></img>
                         </div>
                         <div className="flex flex-col gap-4 my-2">
-                          <div> {course.courseName}</div>
+                          <div> {course.courseName }</div>
                           <div>
                             {" "}
                             {course.courseDescription.slice(0, 100)}{" "}

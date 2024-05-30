@@ -113,7 +113,7 @@ export default function CourseInfo() {
     });
   };
   const handleEditCourse = async () => {
-
+    const toastId=toast.loading("...Updating the course");
     try{
         const formData = new FormData();
          formData.append("courseId",editCourseInfo._id);
@@ -145,11 +145,16 @@ export default function CourseInfo() {
         if (editCourseInfo.thumbnail !== image) {
           formData.append("thumbnail", image);
         }
-        const result = await axios.post(`${url}/editCourse`,{token, formData});
+        formData.append("token", token);
+
+        const result = await axios.post(`${url}/editCourse`, formData);
         if (result.data.success) {
           toast.success("Course details updated successfully ");
           dispatch(seteditCourseInfo(result.data.course));
           dispatch(setStep(2));
+        }
+        else{
+          toast.error("Error in saving changes");
         }
         
         
@@ -158,7 +163,7 @@ export default function CourseInfo() {
       console.log(err);
       toast.error("Error in updating course details");
     }
-    
+    toast.dismiss(toastId);
   };
   const handlesubmit = async (e) => {
     e.preventDefault();

@@ -19,33 +19,29 @@ import { setToken } from "../slices/authSlice";
 import { setUser } from "../slices/profileSlice";
 import { formatDate } from "../services/formatDate";
 import copy from "copy-to-clipboard";
-import { setTotalItems } from "../slices/cartSlice"; 
+import { setTotalItems } from "../slices/cartSlice";
 
 export default function Course() {
-  
   var url = import.meta.env.VITE_REACT_APP_BASE_URL;
-   const { token } = useSelector((state) => state.auth);
-   const { user } = useSelector((state) => state.profile);
-   const {totalItems}=useSelector((state)=>state.cart);
-  const {loading}=useSelector((state)=>state.profile);
-    // const {paymentLoading}=useSelector((state)=>state.course);
-  const dispatch=useDispatch();
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const { totalItems } = useSelector((state) => state.cart);
+  const { loading } = useSelector((state) => state.profile);
+  // const {paymentLoading}=useSelector((state)=>state.course);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [courseinfo, setcourseinfo] = useState(null);
   const [totalNoOfLectures, settotalNoOfLectures] = useState(0);
-  const [othercourses,setothercourses]=useState(null);
-  var {courseId} = useParams();
+  const [othercourses, setothercourses] = useState(null);
+  var { courseId } = useParams();
   useEffect(() => {
-    console.log("uui ",user);
     try {
       (async () => {
-        
-        
         if (courseId) {
           const result = await axios.post(`${url}/getCourseDetails`, {
             courseId,
           });
-          
+
           setcourseinfo(result.data.data);
         }
       })();
@@ -55,19 +51,13 @@ export default function Course() {
   }, [courseId]);
 
   useEffect(() => {
-     
-    try{
-       (async()=>{
-
-         const result =await axios.get(`${url}/getAllCourses`);
-           setothercourses(result.data.allCourses);
-        
-
-       })();
-    }
-    catch(err){
+    try {
+      (async () => {
+        const result = await axios.get(`${url}/getAllCourses`);
+        setothercourses(result.data.allCourses);
+      })();
+    } catch (err) {
       console.log(err);
-
     }
 
     let total_lectures = 0;
@@ -77,86 +67,71 @@ export default function Course() {
     settotalNoOfLectures(total_lectures);
   }, [courseinfo]);
 
-  
   const handlebuycourse = async () => {
-    
-
-    if(token!==null){
-      if(user.accountType!=="Student"){
+    if (token !== null) {
+      if (user.accountType !== "Student") {
         toast.error("Only students can buy the Course");
         return;
       }
-      if(user?.courses.includes(courseId)){
+      if (user?.courses.includes(courseId)) {
         toast.error("You have already bought this course");
         return;
       }
 
-      buyCourse(token,[courseId],user,navigate,dispatch);
+      buyCourse(token, [courseId], user, navigate, dispatch);
 
       return;
-    }
-    else{
+    } else {
       toast.error("You are not logged in ");
     }
   };
 
-  const Addtocart=async()=>{
-         
-    if(!user){
+  const Addtocart = async () => {
+    if (!user) {
       toast.error("You are not logged in");
-      
+
       return;
     }
-    if(user?.accountType!=="Student"){
+    if (user?.accountType !== "Student") {
       toast.error("Only students can add course to cart");
       return;
     }
-     if (user?.courses.includes(courseId)) {
-       
-       toast.error("You have already bought this course");
-       return;
-     }
-    try{ 
-         const result = await axios.post(
-           `${url}/cart/addtocart`,
-           {
-             courseId,token
-           },
-         
-         );
-         if(result.data.success){
-          dispatch(setTotalItems(totalItems+1));
-          toast.success(result.data.message);
-         }
-         else{
-          toast.error(result.data.message);
-         }
-         console.log(result.data);
-
+    if (user?.courses.includes(courseId)) {
+      toast.error("You have already bought this course");
+      return;
     }
-    catch(err){
+    try {
+      const result = await axios.post(`${url}/cart/addtocart`, {
+        courseId,
+        token,
+      });
+      if (result.data.success) {
+        dispatch(setTotalItems(totalItems + 1));
+        toast.success(result.data.message);
+      } else {
+        toast.error(result.data.message);
+      }
+      console.log(result.data);
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
   const shareCourse = async () => {
     copy(window.location.href);
     toast.success("Link copied to clipboard");
   };
 
-  
   useLayoutEffect(() => {
-   window.scrollTo({
-     top: 0,
-     behavior:"instant" 
-   });
-   
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
   });
-
 
   return (
     <div className="text-white w-full mt-10 md:mt-4  ">
       {/* section 1 */}
-      <div className="w-full  flex justify-around  bg-richblack-800 md:p-10 p-6 gap-6 lg:h-[350px]  flex-wrap ">
+      <div className="w-full  flex justify-around  bg-richblack-800 md:p-10 p-6 gap-6 lg:h-[450px]  flex-wrap ">
         <div className="flex flex-col gap-4 w-full md:w-[55%] md:p-10 h-fit ">
           <div className="text-[1.7rem] md:text-[2rem] font-semibold">
             {courseinfo?.courseName}
