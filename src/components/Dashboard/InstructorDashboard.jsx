@@ -100,7 +100,7 @@ export default function InstructorDashboard() {
                   {courses &&
                     courses?.slice(0, 3).map((course) => (
                       <div key={course._id} className="w-[30%] min-w-[250px]">
-                        <img src={course.thumbnail} className="w-full"></img>
+                        <img src={course.thumbnail} className="w-full  h-[200px]"></img>
                         <div className="my-2">
                           <p>{course.courseName}</p>
                           <div className="flex gap-1 ">

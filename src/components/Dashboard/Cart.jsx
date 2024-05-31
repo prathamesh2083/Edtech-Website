@@ -70,9 +70,9 @@ export default function Cart() {
       {cart?.length === 0 ? (
         <div className="text-[1.4rem] font-semibold">Cart is empty</div>
       ) : (
-        <div className="flex flex-wrap  gap-8 ">
+        <div className="flex flex-wrap   ">
           {/* cart courses */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 max-w-[750px] ">
             {cart?.map((course, index) => {
               return (
                 <CartCourse
@@ -86,7 +86,7 @@ export default function Cart() {
           </div>
           {/* checkout page */}
 
-          <div className="bg-richblack-800 rounded-md w-full max-w-[300px] mx-auto h-fit p-4 flex flex-col  gap-1 py-8">
+          <div className="bg-richblack-800 my-8 md:my-0  rounded-md w-full max-w-[300px] mx-auto h-fit p-4 flex flex-col  gap-1 py-8">
             <div className="text-[1.2rem] font-semibold">Total</div>
             <div className="text-yellow-50 text-[2rem] font-semibold  ">
               Rs. {totalprice}

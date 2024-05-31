@@ -60,14 +60,13 @@ export default function InstructorCourses() {
     }
   };
   const totalSecond = (course) => {
-    
     var sec = 0;
-    course.courseContent.forEach((section) => {
-      section.subSection.forEach((lec) => {
+    course?.courseContent?.forEach((section) => {
+      section?.subSection?.forEach((lec) => {
         sec += parseInt(lec.timeDuration);
       });
     });
-   
+
     return sec;
   };
   const editCourse = async (course) => {
@@ -103,8 +102,8 @@ export default function InstructorCourses() {
         <Loading></Loading>
       ) : (
         <div className="text-white">
-          <div className="flex justify-between w-full">
-            <div className="text-[2rem] font-semibold ">My Courses</div>
+          <div className="flex justify-around md:justify-between w-full ">
+            <div className="md:text-[2rem] text-[1.7rem] font-semibold ">My Courses</div>
             <Link
               onClick={() => {
                 dispatch(setStep(1));
@@ -120,10 +119,10 @@ export default function InstructorCourses() {
           {/* // table */}
           <div>
             {/* all instructor courses */}
-            <Table className="my-12">
+            <Table className="my-12 items-center hidden md:block">
               <Thead>
-                <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
-                  <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100">
+                <Tr className="flex flex-col md:flex-row md:gap-x-10 rounded-t-md border-b border-b-richblack-800 md:px-6 py-2">
+                  <Th className="flex-1  text-left text-sm font-medium uppercase text-richblack-100">
                     Courses
                   </Th>
                   <Th className="text-left text-sm font-medium uppercase text-richblack-100">
@@ -148,17 +147,17 @@ export default function InstructorCourses() {
                   courses.map((course) => (
                     <Tr
                       key={course._id}
-                      className=" flex md:flex-row flex-col md:gap-y-20   my-16 md:my-4 border-[1px] border-richblack-700  gap-x-10  p-8  "
+                      className=" flex md:flex-row flex-col md:gap-y-20   my-16 md:my-4 border-[1px] border-richblack-700  md:gap-x-10 md:p-8  "
                     >
-                      <Td className="flex gap-x-4 md:w-[700px] ">
+                      <Td className="flex gap-x-4 md:w-[600px] ">
                         <div className="w-[350px] h-[250px]">
                           <img
                             src={course?.thumbnail}
-                            className="w-full min-h-[100px] min-w-[250px] aspect-auto shadow-md shadow-blue-500   rounded-md object-cover  object-center "
+                            className="w-[200px] h-[200px] aspect-auto shadow-md shadow-blue-500   rounded-md object-cover  object-center "
                           ></img>
                         </div>
                         <div className="flex flex-col gap-4 my-2">
-                          <div> {course.courseName }</div>
+                          <div> {course.courseName}</div>
                           <div>
                             {" "}
                             {course.courseDescription.slice(0, 100)}{" "}
@@ -179,7 +178,7 @@ export default function InstructorCourses() {
                       </Td>
                       <Td>{convertSecondsToDuration(totalSecond(course))}</Td>
                       <Td className="">{course.price}</Td>
-                      <Td className="flex gap-2 flex-nowrap">
+                      <Td className="flex gap-2 flex-nowrap ">
                         <FiEdit
                           size="20px"
                           onClick={() => editCourse(course)}
@@ -208,6 +207,75 @@ export default function InstructorCourses() {
                 )}
               </Tbody>
             </Table>
+
+            <div className="block md:hidden">
+              {courses.length === 0 ? (
+                <div>
+                  <div className="py-10 text-center text-2xl font-medium text-richblack-100">
+                    No courses found
+                  </div>
+                </div>
+              ) : (
+                courses.map((course) => (
+                  <div
+                    key={course._id}
+                    className="my-10 flex items-center p-2 flex-col gap-4 border-[1px] border-richblack-700    "
+                  >
+                    <img
+                      src={course?.thumbnail}
+                      className="w-[280px] h-[200px] aspect-auto shadow-md shadow-blue-500   rounded-md object-cover  object-center "
+                    ></img>
+
+                    <div className="flex flex-col gap-4 text-center ">
+                      <div> {course.courseName}</div>
+                      <div>
+                        {" "}
+                        {course.courseDescription.slice(0, 100)}{" "}
+                        {course.courseDescription.length > 100 && "..."}
+                      </div>
+                      <div>Created At : {formatDate(course.createdAt)}</div>
+                      <div>
+                        {course.status === "Draft" ? (
+                          <div className="mx-auto text-pink-100 bg-richblack-700 rounded-full w-[90px] text-center text-md  flex items-center justify-center gap-1  ">
+                            <FiClock className="inline  " size="15px" />{" "}
+                            <div>Draft</div>
+                          </div>
+                        ) : (
+                          <div className="mx-auto text-caribbeangreen-50 text-center rounded-full bg-richblack-700 w-[100px]  ">
+                            Published
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-around w-full">
+                      <div>{convertSecondsToDuration(totalSecond(course))}</div>
+                      <div className="">Rs.{course.price}</div>
+                    </div>
+                    <div className="flex gap-2 flex-nowrap ">
+                      Actions :
+                      <FiEdit size="20px" onClick={() => editCourse(course)} />
+                      <MdDelete
+                        size="20px"
+                        onClick={() =>
+                          setconfirmationModal({
+                            text1: "Do you want to delete this course",
+                            text2:
+                              "All the data related with this course will be deleted.",
+                            btntext1: "Delete",
+                            btntext2: "Cancel",
+                            btn1handler: () =>
+                              !loading ? deleteCourse(course._id) : () => {},
+                            btn2handler: () =>
+                              !loading ? setconfirmationModal(null) : () => {},
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
           {confirmationModal && (
             <ConfirmationModal modalData={confirmationModal} />

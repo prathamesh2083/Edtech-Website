@@ -50,15 +50,15 @@ export default function CartCourse({ course }) {
     }
   };
   return (
-    <div className="flex flex-wrap items-center md:items-start text-center md:text-start  gap-6 justify-around my-2 hover:bg-richblack-900 hover:scale-105 transition-all duration-700  border-b-[1px] border-b-richblack-600 pb-6 p-2 ">
+    <div className="flex flex-wrap items-center md:items-start text-center md:text-start  gap-2 justify-around my-2 hover:bg-richblack-900 hover:scale-105 transition-all duration-700  border-b-[1px] border-b-richblack-600 pb-6 p-2 ">
       <Link to={`/courses/${course._id}`} >
         <img
           src={courseDetails?.thumbnail}
-          className=" w-[250px] h-[150px]"
+          className="w-[250px] md:w-[200px] h-[150px]"
         ></img>
       </Link>
       <div className="flex flex-col gap-2 justify-center">
-        <div className="font-semibold text-[1.2rem]">
+        <div className="font-semibold text-[1.2rem] max-w-[320px]   ">
           {courseDetails?.courseName}
         </div>
         <div>{courseDetails?.category?.name}</div>

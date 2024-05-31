@@ -13,13 +13,13 @@ export default function CourseCard({ course, Height,width }) {
     
     <Link
       to={`/courses/${course._id}`}
-      className={  ` text-white  flex-wrap border-[1px] border-richblack-500 hover:scale-105 transition-all duration-700 hover:shadow-lg  flex flex-col gap-4  min-w-[250px] p-4`}
+      className={  ` text-white  flex-wrap border-[1px] border-richblack-500 hover:scale-105 transition-all duration-700 hover:shadow-lg  flex flex-col gap-4 w-[330px] md:w-[370px] md:max-w-[500px]   min-w-[250px] p-2 md:p-4`}
     >
       <div className="w-full flex justify-center  items-center">
-        <img src={course.thumbnail} className={`m-auto min-w-[280px] md:w-[350px]    ${Height?Height:"h-full"} `}></img>
+        <img src={course.thumbnail} className={`m-auto w-full max-w-[400px] md:w-[330px]    ${Height?Height:"h-full"} `}></img>
       </div>
 
-      <p className="text-[1.3rem]">{course.courseName}</p>
+      <p className="text-[1.3rem]  ">{course.courseName}</p>
       <div className="flex gap-2 text-richblack-400 ">
         {" "}
         {course.Instructor.firstName} {course.Instructor.lastName}

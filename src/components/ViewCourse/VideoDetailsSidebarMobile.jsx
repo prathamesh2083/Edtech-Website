@@ -5,7 +5,8 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowUp } from "react-icons/io";
 import IconBtn from "../common/IconBtn";
-export default function VideoDetailsSidebar({ setreviewModal }) {
+import { RxCross1 } from "react-icons/rx";
+export default function VideoDetailsSidebar({ setreviewModal, setshowlec }) {
   const [activeSection, setactiveSection] = useState("");
   const [activesubSection, setactivesubSection] = useState("");
   const [videobaractive, setvideobaractive] = useState("");
@@ -44,17 +45,28 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
 
   return (
     <>
-      <div className="pl-2 pt-8 hidden md:block mt-16 max-w-[300px] overflow-y-scroll  ">
+      <div className="pl-2 py-2 px-0 pt-2  max-w-[300px] overflow-y-scroll max-h-[560px] ">
+        <div onClick={() => setshowlec(false)} className="px-4 my-2">
+          <RxCross1 size={"25px"} />
+        </div>
         <div className="flex flex-col  gap-2">
-          <div className="w-full flex gap-x-3 items-center justify-between px-2">
-            <div onClick={() => navigate("/dashboard/enrolled-courses")}>
-              <IoChevronBackCircleOutline size={"30px"} />
+          <div className="w-full flex gap-x-3 items-center justify-around px-2">
+            <div
+              onClick={() => {
+                setshowlec(false);
+                navigate("/dashboard/enrolled-courses");
+              }}
+            >
+              <IoChevronBackCircleOutline size={"35px"} />
             </div>
             <div>
               <IconBtn
                 text="Add Review"
                 active
-                onClick={() => setreviewModal(true)}
+                onClick={() => {
+                  setreviewModal(true);
+                  setshowlec(false);
+                }}
               />
             </div>
           </div>
@@ -69,16 +81,18 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
           </div>
         </div>
 
-        <div className="max-w-[300px] p-2">
+        <div className="max-w-[300px] p-1">
           {courseSectionData?.map((section, index) => (
             <div
               className={`flex-col flex gap-1 `}
-              onClick={() => setactiveSection(section._id)}
+              onClick={() => {
+                setactiveSection(section._id);
+              }}
             >
               <div
                 key={index}
                 className={`flex items-center justify-between gap-x-3 w-full bg-richblack-800 p-4 ${
-                  activeSection === section._id ? "bg-richblack-600" : "" 
+                  activeSection === section._id ? "bg-richblack-600" : ""
                 } rounded-lg `}
               >
                 <div className={`max-w-[150px]  `}> {section.sectionName}</div>
@@ -101,6 +115,7 @@ export default function VideoDetailsSidebar({ setreviewModal }) {
                           navigate(
                             `/view-course/${courseId}/section/${section._id}/sub-section/${subsection._id}`
                           );
+                          setshowlec(false);
                           setactivesubSection(subsection._id);
                         }}
                         className={`flex gap-x-3 px-3 p-2   ${

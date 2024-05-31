@@ -29,7 +29,7 @@ export default function ViewCourse() {
         courseId,
         userId:user._id
       });
-      console.log("det is ",result.data.completedVideos);
+      
       if (result.data.success) {
         const courseData = result.data.data;
         console.log(courseData);
@@ -55,10 +55,10 @@ export default function ViewCourse() {
    
   }, []);
   return (
-    <div className=" text-white relative flex min-h-[calc(100vh-3.5rem)]">
+    <div className=" text-white relative flex h-full min-h-[calc(100vh-3.5rem)]">
       <VideoDetailsSidebar setreviewModal={setreviewModal} />
       <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
-      <div className="mx-6">
+      <div className="md:mx-6 mx-2">
 
         <Outlet />
       </div>

@@ -1,10 +1,23 @@
 import React, { useEffect } from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { Link } from "react-router-dom";
+import convertSecondsToDuration from "../../utils/setToDuration";
 export default function EnrolledCourseCard({ course }) {
-  useEffect(()=>{
-    console.log(course);
-  })
+  // useEffect(()=>{
+  //   console.log(course);
+  // })
+  function totalcourseDuration(){
+
+    var duration=0;
+    
+    course?.courseContent?.forEach((section)=>{
+          section?.subSection?.forEach((subsection)=>{
+             duration+= parseInt(subsection?.timeDuration);
+             
+          })
+    })
+    return duration;
+  }
   return (
     <Link
       to={`/view-course/${course?._id}/section/${course?.courseContent[0]?._id}/sub-section/${course?.courseContent?.[0]?.subSection?.[0]?._id}`}
@@ -25,12 +38,13 @@ export default function EnrolledCourseCard({ course }) {
           </div>
         </div>
       </div>
-      <div className="w-[30%] "> 1 hr 20 min</div>
+      <div className="w-[30%] px-10">
+        {convertSecondsToDuration(totalcourseDuration())}
+      </div>
       <div className="w-[25%] min-w-[100px] flex gap-1">
         {" "}
         <ProgressBar
-          completed={(course?.progressPercentage || 0) }
-          
+          completed={course?.progressPercentage || 0}
           height="15px"
           borderRadius="7px"
           labelSize="12px"

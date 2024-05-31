@@ -16,6 +16,7 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Logout from "../../services/auth/Logout";
 
 import NavbarMobile from "./NavbarMobile";
+import VideoDetailsSidebar from "../ViewCourse/VideoDetailsSidebar";
 export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export default function Navbar() {
     <div className="overflow-y-scroll md:overflow-y-visible fixed z-20 w-full md:max-h-[66px] bg-richblack-900  md:flex  min-h-[50px] md:flex-wrap  items-center justify-center border-b-[1px] border-b-richblack-700">
       <div className="flex p-2 md:p-0 flex-wrap w-11/12 max-w-maxContent items-center justify-between">
         <button
-          className="text-white block md:hidden z-30 "
+          className={`text-white block md:hidden z-30 ${location.pathname.split('/')[1]==="view-course"?"hidden ":"block"} `}
           onClick={() => setshow(!show)}
         >
           {show ? <RxCross1 size={"25px"} /> : <SlMenu size={"25px"} />}
@@ -163,6 +164,7 @@ export default function Navbar() {
           <NavbarMobile subLinks={sublinks} setshow={setshow} show={show} />
         </nav>
       </div>
+      
     </div>
   );
 }
